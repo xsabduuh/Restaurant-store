@@ -1,40 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>تحدي المهام اليومية | نظام XP وأهداف مالية</title>
     <link rel="stylesheet" href="style.css">
-    <title>HOME/DASHBOARD PAGE</title>
 </head>
 <body>
-    <Header>
-        <h1></h1>
-        <nav>
-            <a href="index.html">HOME</a>
-            <a href="schedule.html">SCHEDULE</a>
-            <a href="goals.html">GOALS</a>
-            <a href="notes.html">NOTES</a>
-            <a href="ai.html">AI ASSISTANT</a>
-        </nav>
-    </Header>
-   <main>
-        <p><strong>Plan your day. Build better habits.</strong></p> <hr>
-        <section><p>Today’s Focus:</p>
-                 <p>Practice coding for at least 2 hours</p>
-                 <hr>
-                 <p><strong>Small steps every day lead to big results🧠 ⏰ 📌 📈 🏆</strong></p>
-                 <hr>
-        </section>
-         <section>See my schedule.And you will get what are the benefits of activity schedling. So you can get idea to make your productive schedule <br>
-            Click below to see my schedule:
-            <a href="schedule.html"><br>Click</a>
-         </section>
-   </main>
-  <footer>
-        <hr>
-    <p>Created by Rishik</p>
-    <p>Building better habits, one day at a time.</p>
-    <p>© 2025 Daily Planner</p>
-</footer>
+    <div class="app-container">
+        <header>
+            <h1>🏆 تحدي الإنجاز اليومي</h1>
+            <p class="subtitle">نقاط XP · أهداف مالية · تقارير شهرية صارمة</p>
+        </header>
+
+        <div class="dashboard">
+            <!-- قسم المهام اليومية -->
+            <section class="card tasks-section">
+                <h2>📋 مهام اليوم (تتكرر يومياً)</h2>
+                <div class="add-task">
+                    <input type="text" id="newTaskInput" placeholder="مهمة جديدة ..." autocomplete="off">
+                    <button id="addTaskBtn">➕ إضافة</button>
+                </div>
+                <ul id="tasksList" class="tasks-list"></ul>
+                <div class="task-stats">
+                    <span>🏅 XP اليوم: <strong id="todayXP">0</strong></span>
+                    <span>🎯 إجمالي XP الشهر: <strong id="monthXP">0</strong> / <span id="monthMaxXP">0</span></span>
+                </div>
+            </section>
+
+            <!-- قسم الهدف المالي -->
+            <section class="card finance-section">
+                <h2>💰 الهدف المالي الشهري</h2>
+                <div class="financial-goal-setup">
+                    <label>الهدف (₿):</label>
+                    <input type="number" id="financialGoalInput" placeholder="مثلاً 5000" step="100">
+                    <button id="setGoalBtn">تحديد الهدف</button>
+                </div>
+                <div class="financial-progress">
+                    <div class="progress-label">
+                        <span>المُدخر حتى الآن: <strong id="savedAmount">0</strong> ₿</span>
+                        <span>الهدف: <strong id="goalDisplay">0</strong> ₿</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="financialProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="daily-saving">
+                    <label>أضف مدخرات اليوم:</label>
+                    <input type="number" id="dailySavingInput" placeholder="المبلغ ..." step="10">
+                    <button id="recordSavingBtn">تسجيل</button>
+                    <span id="todaySavingMsg" class="small-msg"></span>
+                </div>
+            </section>
+
+            <!-- قسم الإحصائيات والتقرير الشهري -->
+            <section class="card stats-section">
+                <h2>📊 تقدم الشهر الحالي</h2>
+                <div class="month-info">
+                    <span>🗓️ الفترة: <strong id="monthRange"></strong></span>
+                    <span>📅 الأيام المتبقية: <strong id="daysLeft"></strong></span>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-title">نسبة إنجاز المهام</div>
+                        <div class="stat-value" id="completionRate">0%</div>
+                        <div class="stat-detail">(مهام منفذة / إجمالي ممكن)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">نسبة XP المحققة</div>
+                        <div class="stat-value" id="xpRate">0%</div>
+                        <div class="stat-detail">مطلوب 80% للنجاح</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">الهدف المالي</div>
+                        <div class="stat-value" id="financialRate">0%</div>
+                        <div class="stat-detail">مطلوب 100% للنجاح</div>
+                    </div>
+                </div>
+                <div class="month-status">
+                    <span>⚡ حالة الشهر:</span>
+                    <strong id="monthStatus">جاري</strong>
+                </div>
+                <button id="manualCheckBtn" class="secondary-btn">تحديث الإحصائيات</button>
+            </section>
+
+            <!-- سجل الشهور السابقة -->
+            <section class="card history-section">
+                <h2>📜 سجل الشهور السابقة</h2>
+                <div id="historyList" class="history-list">
+                    <p class="empty-history">لا يوجد سجل بعد</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
