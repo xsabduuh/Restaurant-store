@@ -798,4 +798,21 @@ function init() {
     }
 }
 
+function resetTodaySaving() {
+    const today = getTodayStr();
+    financialRecords[today] = 0;
+    saveFinancialRecords();
+    updateAllStats();
+    updateTodaySavingDisplay();
+}
+
+function updateTodaySavingDisplay() {
+    const today = getTodayStr();
+    const el = document.getElementById('todaySavingDisplay');
+    if (el) el.innerText = financialRecords[today] || 0;
+}
+
 init();
+document.getElementById('resetTodaySavingBtn')?.addEventListener('click', () => {
+    if (confirm('تأكيد: مسح مدخرات اليوم؟')) resetTodaySaving();
+});
