@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -46,8 +45,8 @@
         .page.active { display:block; animation:fadeUp 0.25s ease; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         .page-title { display:flex; align-items:center; gap:0.5rem; font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:1rem; }
-        .bottom-nav { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:space-around; align-items:center; padding:0.5rem 0; background:rgba(8,12,22,0.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-top:1px solid var(--border); z-index:1000; }
-        .nav-btn { background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:0.15rem; padding:0.4rem 0.8rem; color:var(--muted); font-size:0.68rem; cursor:pointer; border-radius:1rem; transition:color 0.2s; min-width:55px; -webkit-tap-highlight-color:transparent; }
+        .bottom-nav { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:space-around; align-items:center; padding:0.5rem 0; background:rgba(8,12,22,0.97); backdrop-filter:blur(12px); border-top:1px solid var(--border); z-index:1000; }
+        .nav-btn { background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:0.15rem; padding:0.4rem 0.8rem; color:var(--muted); font-size:0.68rem; cursor:pointer; border-radius:1rem; transition:color 0.2s; min-width:55px; }
         .nav-btn i { font-size:1.25rem; }
         .nav-btn.active { color:var(--primary); }
         .fab { position:fixed; bottom:4.5rem; left:1rem; width:48px; height:48px; border-radius:50%; background:var(--primary); border:none; font-size:1.3rem; color:#0f172a; cursor:pointer; z-index:999; box-shadow:0 4px 15px rgba(56,189,248,0.4); }
@@ -76,14 +75,11 @@
         .input-row { display:flex; gap:0.4rem; }
         .txt-input { flex:1; background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--text); font-size:0.85rem; font-family:inherit; outline:none; }
         .num-input { flex:1; background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--text); font-size:0.85rem; font-family:inherit; outline:none; }
-        .txt-input::placeholder,.num-input::placeholder { color:var(--muted); }
         .btn-primary { background:var(--primary); border:none; padding:0.55rem 0.9rem; border-radius:50px; color:#0f172a; font-size:0.88rem; cursor:pointer; font-family:inherit; font-weight:600; flex-shrink:0; }
         .btn-icon { background:var(--primary-dim); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.88rem; flex-shrink:0; }
         .btn-danger-icon { background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.35); padding:0.45rem 0.7rem; border-radius:50px; color:var(--danger); cursor:pointer; font-size:0.82rem; flex-shrink:0; }
         .btn-secondary { background:var(--primary-dim); border:1px solid var(--border); padding:0.45rem 0.8rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.78rem; font-family:inherit; }
         .saving-row { display:flex; align-items:center; justify-content:space-between; margin-top:0.6rem; padding:0.5rem 0.75rem; background:rgba(0,0,0,0.2); border-radius:12px; }
-        .saving-label { font-size:0.8rem; color:var(--muted); }
-        .saving-amount { font-weight:700; color:var(--primary); font-size:0.9rem; }
         .stats-summary { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
         .summary-item { background:rgba(0,0,0,0.25); border-radius:12px; padding:0.6rem; font-size:0.78rem; text-align:center; color:var(--muted); }
         .summary-item strong { display:block; font-size:1.05rem; color:var(--primary); margin-top:0.2rem; }
@@ -93,13 +89,11 @@
         .chart-card canvas { max-width:100% !important; }
         .heatmap-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; padding:0.3rem 0; }
         .log-entry { background:rgba(0,0,0,0.2); border-radius:10px; padding:0.45rem 0.7rem; margin-bottom:0.35rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.25rem; font-size:0.78rem; color:var(--muted); }
-        .log-entry span:first-child { color:var(--text); font-weight:600; }
         .ach-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem; }
         .ach-count { font-size:0.78rem; color:var(--muted); }
         .ach-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; }
         .ach-card { background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:14px; padding:0.75rem; text-align:center; position:relative; }
         .ach-card.unlocked { border-color:var(--primary); background:linear-gradient(145deg,rgba(56,189,248,0.1),rgba(0,0,0,0.2)); }
-        .ach-card.secret { border-color:rgba(249,115,22,0.4); }
         .ach-icon { font-size:1.8rem; margin-bottom:0.3rem; }
         .ach-name { font-size:0.72rem; font-weight:700; margin-bottom:0.2rem; }
         .ach-desc { font-size:0.62rem; color:var(--muted); line-height:1.3; }
@@ -111,7 +105,6 @@
         .ach-prog-fill { background:var(--primary); height:100%; border-radius:50px; }
         .ach-prog-text { font-size:0.58rem; color:var(--muted); }
         .setting-row { display:flex; justify-content:space-between; align-items:center; padding:0.55rem 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.83rem; }
-        .setting-row:last-child { border-bottom:none; }
         .setting-row span { display:flex; align-items:center; gap:0.4rem; color:var(--muted); }
         .setting-row span i { color:var(--primary); width:14px; }
         .switch { position:relative; display:inline-block; width:44px; height:22px; }
@@ -140,223 +133,571 @@
 <div class="noise-overlay"></div>
 <div class="app">
     <main class="content">
-
-```
-    <!-- DASHBOARD -->
-    <div id="dashboard-page" class="page active">
-        <div class="glass-card greeting-card">
-            <p id="greeting" class="greeting-text">مرحباً 👋</p>
-        </div>
-        <div class="two-col">
-            <div class="glass-card stat-card">
-                <i class="fas fa-bolt"></i>
-                <div class="stat-value" id="todayXP">0</div>
-                <div class="stat-label">XP اليوم</div>
+        <!-- Dashboard -->
+        <div id="dashboard-page" class="page active">
+            <div class="glass-card greeting-card"><p id="greeting" class="greeting-text">مرحباً 👋</p></div>
+            <div class="two-col">
+                <div class="glass-card stat-card"><i class="fas fa-bolt"></i><div class="stat-value" id="todayXP">0</div><div class="stat-label">XP اليوم</div></div>
+                <div class="glass-card stat-card"><i class="fas fa-fire"></i><div class="stat-value" id="streakCount">0</div><div class="stat-label">التسلسل (يوم)</div></div>
             </div>
-            <div class="glass-card stat-card">
-                <i class="fas fa-fire"></i>
-                <div class="stat-value" id="streakCount">0</div>
-                <div class="stat-label">التسلسل (يوم)</div>
+            <div class="two-col">
+                <div class="glass-card ring-card"><div class="ring-wrap"><svg class="ring-svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8"/><circle id="xpRing" cx="50" cy="50" r="44" fill="none" stroke="var(--primary)" stroke-width="8" stroke-dasharray="276" stroke-dashoffset="276" stroke-linecap="round"/></svg><div class="ring-center"><span class="ring-pct" id="xpPercentRing">0%</span></div></div><div class="ring-info"><span class="ring-title">XP الشهر</span><span class="ring-sub"><span id="monthXP">0</span> / <span id="monthMaxXP">0</span></span></div></div>
+                <div class="glass-card ring-card"><div class="ring-wrap"><svg class="ring-svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8"/><circle id="financialRing" cx="50" cy="50" r="44" fill="none" stroke="#4ade80" stroke-width="8" stroke-dasharray="276" stroke-dashoffset="276" stroke-linecap="round"/></svg><div class="ring-center"><span class="ring-pct" id="financialPercentRing">0%</span></div></div><div class="ring-info"><span class="ring-title">الهدف المالي</span><span class="ring-sub"><span id="savedAmount">0</span> / <span id="goalDisplay">0</span></span></div></div>
             </div>
+            <div class="glass-card status-card" id="monthStatusCard"><i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري</strong></div>
+            <div class="glass-card insight-card"><p id="insightText">🧠 جاري التحليل...</p></div>
+            <div class="glass-card"><div class="card-header"><i class="fas fa-tasks"></i><h3>مهام اليوم</h3></div><ul id="tasksList" class="tasks-list"></ul><div class="input-row"><input type="text" id="newTaskInput" placeholder="أضف مهمة..." class="txt-input"/><button id="voiceAddBtn" class="btn-icon"><i class="fas fa-microphone"></i></button><button id="addTaskBtn" class="btn-primary"><i class="fas fa-plus"></i></button></div></div>
+            <div class="glass-card"><div class="card-header"><i class="fas fa-coins"></i><h3>الهدف المالي</h3></div><div class="input-row" style="margin-bottom:0.6rem;"><input type="number" id="financialGoalInput" placeholder="الهدف الشهري" class="num-input"/><button id="setGoalBtn" class="btn-primary">تحديد</button></div><div class="input-row"><input type="number" id="dailySavingInput" placeholder="مدخرات اليوم" class="num-input"/><button id="recordSavingBtn" class="btn-primary">تسجيل</button></div><div class="saving-row"><span class="saving-label">مدخرات اليوم:</span><div style="display:flex;align-items:center;gap:0.5rem;"><span class="saving-amount" id="todaySavingDisplay">0</span><button id="resetTodaySavingBtn" class="btn-danger-icon" title="تصفير مدخرات اليوم"><i class="fas fa-undo"></i></button></div></div></div>
         </div>
-        <div class="two-col">
-            <div class="glass-card ring-card">
-                <div class="ring-wrap">
-                    <svg class="ring-svg" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8"/>
-                        <circle id="xpRing" cx="50" cy="50" r="44" fill="none" stroke="var(--primary)" stroke-width="8" stroke-dasharray="276" stroke-dashoffset="276" stroke-linecap="round"/>
-                    </svg>
-                    <div class="ring-center">
-                        <span class="ring-pct" id="xpPercentRing" style="color:var(--primary);">0%</span>
-                    </div>
-                </div>
-                <div class="ring-info">
-                    <span class="ring-title">XP الشهر</span>
-                    <span class="ring-sub"><span id="monthXP">0</span> / <span id="monthMaxXP">0</span></span>
-                </div>
-            </div>
-            <div class="glass-card ring-card">
-                <div class="ring-wrap">
-                    <svg class="ring-svg" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8"/>
-                        <circle id="financialRing" cx="50" cy="50" r="44" fill="none" stroke="#4ade80" stroke-width="8" stroke-dasharray="276" stroke-dashoffset="276" stroke-linecap="round"/>
-                    </svg>
-                    <div class="ring-center">
-                        <span class="ring-pct" id="financialPercentRing" style="color:#4ade80;">0%</span>
-                    </div>
-                </div>
-                <div class="ring-info">
-                    <span class="ring-title">الهدف المالي</span>
-                    <span class="ring-sub"><span id="savedAmount">0</span> / <span id="goalDisplay">0</span></span>
-                </div>
-            </div>
-        </div>
-        <div class="glass-card status-card" id="monthStatusCard">
-            <i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري</strong>
-        </div>
-        <div class="glass-card insight-card">
-            <p id="insightText">🧠 جاري التحليل...</p>
-        </div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-tasks"></i><h3>مهام اليوم</h3></div>
-            <ul id="tasksList" class="tasks-list"></ul>
-            <div class="input-row">
-                <input type="text" id="newTaskInput" placeholder="أضف مهمة..." class="txt-input"/>
-                <button id="voiceAddBtn" class="btn-icon"><i class="fas fa-microphone"></i></button>
-                <button id="addTaskBtn" class="btn-primary"><i class="fas fa-plus"></i></button>
-            </div>
-        </div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-coins"></i><h3>الهدف المالي</h3></div>
-            <div class="input-row" style="margin-bottom:0.6rem;">
-                <input type="number" id="financialGoalInput" placeholder="الهدف الشهري" class="num-input"/>
-                <button id="setGoalBtn" class="btn-primary">تحديد</button>
-            </div>
-            <div class="input-row">
-                <input type="number" id="dailySavingInput" placeholder="مدخرات اليوم" class="num-input"/>
-                <button id="recordSavingBtn" class="btn-primary">تسجيل</button>
-            </div>
-            <div class="saving-row">
-                <span class="saving-label">مدخرات اليوم:</span>
-                <div style="display:flex;align-items:center;gap:0.5rem;">
-                    <span class="saving-amount" id="todaySavingDisplay">0</span>
-                    <button id="resetTodaySavingBtn" class="btn-danger-icon" title="تصفير مدخرات اليوم">
-                        <i class="fas fa-undo"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- STATS -->
-    <div id="stats-page" class="page">
-        <div class="page-title"><i class="fas fa-chart-pie"></i> الإحصائيات</div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-chart-line"></i><h3>ملخص الإنجاز</h3></div>
-            <div class="stats-summary">
-                <div class="summary-item">XP الإجمالي<strong id="totalXP">0</strong></div>
-                <div class="summary-item">أطول تسلسل<strong id="bestStreak">0</strong></div>
-                <div class="summary-item">إجمالي المهام<strong id="totalTasksCompleted">0</strong></div>
-                <div class="summary-item">إجمالي المدخرات<strong id="totalSavings">0</strong></div>
-            </div>
-        </div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-brain"></i><h3>توقعات الشهر</h3></div>
-            <div class="prediction-box" id="predictionText">جاري التحليل...</div>
-            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem;">نسبة النجاح المتوقعة</div>
-            <div class="progress-bar-wrap"><div class="progress-bar" id="predictionBar" style="width:0%"></div></div>
-        </div>
-        <div class="glass-card chart-card">
-            <div class="card-header"><i class="fas fa-bolt"></i><h3>XP آخر 7 أيام</h3></div>
-            <canvas id="xpTrendChart"></canvas>
-        </div>
-        <div class="glass-card chart-card">
-            <div class="card-header"><i class="fas fa-coins"></i><h3>المدخرات آخر 7 أيام</h3></div>
-            <canvas id="financeTrendChart"></canvas>
-        </div>
-        <div class="glass-card chart-card">
-            <div class="card-header"><i class="fas fa-tasks"></i><h3>المهام المنجزة</h3></div>
-            <canvas id="completionChart"></canvas>
-        </div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-calendar-alt"></i><h3>التقويم الحراري</h3></div>
-            <div class="heatmap-wrap"><div id="cal-heatmap"></div></div>
-        </div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-list-ul"></i><h3>السجل اليومي</h3></div>
-            <div id="dailyLogContainer" style="max-height:280px;overflow-y:auto;"></div>
-        </div>
-    </div>
-
-    <!-- ACHIEVEMENTS -->
-    <div id="achievements-page" class="page">
-        <div class="page-title"><i class="fas fa-award"></i> إنجازاتي</div>
-        <div class="ach-header">
-            <button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة</button>
-            <span id="achievementCount" class="ach-count">0 / 11 مفتوح</span>
-        </div>
-        <div id="achievementsGrid" class="ach-grid"></div>
-    </div>
-
-    <!-- SETTINGS -->
-    <div id="settings-page" class="page">
-        <div class="page-title"><i class="fas fa-sliders-h"></i> الإعدادات</div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-palette"></i><h3>التخصيص</h3></div>
-            <div class="setting-row">
-                <span><i class="fas fa-moon"></i> الوضع الليلي</span>
-                <label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
-            </div>
-            <div class="setting-row">
-                <span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span>
-                <label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
-            </div>
-            <div class="setting-row">
-                <span><i class="fas fa-palette"></i> نظام الألوان</span>
-                <select id="colorSchemeSelect" class="setting-select">
-                    <option value="default">أزرق</option>
-                    <option value="purple">بنفسجي</option>
-                    <option value="green">أخضر</option>
-                    <option value="sunset">غروب</option>
-                </select>
-            </div>
-            <div class="setting-row">
-                <span><i class="fas fa-font"></i> حجم الخط</span>
-                <select id="fontSizeSelect" class="setting-select">
-                    <option value="small">صغير</option>
-                    <option value="medium" selected>متوسط</option>
-                    <option value="large">كبير</option>
-                </select>
-            </div>
-            <div class="setting-row">
-                <span><i class="fas fa-hourglass-half"></i> سرعة الحركات</span>
-                <select id="animationSpeedSelect" class="setting-select">
-                    <option value="slow">بطيء</option>
-                    <option value="normal" selected>عادي</option>
-                    <option value="fast">سريع</option>
-                </select>
-            </div>
-            <div class="setting-row">
-                <span><i class="fas fa-bell"></i> وقت التذكير</span>
-                <input type="time" id="reminderTime" class="time-input" value="09:00">
-            </div>
-        </div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-database"></i><h3>إدارة البيانات</h3></div>
-            <button id="exportDataBtn" class="settings-btn"><i class="fas fa-download"></i> تصدير البيانات</button>
-            <label for="importFile" class="file-label-btn"><i class="fas fa-upload"></i> استيراد البيانات</label>
-            <input type="file" id="importFile" accept=".json" style="display:none">
-            <button id="resetDataBtn" class="settings-btn danger-btn"><i class="fas fa-trash"></i> إعادة الضبط</button>
-            <div class="data-info">
-                <i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong><br>
-                <i class="fas fa-check-double"></i> إجمالي المهام: <strong id="totalCompletedStats">0</strong>
-            </div>
-        </div>
-        <div class="glass-card">
-            <div class="card-header"><i class="fas fa-info-circle"></i><h3>معلومات</h3></div>
-            <button id="quickTourBtn" class="settings-btn"><i class="fas fa-compass"></i> جولة تعريفية</button>
-            <p class="version-text">الإصدار 2.0 | تحدي الإنجاز اليومي</p>
-        </div>
-    </div>
-
-</main>
-
-<nav class="bottom-nav">
-    <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
-    <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
-    <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
-    <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
-</nav>
-
-<button id="fab" class="fab"><i class="fas fa-plus"></i></button>
-```
-
+        <!-- Stats -->
+        <div id="stats-page" class="page"><div class="page-title"><i class="fas fa-chart-pie"></i> الإحصائيات</div><div class="glass-card"><div class="card-header"><i class="fas fa-chart-line"></i><h3>ملخص الإنجاز</h3></div><div class="stats-summary"><div class="summary-item">XP الإجمالي<strong id="totalXP">0</strong></div><div class="summary-item">أطول تسلسل<strong id="bestStreak">0</strong></div><div class="summary-item">إجمالي المهام<strong id="totalTasksCompleted">0</strong></div><div class="summary-item">إجمالي المدخرات<strong id="totalSavings">0</strong></div></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-brain"></i><h3>توقعات الشهر</h3></div><div class="prediction-box" id="predictionText">جاري التحليل...</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem;">نسبة النجاح المتوقعة</div><div class="progress-bar-wrap"><div class="progress-bar" id="predictionBar" style="width:0%"></div></div></div><div class="glass-card chart-card"><div class="card-header"><i class="fas fa-bolt"></i><h3>XP آخر 7 أيام</h3></div><canvas id="xpTrendChart"></canvas></div><div class="glass-card chart-card"><div class="card-header"><i class="fas fa-coins"></i><h3>المدخرات آخر 7 أيام</h3></div><canvas id="financeTrendChart"></canvas></div><div class="glass-card chart-card"><div class="card-header"><i class="fas fa-tasks"></i><h3>المهام المنجزة</h3></div><canvas id="completionChart"></canvas></div><div class="glass-card"><div class="card-header"><i class="fas fa-calendar-alt"></i><h3>التقويم الحراري</h3></div><div class="heatmap-wrap"><div id="cal-heatmap"></div></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-list-ul"></i><h3>السجل اليومي</h3></div><div id="dailyLogContainer" style="max-height:280px;overflow-y:auto;"></div></div></div>
+        <!-- Achievements -->
+        <div id="achievements-page" class="page"><div class="page-title"><i class="fas fa-award"></i> إنجازاتي</div><div class="ach-header"><button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة</button><span id="achievementCount" class="ach-count">0 / 0 مفتوح</span></div><div id="achievementsGrid" class="ach-grid"></div></div>
+        <!-- Settings -->
+        <div id="settings-page" class="page"><div class="page-title"><i class="fas fa-sliders-h"></i> الإعدادات</div><div class="glass-card"><div class="card-header"><i class="fas fa-palette"></i><h3>التخصيص</h3></div><div class="setting-row"><span><i class="fas fa-moon"></i> الوضع الليلي</span><label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span><label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-palette"></i> نظام الألوان</span><select id="colorSchemeSelect" class="setting-select"><option value="default">أزرق</option><option value="purple">بنفسجي</option><option value="green">أخضر</option><option value="sunset">غروب</option></select></div><div class="setting-row"><span><i class="fas fa-font"></i> حجم الخط</span><select id="fontSizeSelect" class="setting-select"><option value="small">صغير</option><option value="medium" selected>متوسط</option><option value="large">كبير</option></select></div><div class="setting-row"><span><i class="fas fa-hourglass-half"></i> سرعة الحركات</span><select id="animationSpeedSelect" class="setting-select"><option value="slow">بطيء</option><option value="normal" selected>عادي</option><option value="fast">سريع</option></select></div><div class="setting-row"><span><i class="fas fa-bell"></i> وقت التذكير</span><input type="time" id="reminderTime" class="time-input" value="09:00"></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-database"></i><h3>إدارة البيانات</h3></div><button id="exportDataBtn" class="settings-btn"><i class="fas fa-download"></i> تصدير البيانات</button><label for="importFile" class="file-label-btn"><i class="fas fa-upload"></i> استيراد البيانات</label><input type="file" id="importFile" accept=".json" style="display:none"><button id="resetDataBtn" class="settings-btn danger-btn"><i class="fas fa-trash"></i> إعادة الضبط</button><div class="data-info"><i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong><br><i class="fas fa-check-double"></i> إجمالي المهام: <strong id="totalCompletedStats">0</strong></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-info-circle"></i><h3>معلومات</h3></div><button id="quickTourBtn" class="settings-btn"><i class="fas fa-compass"></i> جولة تعريفية</button><p class="version-text">الإصدار 2.0 | تحدي الإنجاز اليومي</p></div></div>
+    </main>
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
+        <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
+        <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
+        <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
+    </nav>
+    <button id="fab" class="fab"><i class="fas fa-plus"></i></button>
 </div>
-
 <audio id="completeSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
 <audio id="achievementSound" src="https://www.soundjay.com/misc/sounds/fanfare-01.mp3" preload="auto"></audio>
 
-<script src="script.js"></script>
+<script>
+// ------------------------------------------------------------
+//  التطبيق الكامل – جميع الوظائف مع إصلاح مشكلة التنقل
+// ------------------------------------------------------------
+(function(){
+    // ----- البيانات الأساسية -----
+    let tasks = [];
+    let completions = {};      // { "YYYY-MM-DD": [taskId, ...] }
+    let financialRecords = {}; // { "YYYY-MM-DD": amount }
+    let monthStartDate = null;
+    let financialGoal = 5000;
+    let unlockedAchievements = [];
+    let settings = {
+        darkMode: false,
+        soundEnabled: true,
+        colorScheme: 'default',
+        fontSize: 'medium',
+        animationSpeed: 'normal',
+        reminderTime: '09:00'
+    };
+    let currentPage = 'dashboard';
+    let xpChart, financeChart, completionChart, calHeatmapInstance;
+    let audioComplete, audioAchievement;
 
+    // ----- دوال مساعدة -----
+    function getTodayStr() {
+        return new Date().toISOString().slice(0,10);
+    }
+    function addOneMonth(dateStr) {
+        let [y,m,d] = dateStr.split('-').map(Number);
+        let newDate = new Date(y, m-1, d);
+        newDate.setMonth(newDate.getMonth() + 1);
+        return newDate.getFullYear() + '-' + String(newDate.getMonth()+1).padStart(2,'0') + '-' + String(newDate.getDate()).padStart(2,'0');
+    }
+    function addOneDay(dateStr) {
+        let d = new Date(dateStr);
+        d.setDate(d.getDate() + 1);
+        return d.toISOString().slice(0,10);
+    }
+
+    // ----- تحميل وحفظ -----
+    function loadData() {
+        tasks = JSON.parse(localStorage.getItem('daily_tasks') || '[]');
+        if (!tasks.length) tasks = [{ id: '1', name: 'البرمجة لمدة ساعة' }, { id: '2', name: 'قراءة 20 صفحة' }, { id: '3', name: 'تمارين رياضية' }];
+        completions = JSON.parse(localStorage.getItem('task_completions') || '{}');
+        financialRecords = JSON.parse(localStorage.getItem('financial_records') || '{}');
+        monthStartDate = localStorage.getItem('month_start_date') || getTodayStr();
+        financialGoal = parseFloat(localStorage.getItem('financial_goal') || '5000');
+        unlockedAchievements = JSON.parse(localStorage.getItem('achievements_unlocked') || '[]');
+        const storedSettings = localStorage.getItem('app_settings');
+        if (storedSettings) settings = Object.assign({}, settings, JSON.parse(storedSettings));
+        applySettings();
+    }
+    function saveTasks() { localStorage.setItem('daily_tasks', JSON.stringify(tasks)); }
+    function saveCompletions() { localStorage.setItem('task_completions', JSON.stringify(completions)); }
+    function saveFinancialRecords() { localStorage.setItem('financial_records', JSON.stringify(financialRecords)); }
+    function saveMonthStart() { localStorage.setItem('month_start_date', monthStartDate); }
+    function saveFinancialGoal() { localStorage.setItem('financial_goal', financialGoal); }
+    function saveAchievements() { localStorage.setItem('achievements_unlocked', JSON.stringify(unlockedAchievements)); }
+    function saveSettings() { localStorage.setItem('app_settings', JSON.stringify(settings)); }
+
+    // ----- إحصائيات -----
+    function getCurrentMonthStats() {
+        const today = getTodayStr();
+        const endDate = addOneMonth(monthStartDate);
+        const actualEnd = today < endDate ? today : endDate;
+        let current = new Date(monthStartDate);
+        const end = new Date(actualEnd);
+        let earnedXP = 0, maxXP = 0, financialTotal = 0;
+        while (current <= end) {
+            const dateStr = current.toISOString().slice(0,10);
+            earnedXP += (completions[dateStr] || []).length * 10;
+            maxXP += tasks.length * 10;
+            financialTotal += financialRecords[dateStr] || 0;
+            current.setDate(current.getDate() + 1);
+        }
+        const xpPercent = maxXP === 0 ? 0 : (earnedXP / maxXP) * 100;
+        const financialPercent = financialGoal === 0 ? 100 : (financialTotal / financialGoal) * 100;
+        return { earnedXP, maxXP, financialTotal, financialGoal, xpPercent, financialPercent };
+    }
+    function calculateStreak() {
+        let streak = 0;
+        let current = new Date(getTodayStr());
+        while (true) {
+            const dateStr = current.toISOString().slice(0,10);
+            if ((completions[dateStr] || []).length > 0) streak++;
+            else break;
+            current.setDate(current.getDate() - 1);
+        }
+        return streak;
+    }
+    function getTotalCompletedTasks() {
+        let total = 0;
+        for (let date in completions) total += completions[date].length;
+        return total;
+    }
+    function getTotalSavings() {
+        let total = 0;
+        for (let date in financialRecords) total += financialRecords[date];
+        return total;
+    }
+    function getBestStreak() {
+        let maxStreak = 0, currentStreak = 0, lastDate = null;
+        let dates = Object.keys(completions).sort();
+        for (let date of dates) {
+            if (completions[date].length === 0) continue;
+            if (lastDate) {
+                const diff = (new Date(date) - new Date(lastDate)) / (1000*60*60*24);
+                if (diff === 1) currentStreak++;
+                else currentStreak = 1;
+            } else currentStreak = 1;
+            maxStreak = Math.max(maxStreak, currentStreak);
+            lastDate = date;
+        }
+        return maxStreak;
+    }
+    function getUsageDays() {
+        const allDates = new Set([...Object.keys(completions), ...Object.keys(financialRecords)]);
+        return allDates.size;
+    }
+
+    // ----- إنهاء الشهر -----
+    function finalizeMonth() {
+        const endDate = addOneMonth(monthStartDate);
+        let current = new Date(monthStartDate);
+        let earnedXP = 0, maxXP = 0, financialTotal = 0;
+        while (current < new Date(endDate)) {
+            const dateStr = current.toISOString().slice(0,10);
+            earnedXP += (completions[dateStr] || []).length * 10;
+            maxXP += tasks.length * 10;
+            financialTotal += financialRecords[dateStr] || 0;
+            current.setDate(current.getDate() + 1);
+        }
+        const xpPercent = maxXP === 0 ? 0 : (earnedXP / maxXP) * 100;
+        const financialPercent = financialGoal === 0 ? 100 : (financialTotal / financialGoal) * 100;
+        const passed = (xpPercent >= 80 && financialPercent >= 100);
+        const history = JSON.parse(localStorage.getItem('monthly_history') || '[]');
+        history.push({ start: monthStartDate, end: endDate, totalXP: earnedXP, maxXP, financialTotal, financialGoal, xpPercent, financialPercent, passed });
+        localStorage.setItem('monthly_history', JSON.stringify(history));
+        monthStartDate = addOneDay(endDate);
+        saveMonthStart();
+        if (passed && settings.soundEnabled) {
+            canvasConfetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            if (audioAchievement) audioAchievement.play();
+        }
+        renderAll();
+    }
+    function checkMonthRollover() {
+        if (getTodayStr() > addOneMonth(monthStartDate)) finalizeMonth();
+    }
+
+    // ----- المهام -----
+    function addTask(name) {
+        if (!name.trim()) return;
+        tasks.push({ id: Date.now().toString(), name: name.trim() });
+        saveTasks();
+        renderTasks();
+        updateAllStats();
+    }
+    function deleteTask(id) {
+        tasks = tasks.filter(t => t.id !== id);
+        saveTasks();
+        for (let d in completions) completions[d] = completions[d].filter(tid => tid !== id);
+        saveCompletions();
+        renderTasks();
+        updateAllStats();
+    }
+    function toggleTask(taskId, checked) {
+        const today = getTodayStr();
+        if (!completions[today]) completions[today] = [];
+        if (checked) {
+            if (!completions[today].includes(taskId)) completions[today].push(taskId);
+            if (settings.soundEnabled && audioComplete) audioComplete.play();
+        } else {
+            completions[today] = completions[today].filter(id => id !== taskId);
+        }
+        saveCompletions();
+        updateAllStats();
+        renderTasks();
+        checkAchievements();
+    }
+    function renderTasks() {
+        const today = getTodayStr();
+        const completedToday = completions[today] || [];
+        const container = document.getElementById('tasksList');
+        if (!container) return;
+        container.innerHTML = '';
+        tasks.forEach(task => {
+            const li = document.createElement('li');
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.className = 'task-check';
+            cb.checked = completedToday.includes(task.id);
+            cb.onchange = e => toggleTask(task.id, e.target.checked);
+            const span = document.createElement('span');
+            span.className = 'task-text';
+            span.textContent = task.name;
+            const del = document.createElement('button');
+            del.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            del.className = 'delete-task';
+            del.onclick = () => deleteTask(task.id);
+            li.appendChild(cb);
+            li.appendChild(span);
+            li.appendChild(del);
+            container.appendChild(li);
+        });
+    }
+
+    // ----- مالية -----
+    function setFinancialGoal(goal) { if (goal > 0) financialGoal = goal; saveFinancialGoal(); updateAllStats(); }
+    function recordSaving(amount) { if (amount <= 0) return; const today = getTodayStr(); financialRecords[today] = (financialRecords[today] || 0) + amount; saveFinancialRecords(); updateAllStats(); updateTodaySavingDisplay(); }
+    function resetTodaySaving() { const today = getTodayStr(); financialRecords[today] = 0; saveFinancialRecords(); updateAllStats(); updateTodaySavingDisplay(); }
+    function updateTodaySavingDisplay() { const el = document.getElementById('todaySavingDisplay'); if (el) el.innerText = financialRecords[getTodayStr()] || 0; }
+
+    // ----- تحديث الواجهة الرئيسية -----
+    function updateAllStats() {
+        const stats = getCurrentMonthStats();
+        const streak = calculateStreak();
+        const todayXP = (completions[getTodayStr()] || []).length * 10;
+        document.getElementById('todayXP').innerText = todayXP;
+        document.getElementById('streakCount').innerText = streak;
+        document.getElementById('monthXP').innerText = stats.earnedXP;
+        document.getElementById('monthMaxXP').innerText = stats.maxXP;
+        document.getElementById('savedAmount').innerText = stats.financialTotal;
+        document.getElementById('goalDisplay').innerText = financialGoal;
+        const xpPercent = stats.xpPercent;
+        const financialPercent = Math.min(100, (stats.financialTotal / financialGoal) * 100);
+        document.getElementById('xpPercentRing').innerText = xpPercent.toFixed(0) + '%';
+        document.getElementById('financialPercentRing').innerText = financialPercent.toFixed(0) + '%';
+        const xpRing = document.getElementById('xpRing');
+        const finRing = document.getElementById('financialRing');
+        if (xpRing) xpRing.style.strokeDashoffset = 283 * (1 - xpPercent / 100);
+        if (finRing) finRing.style.strokeDashoffset = 283 * (1 - financialPercent / 100);
+        const monthStatus = document.getElementById('monthStatusCard');
+        if (monthStatus) {
+            if (xpPercent >= 80 && financialPercent >= 100) monthStatus.innerHTML = '<i class="fas fa-check-circle"></i> حالة الشهر: <strong style="color:#4ade80">ناجح</strong>';
+            else monthStatus.innerHTML = '<i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري (' + xpPercent.toFixed(0) + '% XP, ' + financialPercent.toFixed(0) + '% مالي)</strong>';
+        }
+        const insightText = document.getElementById('insightText');
+        if (insightText) {
+            const neededXP = Math.max(0, Math.ceil(stats.maxXP * 0.8 - stats.earnedXP));
+            insightText.innerHTML = neededXP > 0 ? '🧠 تحتاج إلى ' + neededXP + ' XP إضافي للوصول إلى 80% من هدف الشهر.' : '🎉 مذهل! أنت على الطريق الصحيح للنجاح هذا الشهر.';
+        }
+        updateTodaySavingDisplay();
+        if (currentPage === 'stats') { updateStatsPage(); updateCharts(); updateCalendarHeatmap(); }
+        if (currentPage === 'achievements') renderAchievements();
+    }
+
+    // ----- الإنجازات -----
+    const achievementsList = [
+        { id: 'first_task', name: 'أول خطوة', desc: 'إنجاز أول مهمة', icon: 'fa-star', condition: () => getTotalCompletedTasks() >= 1, progress: () => Math.min(1, getTotalCompletedTasks()), max: 1 },
+        { id: 'streak_7', name: 'أسبوع متواصل', desc: 'تسلسل 7 أيام متتالية', icon: 'fa-calendar-check', condition: () => calculateStreak() >= 7, progress: () => Math.min(7, calculateStreak()), max: 7 },
+        { id: 'xp_1000', name: 'صائد النقاط', desc: '1000 XP في شهر', icon: 'fa-trophy', condition: () => getCurrentMonthStats().earnedXP >= 1000, progress: () => Math.min(1000, getCurrentMonthStats().earnedXP), max: 1000 },
+        { id: 'financial_goal', name: 'المحقق المالي', desc: 'تحقيق الهدف المالي لشهر', icon: 'fa-chart-line', condition: () => getCurrentMonthStats().financialPercent >= 100, progress: () => getCurrentMonthStats().financialPercent, max: 100 },
+        { id: 'month_pass', name: 'بطل الشهر', desc: 'إنهاء شهر بنجاح', icon: 'fa-crown', condition: () => { let h = JSON.parse(localStorage.getItem('monthly_history') || '[]'); return h.length && h[h.length-1].passed; }, progress: () => 0, max: 1 },
+        { id: 'task_master', name: 'سيد المهام', desc: 'إنجاز 100 مهمة إجمالاً', icon: 'fa-tasks', condition: () => getTotalCompletedTasks() >= 100, progress: () => Math.min(100, getTotalCompletedTasks()), max: 100 },
+        { id: 'savings_king', name: 'ملك الادخار', desc: 'توفير 10,000 ₿ إجمالاً', icon: 'fa-piggy-bank', condition: () => getTotalSavings() >= 10000, progress: () => Math.min(10000, getTotalSavings()), max: 10000 },
+        { id: 'streak_30', name: 'أسطورة التسلسل', desc: 'تسلسل 30 يوماً', icon: 'fa-fire', condition: () => calculateStreak() >= 30, progress: () => Math.min(30, calculateStreak()), max: 30 },
+        { id: 'xp_5000', name: 'صائد النقاط الأسطوري', desc: '5000 XP في شهر', icon: 'fa-dragon', condition: () => getCurrentMonthStats().earnedXP >= 5000, progress: () => Math.min(5000, getCurrentMonthStats().earnedXP), max: 5000 }
+    ];
+    function checkAchievements() {
+        let changed = false;
+        achievementsList.forEach(ach => {
+            if (!unlockedAchievements.includes(ach.id) && ach.condition()) {
+                unlockedAchievements.push(ach.id);
+                changed = true;
+                if (settings.soundEnabled && audioAchievement) audioAchievement.play();
+                canvasConfetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+                setTimeout(() => alert('🏅 إنجاز جديد: ' + ach.name + '\n' + ach.desc), 100);
+            }
+        });
+        if (changed) { saveAchievements(); if (currentPage === 'achievements') renderAchievements(); }
+    }
+    function renderAchievements() {
+        const container = document.getElementById('achievementsGrid');
+        if (!container) return;
+        container.innerHTML = '';
+        let unlockedCount = 0;
+        achievementsList.forEach(ach => {
+            const unlocked = unlockedAchievements.includes(ach.id);
+            if (unlocked) unlockedCount++;
+            const progressPercent = ach.max ? (ach.progress() / ach.max) * 100 : (unlocked ? 100 : 0);
+            const card = document.createElement('div');
+            card.className = 'ach-card ' + (unlocked ? 'unlocked' : '');
+            card.innerHTML = `<div class="ach-icon"><i class="fas ${ach.icon}"></i></div><div class="ach-name">${ach.name}</div><div class="ach-desc">${ach.desc}</div>` +
+                (ach.max > 1 ? `<div class="ach-prog"><div class="ach-prog-bar"><div class="ach-prog-fill" style="width:${progressPercent}%"></div></div><div class="ach-prog-text">${Math.floor(ach.progress())} / ${ach.max}</div></div>` : '') +
+                `<div class="ach-badge ${unlocked ? 'open' : 'locked'}">${unlocked ? '<i class="fas fa-check-circle"></i> مفتوح' : '<i class="fas fa-lock"></i> مغلق'}</div>`;
+            container.appendChild(card);
+        });
+        document.getElementById('achievementCount').innerText = unlockedCount + ' / ' + achievementsList.length + ' مفتوح';
+    }
+
+    // ----- الإحصائيات والصفحات -----
+    function updateStatsPage() {
+        document.getElementById('totalXP').innerText = getTotalCompletedTasks() * 10;
+        document.getElementById('bestStreak').innerText = getBestStreak();
+        document.getElementById('totalTasksCompleted').innerText = getTotalCompletedTasks();
+        document.getElementById('totalSavings').innerText = getTotalSavings();
+        const stats = getCurrentMonthStats();
+        const daysPassed = Math.ceil((new Date() - new Date(monthStartDate)) / (1000*60*60*24));
+        const totalDays = Math.ceil((new Date(addOneMonth(monthStartDate)) - new Date(monthStartDate)) / (1000*60*60*24));
+        const remainingDays = totalDays - daysPassed;
+        const currentXPRate = stats.earnedXP / Math.max(1, daysPassed);
+        const projectedXP = stats.earnedXP + (currentXPRate * remainingDays);
+        const projectedXPPercent = (projectedXP / stats.maxXP) * 100;
+        const financialRate = stats.financialTotal / Math.max(1, daysPassed);
+        const projectedFinancial = stats.financialTotal + (financialRate * remainingDays);
+        const projectedFinancialPercent = (projectedFinancial / financialGoal) * 100;
+        const predictedSuccess = (projectedXPPercent >= 80 && projectedFinancialPercent >= 100);
+        document.getElementById('predictionText').innerHTML = predictedSuccess ? '🎯 من المتوقع أن تنجح في الشهر! استمر.' : '⚠️ تحتاج إلى زيادة إنجاز المهام أو المدخرات.';
+        const predPercent = Math.min(100, (projectedXPPercent + projectedFinancialPercent) / 2);
+        document.getElementById('predictionBar').style.width = predPercent + '%';
+    }
+    function getLast7Days() {
+        let days = [];
+        const today = new Date();
+        for (let i = 6; i >= 0; i--) {
+            const d = new Date(today);
+            d.setDate(today.getDate() - i);
+            days.push(d.toISOString().slice(0,10));
+        }
+        return days;
+    }
+    function updateCharts() {
+        const last7 = getLast7Days();
+        const xpData = last7.map(d => (completions[d] || []).length * 10);
+        const financeData = last7.map(d => financialRecords[d] || 0);
+        const completionData = last7.map(d => (completions[d] || []).length);
+        if (xpChart) { xpChart.data.datasets[0].data = xpData; xpChart.update(); }
+        if (financeChart) { financeChart.data.datasets[0].data = financeData; financeChart.update(); }
+        if (completionChart) { completionChart.data.datasets[0].data = completionData; completionChart.update(); }
+        const container = document.getElementById('dailyLogContainer');
+        if (container) {
+            const allDates = Array.from(new Set([...Object.keys(completions), ...Object.keys(financialRecords)])).sort().reverse();
+            if (allDates.length === 0) container.innerHTML = '<p>لا توجد سجلات بعد</p>';
+            else {
+                container.innerHTML = '';
+                allDates.slice(0, 30).forEach(date => {
+                    const xp = (completions[date] || []).length * 10;
+                    const saved = financialRecords[date] || 0;
+                    const div = document.createElement('div');
+                    div.className = 'log-entry';
+                    div.innerHTML = `<span><i class="fas fa-calendar-alt"></i> ${date}</span><span><i class="fas fa-bolt"></i> XP: ${xp}</span><span><i class="fas fa-coins"></i> مدخرات: ${saved} ₿</span>`;
+                    container.appendChild(div);
+                });
+            }
+        }
+    }
+    function initCharts() {
+        const ctx1 = document.getElementById('xpTrendChart')?.getContext('2d');
+        const ctx2 = document.getElementById('financeTrendChart')?.getContext('2d');
+        const ctx3 = document.getElementById('completionChart')?.getContext('2d');
+        if (!ctx1 || !ctx2 || !ctx3) return;
+        const last7 = getLast7Days();
+        xpChart = new Chart(ctx1, { type: 'line', data: { labels: last7, datasets: [{ label: 'XP', data: [], borderColor: '#38bdf8', tension: 0.3 }] }, options: { responsive: true } });
+        financeChart = new Chart(ctx2, { type: 'bar', data: { labels: last7, datasets: [{ label: 'مدخرات', data: [], backgroundColor: '#4ade80' }] }, options: { responsive: true } });
+        completionChart = new Chart(ctx3, { type: 'line', data: { labels: last7, datasets: [{ label: 'المهام المنجزة', data: [], borderColor: '#f97316', tension: 0.3 }] }, options: { responsive: true } });
+        updateCharts();
+    }
+    function initCalendarHeatmap() {
+        if (!document.getElementById('cal-heatmap')) return;
+        const data = {};
+        for (let date in completions) if (completions[date].length) data[date] = completions[date].length;
+        if (calHeatmapInstance) calHeatmapInstance.destroy();
+        calHeatmapInstance = new CalHeatmap();
+        calHeatmapInstance.paint({
+            itemSelector: '#cal-heatmap',
+            domain: { type: 'month', gutter: 2 },
+            subDomain: { type: 'day', radius: 1, width: 10, height: 10, gutter: 1 },
+            data: { source: data, x: 'key', y: 'value' },
+            range: 4,
+            date: { start: new Date(new Date().setMonth(new Date().getMonth() - 3)) },
+            scale: { color: { scheme: ['#0f172a', '#38bdf8'], type: 'linear' } }
+        });
+    }
+    function updateCalendarHeatmap() {
+        if (!calHeatmapInstance) return;
+        const data = {};
+        for (let date in completions) if (completions[date].length) data[date] = completions[date].length;
+        calHeatmapInstance.update({ data: { source: data, x: 'key', y: 'value' } });
+    }
+
+    // ----- الإعدادات -----
+    function applySettings() {
+        document.body.classList.toggle('light-mode', settings.darkMode);
+        let primary = '#38bdf8';
+        if (settings.colorScheme === 'purple') primary = '#a855f7';
+        else if (settings.colorScheme === 'green') primary = '#22c55e';
+        else if (settings.colorScheme === 'sunset') primary = '#f97316';
+        document.documentElement.style.setProperty('--primary', primary);
+        document.body.className = document.body.className.replace(/font-(small|medium|large)/, '');
+        document.body.classList.add('font-' + settings.fontSize);
+        document.body.classList.remove('animation-slow', 'animation-normal', 'animation-fast');
+        document.body.classList.add('animation-' + settings.animationSpeed);
+        saveSettings();
+        scheduleDailyReminder();
+    }
+    function setupSettingsUI() {
+        document.getElementById('darkModeToggle').checked = settings.darkMode;
+        document.getElementById('soundToggle').checked = settings.soundEnabled;
+        document.getElementById('colorSchemeSelect').value = settings.colorScheme;
+        document.getElementById('fontSizeSelect').value = settings.fontSize;
+        document.getElementById('animationSpeedSelect').value = settings.animationSpeed;
+        document.getElementById('reminderTime').value = settings.reminderTime;
+        document.getElementById('darkModeToggle').addEventListener('change', e => { settings.darkMode = e.target.checked; applySettings(); });
+        document.getElementById('soundToggle').addEventListener('change', e => { settings.soundEnabled = e.target.checked; applySettings(); });
+        document.getElementById('colorSchemeSelect').addEventListener('change', e => { settings.colorScheme = e.target.value; applySettings(); });
+        document.getElementById('fontSizeSelect').addEventListener('change', e => { settings.fontSize = e.target.value; applySettings(); });
+        document.getElementById('animationSpeedSelect').addEventListener('change', e => { settings.animationSpeed = e.target.value; applySettings(); });
+        document.getElementById('reminderTime').addEventListener('change', e => { settings.reminderTime = e.target.value; saveSettings(); scheduleDailyReminder(); });
+        document.getElementById('exportDataBtn').addEventListener('click', () => {
+            const data = { tasks, completions, financialRecords, monthStartDate, financialGoal, unlockedAchievements, history: localStorage.getItem('monthly_history') };
+            const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
+            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'challenge_backup.json'; a.click(); URL.revokeObjectURL(a.href);
+        });
+        document.getElementById('importFile').addEventListener('change', e => {
+            const file = e.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                try { const data = JSON.parse(ev.target.result); if (data.tasks) tasks = data.tasks; if (data.completions) completions = data.completions; if (data.financialRecords) financialRecords = data.financialRecords; if (data.monthStartDate) monthStartDate = data.monthStartDate; if (data.financialGoal) financialGoal = data.financialGoal; if (data.unlockedAchievements) unlockedAchievements = data.unlockedAchievements; if (data.history) localStorage.setItem('monthly_history', data.history); saveTasks(); saveCompletions(); saveFinancialRecords(); saveMonthStart(); saveFinancialGoal(); saveAchievements(); alert('تم الاستيراد'); location.reload(); } catch(err) { alert('ملف غير صالح'); }
+            };
+            reader.readAsText(file);
+        });
+        document.getElementById('resetDataBtn').addEventListener('click', () => { if (confirm('مسح كل البيانات نهائياً؟')) { localStorage.clear(); location.reload(); } });
+        document.getElementById('shareAllAchievementsBtn').addEventListener('click', async () => {
+            const el = document.getElementById('achievementsGrid'); if (!el) return;
+            try { const canvas = await html2canvas(el); const link = document.createElement('a'); link.download = 'achievements.png'; link.href = canvas.toDataURL(); link.click(); } catch(e) { alert('فشل المشاركة'); }
+        });
+        document.getElementById('quickTourBtn').addEventListener('click', () => alert('✨ جولة تعريفية:\n1️⃣ أضف مهامك اليومية\n2️⃣ سجل مدخراتك\n3️⃣ احصل على XP\n4️⃣ افتح الإنجازات\n5️⃣ تابع التقدم في الإحصائيات'));
+        document.getElementById('usageDays').innerText = getUsageDays();
+        document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks();
+    }
+    function scheduleDailyReminder() {
+        if (!('Notification' in window) || Notification.permission !== 'granted') return;
+        const [hour, minute] = settings.reminderTime.split(':');
+        const now = new Date();
+        const remind = new Date(); remind.setHours(hour, minute, 0, 0);
+        if (remind <= now) remind.setDate(remind.getDate() + 1);
+        setTimeout(() => { new Notification('تذكير يومي', { body: 'لا تنسَ إنجاز مهامك وتسجيل مدخراتك!' }); scheduleDailyReminder(); }, remind - now);
+    }
+
+    // ----- الصوت -----
+    function initAudio() { audioComplete = document.getElementById('completeSound'); audioAchievement = document.getElementById('achievementSound'); if (audioComplete) audioComplete.volume = 0.3; if (audioAchievement) audioAchievement.volume = 0.4; }
+
+    // ----- خلفية ثلاثية الأبعاد -----
+    function initThreeBackground() {
+        const canvas = document.getElementById('bg-canvas');
+        if (!canvas || !window.THREE) return;
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 30;
+        const geometry = new THREE.BufferGeometry();
+        const count = 1200;
+        const positions = new Float32Array(count * 3);
+        for (let i = 0; i < count; i++) { positions[i*3] = (Math.random() - 0.5) * 100; positions[i*3+1] = (Math.random() - 0.5) * 60; positions[i*3+2] = (Math.random() - 0.5) * 50 - 20; }
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const material = new THREE.PointsMaterial({ color: 0x38bdf8, size: 0.15, transparent: true, opacity: 0.5 });
+        const particles = new THREE.Points(geometry, material);
+        scene.add(particles);
+        function animate() { requestAnimationFrame(animate); particles.rotation.y += 0.0005; particles.rotation.x += 0.0003; renderer.render(scene, camera); }
+        animate();
+        window.addEventListener('resize', () => { renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); });
+    }
+
+    // ----- التنقل (المشكلة الأساسية) -----
+    function setupNavigation() {
+        const navBtns = document.querySelectorAll('.bottom-nav .nav-btn');
+        navBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const page = btn.getAttribute('data-page');
+                if (!page) return;
+                currentPage = page;
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById(page + '-page').classList.add('active');
+                navBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                // تحديث المحتوى حسب الصفحة
+                if (page === 'stats') { if (!xpChart) initCharts(); else { updateCharts(); updateStatsPage(); updateCalendarHeatmap(); } if (!calHeatmapInstance) initCalendarHeatmap(); }
+                else if (page === 'achievements') renderAchievements();
+                else if (page === 'settings') { document.getElementById('usageDays').innerText = getUsageDays(); document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks(); }
+            });
+        });
+    }
+
+    // ----- الإدخال الصوتي -----
+    function setupVoiceInput() {
+        const voiceBtn = document.getElementById('voiceAddBtn');
+        if (!voiceBtn) return;
+        if (!('webkitSpeechRecognition' in window)) { voiceBtn.disabled = true; voiceBtn.title = 'غير مدعوم'; return; }
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = 'ar-EG';
+        recognition.interimResults = false;
+        voiceBtn.onclick = () => { recognition.start(); voiceBtn.innerHTML = '<i class="fas fa-microphone-alt"></i>'; };
+        recognition.onresult = event => { const text = event.results[0][0].transcript; document.getElementById('newTaskInput').value = text; addTask(text); voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>'; };
+        recognition.onerror = () => { voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>'; };
+    }
+
+    // ----- تهيئة عامة -----
+    function renderAll() {
+        renderTasks();
+        updateAllStats();
+        const hour = new Date().getHours();
+        let greeting = hour < 12 ? 'صباح الخير ☀️' : hour < 18 ? 'مساء الخير 🌤️' : 'مساء الخير 🌙';
+        document.getElementById('greeting').innerHTML = greeting + '، ابدأ يومك بقوة!';
+        if (currentPage === 'stats') { if (!xpChart) initCharts(); else { updateCharts(); updateStatsPage(); updateCalendarHeatmap(); } }
+        if (currentPage === 'achievements') renderAchievements();
+        if (currentPage === 'settings') { document.getElementById('usageDays').innerText = getUsageDays(); document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks(); }
+    }
+    function init() {
+        loadData();
+        checkMonthRollover();
+        initThreeBackground();
+        initAudio();
+        setupNavigation();        // إصلاح التنقل
+        renderAll();
+        setupSettingsUI();
+        setupVoiceInput();
+        initCharts();
+        initCalendarHeatmap();
+        document.getElementById('addTaskBtn').addEventListener('click', () => { const input = document.getElementById('newTaskInput'); addTask(input.value); input.value = ''; });
+        document.getElementById('setGoalBtn').addEventListener('click', () => { const val = parseFloat(document.getElementById('financialGoalInput').value); if (!isNaN(val) && val>0) setFinancialGoal(val); });
+        document.getElementById('recordSavingBtn').addEventListener('click', () => { const val = parseFloat(document.getElementById('dailySavingInput').value); if (!isNaN(val) && val>0) { recordSaving(val); document.getElementById('dailySavingInput').value = ''; } });
+        document.getElementById('resetTodaySavingBtn').addEventListener('click', () => { if (confirm('تأكيد مسح مدخرات اليوم؟')) resetTodaySaving(); });
+        document.getElementById('fab').addEventListener('click', () => document.getElementById('newTaskInput').focus());
+        setInterval(() => { checkMonthRollover(); updateAllStats(); }, 60000);
+        if (Notification.permission !== 'granted' && Notification.permission !== 'denied') Notification.requestPermission();
+    }
+    init();
+})();
+</script>
 </body>
 </html>
