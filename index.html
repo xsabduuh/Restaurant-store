@@ -2,88 +2,97 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>تحدي الإنجاز اليومي | الرئيسية</title>
-    <link rel="stylesheet" href="style.css">
-    <!-- Chart.js (للرسوم البيانية في صفحة الإحصائيات فقط) -->
+    <!-- Font Awesome 6 (أيقونات رائعة) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="main-nav">
+    <nav class="glass-nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-link active">🏠 الرئيسية</a>
-            <a href="stats.html" class="nav-link">📊 الإحصائيات</a>
-            <a href="achievements.html" class="nav-link">🏅 الإنجازات</a>
-            <a href="settings.html" class="nav-link">⚙️ الإعدادات</a>
+            <a href="index.html" class="nav-link active"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="stats.html" class="nav-link"><i class="fas fa-chart-line"></i> الإحصائيات</a>
+            <a href="achievements.html" class="nav-link"><i class="fas fa-medal"></i> الإنجازات</a>
+            <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a>
         </div>
     </nav>
 
-    <div class="app-container">
-        <header>
-            <h1>🏆 تحدي الإنجاز اليومي</h1>
-            <p class="subtitle">نقاط XP · أهداف مالية · تقارير شهرية صارمة</p>
+    <div class="container">
+        <header class="glass-header">
+            <h1><i class="fas fa-trophy"></i> تحدي الإنجاز اليومي</h1>
+            <p>نظام نقاط صارم | أهداف مالية | تقارير شهرية</p>
         </header>
 
         <div class="dashboard">
-            <!-- قسم المهام اليومية -->
-            <section class="card tasks-section">
-                <h2>📋 مهام اليوم (تتكرر يومياً)</h2>
+            <!-- بطاقة المهام -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <i class="fas fa-check-circle"></i>
+                    <h2>مهام اليوم <span class="badge">تتكرر يومياً</span></h2>
+                </div>
                 <div class="add-task">
-                    <input type="text" id="newTaskInput" placeholder="مهمة جديدة ..." autocomplete="off">
-                    <button id="addTaskBtn">➕ إضافة</button>
+                    <input type="text" id="newTaskInput" placeholder="أضف مهمة جديدة...">
+                    <button id="addTaskBtn"><i class="fas fa-plus"></i> إضافة</button>
                 </div>
                 <ul id="tasksList" class="tasks-list"></ul>
                 <div class="task-stats">
-                    <span>🏅 XP اليوم: <strong id="todayXP">0</strong></span>
-                    <span>🎯 إجمالي XP الشهر: <strong id="monthXP">0</strong> / <span id="monthMaxXP">0</span></span>
-                    <span>🔥 التسلسل: <strong id="streakCount">0</strong> يوم</span>
+                    <div><i class="fas fa-bolt"></i> XP اليوم: <strong id="todayXP">0</strong></div>
+                    <div><i class="fas fa-calendar-alt"></i> XP الشهر: <strong id="monthXP">0</strong> / <span id="monthMaxXP">0</span></div>
+                    <div><i class="fas fa-fire"></i> التسلسل: <strong id="streakCount">0</strong> يوم</div>
                 </div>
-            </section>
+            </div>
 
-            <!-- قسم الهدف المالي -->
-            <section class="card finance-section">
-                <h2>💰 الهدف المالي الشهري</h2>
-                <div class="financial-goal-setup">
-                    <label>الهدف (₿):</label>
-                    <input type="number" id="financialGoalInput" placeholder="مثلاً 5000" step="100">
-                    <button id="setGoalBtn">تحديد الهدف</button>
+            <!-- بطاقة الهدف المالي -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <i class="fas fa-coins"></i>
+                    <h2>الهدف المالي الشهري</h2>
                 </div>
-                <div class="financial-progress">
+                <div class="financial-goal-setup">
+                    <input type="number" id="financialGoalInput" placeholder="الهدف (₿)">
+                    <button id="setGoalBtn"><i class="fas fa-save"></i> تحديد</button>
+                </div>
+                <div class="progress-section">
                     <div class="progress-label">
-                        <span>المُدخر حتى الآن: <strong id="savedAmount">0</strong> ₿</span>
+                        <span><i class="fas fa-piggy-bank"></i> المدخرات: <strong id="savedAmount">0</strong> ₿</span>
                         <span>الهدف: <strong id="goalDisplay">0</strong> ₿</span>
                     </div>
                     <div class="progress-bar-container">
-                        <div class="progress-bar" id="financialProgressBar" style="width: 0%"></div>
+                        <div class="progress-bar" id="financialProgressBar"></div>
                     </div>
                 </div>
                 <div class="daily-saving">
-                    <label>أضف مدخرات اليوم:</label>
-                    <input type="number" id="dailySavingInput" placeholder="المبلغ ..." step="10">
-                    <button id="recordSavingBtn">تسجيل</button>
-                    <span id="todaySavingMsg" class="small-msg"></span>
+                    <input type="number" id="dailySavingInput" placeholder="أضف مدخرات اليوم">
+                    <button id="recordSavingBtn"><i class="fas fa-plus-circle"></i> تسجيل</button>
                 </div>
-            </section>
+                <div id="todaySavingMsg" class="small-msg"></div>
+            </div>
 
-            <!-- قسم التقدم السريع -->
-            <section class="card quick-stats">
-                <h2>⚡ ملخص سريع</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-title">نسبة XP</div>
-                        <div class="stat-value" id="xpRate">0%</div>
+            <!-- بطاقة ملخص سريع -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <i class="fas fa-chart-simple"></i>
+                    <h2>ملخص سريع</h2>
+                </div>
+                <div class="stats-mini">
+                    <div class="stat-item">
+                        <span class="stat-label"><i class="fas fa-percent"></i> نسبة XP</span>
+                        <span class="stat-value" id="xpRateMini">0%</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-title">نسبة الهدف المالي</div>
-                        <div class="stat-value" id="financialRate">0%</div>
+                    <div class="stat-item">
+                        <span class="stat-label"><i class="fas fa-chart-line"></i> نسبة المالي</span>
+                        <span class="stat-value" id="financialRateMini">0%</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-title">حالة الشهر</div>
-                        <div class="stat-value" id="monthStatusShort">جاري</div>
+                    <div class="stat-item">
+                        <span class="stat-label"><i class="fas fa-hourglass-half"></i> حالة الشهر</span>
+                        <span class="stat-value" id="monthStatusMini">جاري</span>
                     </div>
                 </div>
-                <button id="syncDataBtn" class="secondary-btn">🔄 مزامنة البيانات</button>
-            </section>
+                <button id="syncDataBtn" class="btn-secondary"><i class="fas fa-sync-alt"></i> مزامنة</button>
+            </div>
         </div>
     </div>
 
