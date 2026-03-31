@@ -26,14 +26,6 @@
             font-weight: 600;
             color: var(--primary);
         }
-        <div class="finance-row" style="margin-top:0.5rem;">
-    <span style="color:var(--text-muted);font-size:0.85rem;">
-        مدخرات اليوم: <strong id="todaySavingDisplay">0</strong> ₿
-    </span>
-    <button id="resetTodaySavingBtn" class="btn-icon" style="color:var(--danger);border-color:var(--danger);">
-        <i class="fas fa-undo"></i>
-    </button>
-</div>
 
     /* Quick Stats Row */
     .stats-row {
@@ -387,6 +379,14 @@
                 <div class="finance-row">
                     <input type="number" id="dailySavingInput" placeholder="مدخرات اليوم (₿)" class="finance-input"/>
                     <button id="recordSavingBtn" class="btn-primary">تسجيل</button>
+                </div>
+                <div class="finance-row" style="align-items:center; margin-top:0.25rem;">
+                    <span style="color:var(--text-muted); font-size:0.85rem;">
+                        مدخرات اليوم: <strong id="todaySavingDisplay" style="color:var(--primary);">0</strong> &#x20BF;
+                    </span>
+                    <button id="resetTodaySavingBtn" class="btn-icon" style="color:var(--danger); border-color:var(--danger);">
+                        <i class="fas fa-undo"></i>
+                    </button>
                 </div>
             </div>
 
