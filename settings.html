@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي الإنجاز اليومي | الإعدادات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">🏠 الرئيسية</a>
+            <a href="stats.html" class="nav-link">📊 الإحصائيات</a>
+            <a href="achievements.html" class="nav-link">🏅 الإنجازات</a>
+            <a href="settings.html" class="nav-link active">⚙️ الإعدادات</a>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <header>
+            <h1>⚙️ إعدادات التطبيق</h1>
+            <p class="subtitle">تحكم في بياناتك وتفضيلاتك</p>
+        </header>
+
+        <div class="settings-grid">
+            <div class="card">
+                <h2>📁 إدارة البيانات</h2>
+                <button id="exportDataBtn" class="secondary-btn">📤 تصدير البيانات (JSON)</button>
+                <label for="importFile" class="secondary-btn" style="display: inline-block; margin-top: 0.5rem;">📥 استيراد بيانات</label>
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+                <button id="resetDataBtn" class="danger-btn" style="margin-top: 1rem;">⚠️ إعادة ضبط جميع البيانات</button>
+            </div>
+
+            <div class="card">
+                <h2>🔔 الإشعارات</h2>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="notificationToggle">
+                    <span class="slider"></span>
+                </label>
+                <span>تذكير يومي بالمهام</span>
+                <button id="testNotificationBtn" class="secondary-btn">اختبار الإشعار</button>
+            </div>
+
+            <div class="card">
+                <h2>🎨 المظهر</h2>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+                <span>الوضع الليلي (ممتد)</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="settings.js"></script>
+</body>
+</html>
