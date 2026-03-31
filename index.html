@@ -1,189 +1,537 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>🏆 تحدي الإنجاز اليومي</title>
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- html2canvas -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <!-- canvas-confetti -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
-    <!-- Cal-heatmap (for calendar heatmap) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cal-heatmap@4.0.0/dist/cal-heatmap.css">
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cal-heatmap@4.0.0/dist/cal-heatmap.min.js"></script>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* ===== Dashboard Styles ===== */
+        .greeting-card {
+            text-align: center;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+        }
+        .greeting-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+```
+    /* Quick Stats Row */
+    .stats-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    .stat-card {
+        text-align: center;
+        padding: 1rem;
+        margin-bottom: 0;
+    }
+    .stat-card i {
+        font-size: 1.6rem;
+        color: var(--primary);
+        margin-bottom: 0.4rem;
+        display: block;
+    }
+    .stat-value {
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text);
+    }
+    .stat-label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        margin-top: 0.2rem;
+    }
+
+    /* Progress Rings Row */
+    .rings-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+    }
+    .ring-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        margin-bottom: 0;
+        position: relative;
+    }
+    .ring-svg-wrap {
+        position: relative;
+        width: 110px;
+        height: 110px;
+    }
+    .ring-svg {
+        width: 110px;
+        height: 110px;
+        transform: rotate(-90deg);
+    }
+    .ring-center-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        pointer-events: none;
+    }
+    .ring-percent {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: var(--primary);
+        display: block;
+    }
+    .ring-label {
+        text-align: center;
+        margin-top: 0.6rem;
+    }
+    .ring-label small {
+        display: block;
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        line-height: 1.4;
+    }
+    .ring-label .ring-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text);
+        display: block;
+    }
+
+    /* Month Status */
+    #monthStatusCard {
+        padding: 1rem 1.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+    }
+
+    /* Insight */
+    .insight-box {
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.2rem;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+    }
+
+    /* Tasks Card */
+    .tasks-card {
+        margin-bottom: 1.2rem;
+    }
+    .add-task-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    .task-input {
+        flex: 1;
+        background: rgba(0,0,0,0.4);
+        border: 1px solid var(--glass-border);
+        padding: 0.65rem 1rem;
+        border-radius: 2rem;
+        color: var(--text);
+        outline: none;
+        font-size: 0.9rem;
+        font-family: inherit;
+    }
+    .task-input::placeholder { color: var(--text-muted); }
+    .btn-primary {
+        background: var(--primary);
+        border: none;
+        padding: 0.65rem 1rem;
+        border-radius: 2rem;
+        color: #0f172a;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: scale(1.04); }
+    .btn-icon {
+        background: rgba(56,189,248,0.15);
+        border: 1px solid var(--glass-border);
+        padding: 0.65rem 0.9rem;
+        border-radius: 2rem;
+        color: var(--primary);
+        cursor: pointer;
+        font-size: 1rem;
+        transition: var(--transition);
+    }
+    .btn-icon:hover { background: rgba(56,189,248,0.25); }
+
+    /* Finance Card */
+    .finance-card { margin-bottom: 1.2rem; }
+    .finance-row {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+    }
+    .finance-input {
+        flex: 1;
+        background: rgba(0,0,0,0.4);
+        border: 1px solid var(--glass-border);
+        padding: 0.65rem 1rem;
+        border-radius: 2rem;
+        color: var(--text);
+        outline: none;
+        font-size: 0.9rem;
+        font-family: inherit;
+    }
+    .finance-input::placeholder { color: var(--text-muted); }
+
+    /* Settings buttons */
+    #settings-page .glass-card button {
+        background: var(--primary);
+        border: none;
+        padding: 0.6rem 1rem;
+        border-radius: 2rem;
+        color: #0f172a;
+        cursor: pointer;
+        margin: 0.4rem 0;
+        width: 100%;
+        font-size: 0.9rem;
+        font-family: inherit;
+        transition: var(--transition);
+    }
+    #settings-page .glass-card button.danger {
+        background: var(--danger);
+        color: white;
+    }
+    #settings-page .glass-card select,
+    #settings-page .glass-card input[type="time"] {
+        background: rgba(0,0,0,0.4);
+        border: 1px solid var(--glass-border);
+        padding: 0.4rem 0.8rem;
+        border-radius: 1rem;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.85rem;
+    }
+
+    /* btn-secondary */
+    .btn-secondary {
+        background: rgba(56,189,248,0.15);
+        border: 1px solid var(--glass-border);
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        color: var(--primary);
+        cursor: pointer;
+        font-size: 0.85rem;
+        font-family: inherit;
+        transition: var(--transition);
+    }
+    .btn-secondary:hover { background: rgba(56,189,248,0.25); }
+
+    /* Stats page h2 / achievements page h2 */
+    .page > h2 {
+        margin-bottom: 1.2rem;
+        font-size: 1.3rem;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        color: var(--primary);
+    }
+    .page > h2 i { font-size: 1.4rem; }
+
+    /* Stats grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+    }
+
+    /* Cal-heatmap container */
+    #cal-heatmap {
+        overflow-x: auto;
+        padding: 0.5rem 0;
+    }
+</style>
+```
+
 </head>
 <body>
-    <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; pointer-events: none;"></canvas>
+    <canvas id="bg-canvas"></canvas>
     <div class="noise-overlay"></div>
 
-    <div class="app">
-        <main class="content">
-            <!-- Dashboard Page (unchanged) -->
-            <div id="dashboard-page" class="page active">
+```
+<div class="app">
+    <main class="content">
+
+        <!-- ===== Dashboard Page ===== -->
+        <div id="dashboard-page" class="page active">
+
+            <!-- الترحيب -->
+            <div class="glass-card greeting-card">
+                <p id="greeting" class="greeting-text">مرحباً 👋</p>
             </div>
 
-            <!-- Stats Page (enhanced) -->
-            <div id="stats-page" class="page">
-                <h2><i class="fas fa-chart-pie"></i> الإحصائيات المتقدمة</h2>
-                <div class="stats-grid">
-                    <!-- Summary Cards -->
-                    <div class="glass-card summary-card">
-                        <div class="card-header">
-                            <i class="fas fa-chart-line"></i>
-                            <h3>ملخص الإنجاز</h3>
-                        </div>
-                        <div class="summary-stats">
-                            <div><i class="fas fa-trophy"></i> إجمالي XP: <strong id="totalXP">0</strong></div>
-                            <div><i class="fas fa-fire"></i> أطول تسلسل: <strong id="bestStreak">0</strong> يوم</div>
-                            <div><i class="fas fa-check-circle"></i> إجمالي المهام: <strong id="totalTasksCompleted">0</strong></div>
-                            <div><i class="fas fa-coins"></i> إجمالي المدخرات: <strong id="totalSavings">0</strong> ₿</div>
-                        </div>
-                    </div>
+            <!-- إحصائيات سريعة -->
+            <div class="stats-row">
+                <div class="glass-card stat-card">
+                    <i class="fas fa-bolt"></i>
+                    <div class="stat-value" id="todayXP">0</div>
+                    <div class="stat-label">XP اليوم</div>
+                </div>
+                <div class="glass-card stat-card">
+                    <i class="fas fa-fire"></i>
+                    <div class="stat-value" id="streakCount">0</div>
+                    <div class="stat-label">التسلسل (يوم)</div>
+                </div>
+            </div>
 
-                    <!-- Prediction Card -->
-                    <div class="glass-card prediction-card">
-                        <div class="card-header">
-                            <i class="fas fa-brain"></i>
-                            <h3>توقعات الشهر</h3>
-                        </div>
-                        <div id="predictionText" class="prediction-text">جاري التحليل...</div>
-                        <div class="prediction-progress">
-                            <div class="progress-label">نسبة النجاح المتوقعة</div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar" id="predictionBar" style="width: 0%"></div>
-                            </div>
+            <!-- حلقات التقدم -->
+            <div class="rings-row">
+                <!-- حلقة XP -->
+                <div class="glass-card ring-card">
+                    <div class="ring-svg-wrap">
+                        <svg class="ring-svg" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#1e293b" stroke-width="8"/>
+                            <circle id="xpRing"
+                                cx="50" cy="50" r="45"
+                                fill="none"
+                                stroke="var(--primary)"
+                                stroke-width="8"
+                                stroke-dasharray="283"
+                                stroke-dashoffset="283"
+                                stroke-linecap="round"/>
+                        </svg>
+                        <div class="ring-center-text">
+                            <span class="ring-percent" id="xpPercentRing">0%</span>
                         </div>
                     </div>
+                    <div class="ring-label">
+                        <span class="ring-title">XP الشهر</span>
+                        <small><span id="monthXP">0</span> / <span id="monthMaxXP">0</span></small>
+                    </div>
+                </div>
 
-                    <!-- Charts -->
-                    <div class="glass-card full-width">
-                        <canvas id="xpTrendChart" width="400" height="200"></canvas>
-                    </div>
-                    <div class="glass-card full-width">
-                        <canvas id="financeTrendChart" width="400" height="200"></canvas>
-                    </div>
-                    <div class="glass-card full-width">
-                        <canvas id="completionChart" width="400" height="200"></canvas>
-                    </div>
-
-                    <!-- Calendar Heatmap -->
-                    <div class="glass-card full-width">
-                        <div class="card-header">
-                            <i class="fas fa-calendar-alt"></i>
-                            <h3>التقويم الحراري للإنجازات</h3>
+                <!-- حلقة المالية -->
+                <div class="glass-card ring-card">
+                    <div class="ring-svg-wrap">
+                        <svg class="ring-svg" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#1e293b" stroke-width="8"/>
+                            <circle id="financialRing"
+                                cx="50" cy="50" r="45"
+                                fill="none"
+                                stroke="#4ade80"
+                                stroke-width="8"
+                                stroke-dasharray="283"
+                                stroke-dashoffset="283"
+                                stroke-linecap="round"/>
+                        </svg>
+                        <div class="ring-center-text">
+                            <span class="ring-percent" style="color:#4ade80" id="financialPercentRing">0%</span>
                         </div>
-                        <div id="cal-heatmap"></div>
                     </div>
-
-                    <!-- Daily Log -->
-                    <div class="glass-card full-width">
-                        <div class="card-header">
-                            <i class="fas fa-list-ul"></i>
-                            <h3>السجل اليومي التفصيلي</h3>
-                        </div>
-                        <div id="dailyLogContainer" class="daily-log"></div>
+                    <div class="ring-label">
+                        <span class="ring-title">الهدف المالي</span>
+                        <small><span id="savedAmount">0</span> / <span id="goalDisplay">0</span> ₿</small>
                     </div>
                 </div>
             </div>
 
-            <!-- Achievements Page (enhanced) -->
-            <div id="achievements-page" class="page">
-                <h2><i class="fas fa-award"></i> إنجازاتي</h2>
-                <div class="achievements-header">
-                    <button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة جميع الإنجازات</button>
-                    <span id="achievementCount">0 / 12 مفتوح</span>
-                </div>
-                <div id="achievementsGrid" class="achievements-grid"></div>
+            <!-- حالة الشهر -->
+            <div class="glass-card" id="monthStatusCard">
+                <i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري</strong>
             </div>
 
-            <!-- Settings Page (enhanced) -->
-            <div id="settings-page" class="page">
-                <h2><i class="fas fa-sliders-h"></i> الإعدادات المتقدمة</h2>
-                <div class="settings-grid">
-                    <div class="glass-card">
-                        <h3><i class="fas fa-database"></i> إدارة البيانات</h3>
-                        <button id="exportDataBtn"><i class="fas fa-download"></i> تصدير</button>
-                        <label for="importFile" class="file-label"><i class="fas fa-upload"></i> استيراد</label>
-                        <input type="file" id="importFile" accept=".json" style="display:none">
-                        <button id="resetDataBtn" class="danger"><i class="fas fa-trash"></i> إعادة ضبط</button>
-                        <div class="data-stats">
-                            <p><i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong></p>
-                            <p><i class="fas fa-check-double"></i> إجمالي المهام المنفذة: <strong id="totalCompletedStats">0</strong></p>
-                        </div>
-                    </div>
+            <!-- تحليل ذكي -->
+            <div class="glass-card insight-box">
+                <p id="insightText">🧠 جاري التحليل...</p>
+            </div>
 
-                    <div class="glass-card">
-                        <h3><i class="fas fa-palette"></i> التخصيص</h3>
-                        <div class="setting-item">
-                            <span><i class="fas fa-moon"></i> الوضع الليلي</span>
-                            <label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider round"></span></label>
-                        </div>
-                        <div class="setting-item">
-                            <span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span>
-                            <label class="switch"><input type="checkbox" id="soundToggle"><span class="slider round"></span></label>
-                        </div>
-                        <div class="setting-item">
-                            <span><i class="fas fa-palette"></i> نظام الألوان</span>
-                            <select id="colorSchemeSelect">
-                                <option value="default">أزرق</option>
-                                <option value="purple">بنفسجي</option>
-                                <option value="green">أخضر</option>
-                                <option value="sunset">غروب الشمس</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <span><i class="fas fa-font"></i> حجم الخط</span>
-                            <select id="fontSizeSelect">
-                                <option value="small">صغير</option>
-                                <option value="medium" selected>متوسط</option>
-                                <option value="large">كبير</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <span><i class="fas fa-hourglass-half"></i> سرعة الحركات</span>
-                            <select id="animationSpeedSelect">
-                                <option value="slow">بطيء</option>
-                                <option value="normal" selected>عادي</option>
-                                <option value="fast">سريع</option>
-                            </select>
-                        </div>
-                        <div class="setting-item">
-                            <span><i class="fas fa-bell"></i> وقت التذكير اليومي</span>
-                            <input type="time" id="reminderTime" step="60">
-                        </div>
-                    </div>
-
-                    <div class="glass-card">
-                        <h3><i class="fas fa-info-circle"></i> معلومات</h3>
-                        <button id="quickTourBtn"><i class="fas fa-compass"></i> جولة تعريفية</button>
-                        <p class="version">الإصدار 2.0 | متطور بالذكاء الاصطناعي</p>
-                    </div>
+            <!-- المهام -->
+            <div class="glass-card tasks-card">
+                <div class="card-header">
+                    <i class="fas fa-tasks"></i>
+                    <h3>مهام اليوم</h3>
+                </div>
+                <ul id="tasksList" class="tasks-list"></ul>
+                <div class="add-task-row">
+                    <input type="text" id="newTaskInput" placeholder="أضف مهمة جديدة..." class="task-input"/>
+                    <button id="voiceAddBtn" class="btn-icon"><i class="fas fa-microphone"></i></button>
+                    <button id="addTaskBtn" class="btn-primary"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
-        </main>
 
-        <!-- Bottom Navigation Bar -->
-        <nav class="bottom-nav glass">
-            <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
-            <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
-            <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
-            <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
-        </nav>
+            <!-- المالية -->
+            <div class="glass-card finance-card">
+                <div class="card-header">
+                    <i class="fas fa-coins"></i>
+                    <h3>الهدف المالي</h3>
+                </div>
+                <div class="finance-row">
+                    <input type="number" id="financialGoalInput" placeholder="الهدف الشهري (₿)" class="finance-input"/>
+                    <button id="setGoalBtn" class="btn-primary">تحديد</button>
+                </div>
+                <div class="finance-row">
+                    <input type="number" id="dailySavingInput" placeholder="مدخرات اليوم (₿)" class="finance-input"/>
+                    <button id="recordSavingBtn" class="btn-primary">تسجيل</button>
+                </div>
+            </div>
 
-        <button id="fab" class="fab glass"><i class="fas fa-plus"></i></button>
-    </div>
+        </div>
+        <!-- ===== نهاية Dashboard ===== -->
 
-    <audio id="completeSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
-    <audio id="achievementSound" src="https://www.soundjay.com/misc/sounds/fanfare-01.mp3" preload="auto"></audio>
+        <!-- Stats Page -->
+        <div id="stats-page" class="page">
+            <h2><i class="fas fa-chart-pie"></i> الإحصائيات المتقدمة</h2>
+            <div class="stats-grid">
+                <div class="glass-card summary-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>ملخص الإنجاز</h3>
+                    </div>
+                    <div class="summary-stats">
+                        <div><i class="fas fa-trophy"></i> إجمالي XP: <strong id="totalXP">0</strong></div>
+                        <div><i class="fas fa-fire"></i> أطول تسلسل: <strong id="bestStreak">0</strong> يوم</div>
+                        <div><i class="fas fa-check-circle"></i> إجمالي المهام: <strong id="totalTasksCompleted">0</strong></div>
+                        <div><i class="fas fa-coins"></i> إجمالي المدخرات: <strong id="totalSavings">0</strong> ₿</div>
+                    </div>
+                </div>
+                <div class="glass-card prediction-card">
+                    <div class="card-header">
+                        <i class="fas fa-brain"></i>
+                        <h3>توقعات الشهر</h3>
+                    </div>
+                    <div id="predictionText" class="prediction-text">جاري التحليل...</div>
+                    <div class="prediction-progress">
+                        <div class="progress-label">نسبة النجاح المتوقعة</div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="predictionBar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card full-width">
+                    <canvas id="xpTrendChart" width="400" height="200"></canvas>
+                </div>
+                <div class="glass-card full-width">
+                    <canvas id="financeTrendChart" width="400" height="200"></canvas>
+                </div>
+                <div class="glass-card full-width">
+                    <canvas id="completionChart" width="400" height="200"></canvas>
+                </div>
+                <div class="glass-card full-width">
+                    <div class="card-header">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>التقويم الحراري للإنجازات</h3>
+                    </div>
+                    <div id="cal-heatmap"></div>
+                </div>
+                <div class="glass-card full-width">
+                    <div class="card-header">
+                        <i class="fas fa-list-ul"></i>
+                        <h3>السجل اليومي التفصيلي</h3>
+                    </div>
+                    <div id="dailyLogContainer" class="daily-log"></div>
+                </div>
+            </div>
+        </div>
 
-    <script src="script.js"></script>
+        <!-- Achievements Page -->
+        <div id="achievements-page" class="page">
+            <h2><i class="fas fa-award"></i> إنجازاتي</h2>
+            <div class="achievements-header">
+                <button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة جميع الإنجازات</button>
+                <span id="achievementCount">0 / 12 مفتوح</span>
+            </div>
+            <div id="achievementsGrid" class="achievements-grid"></div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings-page" class="page">
+            <h2><i class="fas fa-sliders-h"></i> الإعدادات المتقدمة</h2>
+            <div class="settings-grid">
+                <div class="glass-card">
+                    <h3><i class="fas fa-database"></i> إدارة البيانات</h3>
+                    <button id="exportDataBtn"><i class="fas fa-download"></i> تصدير</button>
+                    <label for="importFile" class="file-label"><i class="fas fa-upload"></i> استيراد</label>
+                    <input type="file" id="importFile" accept=".json" style="display:none">
+                    <button id="resetDataBtn" class="danger"><i class="fas fa-trash"></i> إعادة ضبط</button>
+                    <div class="data-stats">
+                        <p><i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong></p>
+                        <p><i class="fas fa-check-double"></i> إجمالي المهام المنفذة: <strong id="totalCompletedStats">0</strong></p>
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3><i class="fas fa-palette"></i> التخصيص</h3>
+                    <div class="setting-item">
+                        <span><i class="fas fa-moon"></i> الوضع الليلي</span>
+                        <label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider round"></span></label>
+                    </div>
+                    <div class="setting-item">
+                        <span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span>
+                        <label class="switch"><input type="checkbox" id="soundToggle"><span class="slider round"></span></label>
+                    </div>
+                    <div class="setting-item">
+                        <span><i class="fas fa-palette"></i> نظام الألوان</span>
+                        <select id="colorSchemeSelect">
+                            <option value="default">أزرق</option>
+                            <option value="purple">بنفسجي</option>
+                            <option value="green">أخضر</option>
+                            <option value="sunset">غروب الشمس</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <span><i class="fas fa-font"></i> حجم الخط</span>
+                        <select id="fontSizeSelect">
+                            <option value="small">صغير</option>
+                            <option value="medium" selected>متوسط</option>
+                            <option value="large">كبير</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <span><i class="fas fa-hourglass-half"></i> سرعة الحركات</span>
+                        <select id="animationSpeedSelect">
+                            <option value="slow">بطيء</option>
+                            <option value="normal" selected>عادي</option>
+                            <option value="fast">سريع</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <span><i class="fas fa-bell"></i> وقت التذكير اليومي</span>
+                        <input type="time" id="reminderTime" step="60">
+                    </div>
+                </div>
+                <div class="glass-card">
+                    <h3><i class="fas fa-info-circle"></i> معلومات</h3>
+                    <button id="quickTourBtn"><i class="fas fa-compass"></i> جولة تعريفية</button>
+                    <p class="version">الإصدار 2.0 | متطور بالذكاء الاصطناعي</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav glass">
+        <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
+        <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
+        <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
+        <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
+    </nav>
+
+    <button id="fab" class="fab glass"><i class="fas fa-plus"></i></button>
+</div>
+
+<audio id="completeSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
+<audio id="achievementSound" src="https://www.soundjay.com/misc/sounds/fanfare-01.mp3" preload="auto"></audio>
+
+<script src="script.js"></script>
+```
+
 </body>
 </html>
