@@ -506,3 +506,37 @@ body.font-large { font-size: 16px; }
 /* Animation speeds */
 body.animation-slow * { transition-duration: 0.5s !important; }
 body.animation-fast * { transition-duration: 0.1s !important; }
+
+/* ===== Fix Stats Page Mobile ===== */
+.summary-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+}
+
+.summary-stats div {
+    background: rgba(0,0,0,0.2);
+    padding: 0.6rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+}
+
+.stats-grid .glass-card {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+canvas {
+    max-width: 100% !important;
+    height: auto !important;
+}
