@@ -1,289 +1,301 @@
-/* ===============================
-   GLOBAL RESET & FONT
-================================ */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Poppins", "Segoe UI", sans-serif;
+    font-family: system-ui, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ===============================
-   COLOR SYSTEM (RED DOMINANT)
-================================ */
-:root {
-    --bg-main: linear-gradient(135deg, #1f0a0a, #2b0f14, #3a0d0d);
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.25);
-
-    --primary-red: #ef4444;
-    --secondary-pink: #ec4899;
-    --accent-orange: #f97316;
-    --accent-violet: #8b5cf6;
-
-    --text-main: #fef2f2;
-    --text-muted: #fecaca;
-}
-
-/* ===============================
-   BODY
-================================ */
 body {
+    background: #0F172A;  /* لون أساسي غامق */
+    color: #E2E8F0;
+    padding: 1.5rem;
     min-height: 100vh;
-    background: var(--bg-main);
-    color: var(--text-main);
-    line-height: 1.7;
 }
 
-/* ===============================
-   HEADER & NAVIGATION
-================================ */
+/* تنسيق الألوان الثلاثة: #0F172A (خلفية), #1E293B (بطاقات), #38BDF8 (أزرق فاتح للتفاصيل) */
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
 header {
-    padding: 30px 20px;
     text-align: center;
-    backdrop-filter: blur(12px);
+    margin-bottom: 2rem;
 }
 
 header h1 {
-    font-size: 36px;
-    font-weight: 800;
-    background: linear-gradient(
-        90deg,
-        var(--primary-red),
-        var(--secondary-pink),
-        var(--accent-orange),
-        var(--accent-violet)
-    );
+    font-size: 2.2rem;
+    background: linear-gradient(135deg, #38BDF8, #818CF8);
+    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin-bottom: 0.5rem;
 }
 
-nav {
-    margin-top: 22px;
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
+.subtitle {
+    color: #94A3B8;
+    font-size: 0.9rem;
 }
 
-nav a {
-    color: var(--text-main);
-    text-decoration: none;
-    padding: 12px 22px;
-    border-radius: 30px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    font-weight: 600;
-    transition: all 0.35s ease;
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
 }
 
-nav a:hover {
-    background: linear-gradient(
-        135deg,
-        var(--primary-red),
-        var(--secondary-pink)
-    );
-    color: #1f0a0a;
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 12px 35px rgba(239, 68, 68, 0.6);
+.card {
+    background: #1E293B;
+    border-radius: 1.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
 }
 
-/* ===============================
-   MAIN LAYOUT
-================================ */
-main {
-    max-width: 1150px;
-    margin: 45px auto;
-    padding: 20px;
+.card:hover {
+    transform: translateY(-3px);
 }
 
-/* ===============================
-   GLASS CARD SECTIONS
-================================ */
-section {
-    background: var(--glass-bg);
-    backdrop-filter: blur(18px);
-    border: 1px solid var(--glass-border);
-    padding: 32px;
-    margin-bottom: 35px;
-    border-radius: 26px;
-    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.45);
-}
-
-/* ===============================
-   HEADINGS & TEXT
-================================ */
 h2 {
-    font-size: 26px;
-    margin-bottom: 14px;
-    color: var(--primary-red);
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    border-right: 4px solid #38BDF8;
+    padding-right: 0.75rem;
+    color: #F1F5F9;
 }
 
-h3 {
-    margin-top: 22px;
-    margin-bottom: 10px;
-    color: var(--accent-orange);
+/* المهام */
+.add-task {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
-p {
-    margin-bottom: 12px;
-    color: var(--text-muted);
+.add-task input, .daily-saving input, .financial-goal-setup input {
+    flex: 1;
+    background: #0F172A;
+    border: 1px solid #334155;
+    padding: 0.6rem 1rem;
+    border-radius: 2rem;
+    color: #F1F5F9;
+    font-size: 0.9rem;
+    outline: none;
+    transition: 0.2s;
 }
 
-strong {
-    color: var(--text-main);
+.add-task input:focus, .daily-saving input:focus {
+    border-color: #38BDF8;
 }
 
-/* ===============================
-   LISTS (GOALS / HABITS / AI)
-================================ */
-ul {
-    margin-top: 12px;
-    padding-left: 24px;
-}
-
-ul li {
-    margin-bottom: 10px;
-}
-
-ul li::marker {
-    color: var(--secondary-pink);
-}
-
-/* ===============================
-   TABLES (SCHEDULE PAGE)
-================================ */
-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 25px;
-    border-radius: 18px;
-    overflow: hidden;
-}
-
-table th {
-    background: linear-gradient(
-        90deg,
-        var(--primary-red),
-        var(--secondary-pink)
-    );
-    color: #1f0a0a;
-    padding: 16px;
-    font-weight: 700;
-    text-align: left;
-}
-
-table td {
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-main);
-}
-
-table tr:hover td {
-    background: rgba(255, 255, 255, 0.22);
-}
-
-/* ===============================
-   FORMS & INPUTS
-================================ */
-label {
-    font-weight: 600;
-    color: var(--accent-orange);
-}
-
-input,
-textarea {
-    width: 100%;
-    padding: 14px;
-    border-radius: 14px;
+button {
+    background: #38BDF8;
     border: none;
-    margin-top: 8px;
-    margin-bottom: 18px;
-    background: rgba(255, 255, 255, 0.18);
-    color: var(--text-main);
-}
-
-input::placeholder,
-textarea::placeholder {
-    color: #ffe4e6;
-}
-
-/* ===============================
-   BUTTONS (NEON GLOW 🔥)
-================================ */
-button,
-input[type="submit"] {
-    background: linear-gradient(
-        135deg,
-        var(--primary-red),
-        var(--accent-orange)
-    );
-    color: #1f0a0a;
-    border: none;
-    padding: 14px 34px;
-    border-radius: 40px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
+    padding: 0.6rem 1rem;
+    border-radius: 2rem;
+    font-weight: bold;
+    color: #0F172A;
     cursor: pointer;
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
-    transition: all 0.35s ease;
+    transition: 0.2s;
+    font-size: 0.85rem;
 }
 
-button:hover,
-input[type="submit"]:hover {
-    transform: scale(1.12);
-    box-shadow: 0 0 50px rgba(236, 72, 153, 1);
+button:hover {
+    background: #0EA5E9;
+    transform: scale(0.97);
 }
 
-/* ===============================
-   AI RESPONSE / OUTPUT
-================================ */
-#aiResponse,
-#aiOutput {
-    border-left: 6px solid var(--primary-red);
-    background: rgba(239, 68, 68, 0.18);
+.secondary-btn {
+    background: #334155;
+    color: #E2E8F0;
+    margin-top: 1rem;
+    width: 100%;
 }
 
-/* ===============================
-   LINKS
-================================ */
-a {
-    color: var(--accent-orange);
+.secondary-btn:hover {
+    background: #475569;
 }
 
-a:hover {
-    color: var(--secondary-pink);
+.tasks-list {
+    list-style: none;
+    margin: 1rem 0;
+    max-height: 280px;
+    overflow-y: auto;
 }
 
-/* ===============================
-   FOOTER
-================================ */
-footer {
+.tasks-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: #0F172A;
+    margin-bottom: 0.6rem;
+    padding: 0.7rem 1rem;
+    border-radius: 1rem;
+    transition: 0.1s;
+}
+
+.tasks-list li input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+    accent-color: #38BDF8;
+}
+
+.tasks-list li span {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.tasks-list li .delete-task {
+    background: none;
+    color: #F87171;
+    font-size: 1.2rem;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tasks-list li .delete-task:hover {
+    background: #2D3748;
+    color: #EF4444;
+}
+
+.task-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    background: #0F172A;
+    padding: 0.7rem;
+    border-radius: 1rem;
+}
+
+/* المالية */
+.financial-goal-setup, .daily-saving {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    align-items: center;
+}
+
+.financial-goal-setup label, .daily-saving label {
+    font-size: 0.85rem;
+    color: #CBD5E1;
+}
+
+.progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.progress-bar-container {
+    background: #0F172A;
+    border-radius: 1rem;
+    height: 0.6rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.progress-bar {
+    background: #38BDF8;
+    width: 0%;
+    height: 100%;
+    transition: width 0.3s;
+}
+
+/* إحصائيات */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.stat-card {
+    background: #0F172A;
+    border-radius: 1rem;
+    padding: 0.8rem;
     text-align: center;
-    padding: 40px 15px;
-    margin-top: 70px;
-    color: var(--text-muted);
 }
 
-footer p:first-child {
-    color: var(--accent-violet);
-    font-weight: 700;
+.stat-title {
+    font-size: 0.75rem;
+    color: #94A3B8;
+    margin-bottom: 0.3rem;
 }
 
-/* ===============================
-   RESPONSIVE
-================================ */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 28px;
-    }
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #38BDF8;
+}
 
-    nav a {
-        padding: 10px 16px;
-    }
+.stat-detail {
+    font-size: 0.7rem;
+    color: #64748B;
+}
 
-    section {
-        padding: 22px;
+.month-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    background: #0F172A;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+.month-status {
+    text-align: center;
+    background: #0F172A;
+    padding: 0.6rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+}
+
+.history-list {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.history-item {
+    background: #0F172A;
+    border-radius: 1rem;
+    padding: 0.8rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.8rem;
+    border-right: 3px solid #38BDF8;
+}
+
+.history-item.pass {
+    border-right-color: #4ADE80;
+}
+
+.history-item.fail {
+    border-right-color: #F87171;
+}
+
+.empty-history {
+    text-align: center;
+    color: #64748B;
+    font-size: 0.85rem;
+}
+
+.small-msg {
+    font-size: 0.7rem;
+    color: #94A3B8;
+}
+
+@media (max-width: 700px) {
+    body {
+        padding: 0.8rem;
+    }
+    .card {
+        padding: 1rem;
     }
 }
