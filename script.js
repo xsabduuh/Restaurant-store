@@ -1,10 +1,6 @@
-// ============================================================
-// 🚀 تحدي الإنجاز اليومي - النسخة المتطورة (SPA + Three.js + صوت + مشاركة)
-// ============================================================
+// ==================== تحدي الإنجاز اليومي - النسخة المتطورة (تعمل في GitHub Pages) ====================
 
-import * as THREE from 'three';
-
-// ---------- إعدادات عامة ----------
+// ---------- المتغيرات العامة ----------
 const STORAGE = {
     TASKS: 'daily_tasks',
     COMPLETIONS: 'task_completions',
@@ -28,7 +24,6 @@ let settings = {
     colorScheme: 'default'
 };
 
-// عناصر DOM
 let currentPage = 'dashboard';
 let xpChart, financeChart;
 let audioComplete, audioAchievement;
@@ -50,10 +45,6 @@ function addOneDay(dateStr) {
     let date = new Date(dateStr);
     date.setDate(date.getDate() + 1);
     return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
-}
-
-function daysBetween(d1, d2) {
-    return Math.ceil((new Date(d2) - new Date(d1)) / (86400000));
 }
 
 // ---------- تحميل وحفظ البيانات ----------
@@ -122,10 +113,9 @@ function calculateStreak() {
 function finalizeMonth() {
     const endDate = addOneMonth(monthStartDate);
     let current = new Date(monthStartDate);
-    let totalDays = 0, earnedXP = 0, maxXP = 0, financialTotal = 0;
+    let earnedXP = 0, maxXP = 0, financialTotal = 0;
     while (current < new Date(endDate)) {
         const dateStr = current.toISOString().slice(0,10);
-        totalDays++;
         const completed = completions[dateStr] || [];
         earnedXP += completed.length * 10;
         maxXP += tasks.length * 10;
@@ -148,12 +138,11 @@ function finalizeMonth() {
         passed
     });
     localStorage.setItem(STORAGE.HISTORY, JSON.stringify(history));
-    // بدء شهر جديد
     monthStartDate = addOneDay(endDate);
     saveMonthStart();
     if (passed && settings.soundEnabled) {
         canvasConfetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-        audioAchievement?.play();
+        if (audioAchievement) audioAchievement.play();
     }
     renderAll();
 }
@@ -186,7 +175,7 @@ function toggleTask(taskId, checked) {
     if (!completions[today]) completions[today] = [];
     if (checked) {
         if (!completions[today].includes(taskId)) completions[today].push(taskId);
-        if (settings.soundEnabled) audioComplete?.play();
+        if (settings.soundEnabled && audioComplete) audioComplete.play();
     } else {
         completions[today] = completions[today].filter(id => id !== taskId);
     }
@@ -242,7 +231,8 @@ function recordSaving(amount) {
 function updateAllStats() {
     const stats = getCurrentMonthStats();
     const streak = calculateStreak();
-    document.getElementById('todayXP').innerText = (completions[getTodayStr()] || []).length * 10;
+    const todayXP = (completions[getTodayStr()] || []).length * 10;
+    document.getElementById('todayXP').innerText = todayXP;
     document.getElementById('streakCount').innerText = streak;
     document.getElementById('monthXP').innerText = stats.earnedXP;
     document.getElementById('monthMaxXP').innerText = stats.maxXP;
@@ -264,14 +254,12 @@ function updateAllStats() {
             monthStatus.innerHTML = `<i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري (${xpPercent.toFixed(0)}% XP, ${financialPercent.toFixed(0)}% مالي)</strong>`;
         }
     }
-    // نصيحة ذكاء اصطناعي
     const insightText = document.getElementById('insightText');
     if (insightText) {
         const neededXP = Math.max(0, Math.ceil(stats.maxXP * 0.8 - stats.earnedXP));
         if (neededXP > 0) insightText.innerHTML = `🧠 تحليل ذكي: تحتاج إلى ${neededXP} XP إضافي للوصول إلى 80% من هدف الشهر.`;
         else insightText.innerHTML = `🎉 مذهل! أنت على الطريق الصحيح للنجاح هذا الشهر.`;
     }
-    // تحديث الرسم البياني في صفحة الإحصائيات
     if (currentPage === 'stats') updateCharts();
 }
 
@@ -294,7 +282,7 @@ function checkAchievements() {
         if (!unlockedAchievements.includes(ach.id) && ach.condition()) {
             unlockedAchievements.push(ach.id);
             changed = true;
-            if (settings.soundEnabled) audioAchievement?.play();
+            if (settings.soundEnabled && audioAchievement) audioAchievement.play();
             canvasConfetti({ particleCount: 100, startVelocity: 15, spread: 70, origin: { y: 0.6 } });
             setTimeout(() => alert(`🏅 إنجاز جديد: ${ach.name}\n${ach.desc}`), 100);
         }
@@ -347,7 +335,6 @@ function updateCharts() {
         financeChart.data.datasets[0].data = financeData;
         financeChart.update();
     }
-    // السجل اليومي
     const container = document.getElementById('dailyLogContainer');
     if (container) {
         const allDates = [...new Set([...Object.keys(completions), ...Object.keys(financialRecords)])].sort().reverse();
@@ -366,18 +353,35 @@ function updateCharts() {
     }
 }
 
+function initCharts() {
+    const ctx1 = document.getElementById('xpTrendChart')?.getContext('2d');
+    const ctx2 = document.getElementById('financeTrendChart')?.getContext('2d');
+    if (!ctx1 || !ctx2) return;
+    const last7 = getLast7Days();
+    xpChart = new Chart(ctx1, {
+        type: 'line',
+        data: { labels: last7, datasets: [{ label: 'XP', data: [], borderColor: '#38bdf8', tension: 0.3 }] },
+        options: { responsive: true }
+    });
+    financeChart = new Chart(ctx2, {
+        type: 'bar',
+        data: { labels: last7, datasets: [{ label: 'مدخرات (₿)', data: [], backgroundColor: '#4ade80' }] },
+        options: { responsive: true }
+    });
+    updateCharts();
+}
+
 // ---------- الإعدادات والمظهر ----------
 function applySettings() {
     document.body.classList.toggle('light-mode', settings.darkMode);
     const scheme = settings.colorScheme;
     let primary, secondary;
-    if (scheme === 'purple') primary = '#a855f7', secondary = '#d946ef';
-    else if (scheme === 'green') primary = '#22c55e', secondary = '#4ade80';
-    else if (scheme === 'sunset') primary = '#f97316', secondary = '#facc15';
-    else primary = '#38bdf8', secondary = '#0ea5e9';
+    if (scheme === 'purple') primary = '#a855f7';
+    else if (scheme === 'green') primary = '#22c55e';
+    else if (scheme === 'sunset') primary = '#f97316';
+    else primary = '#38bdf8';
     document.documentElement.style.setProperty('--primary', primary);
     document.documentElement.style.setProperty('--primary-glow', `${primary}80`);
-    // حفظ الإعدادات
     saveSettings();
 }
 
@@ -494,42 +498,19 @@ function setupNavigation() {
             } else if (page === 'achievements') renderAchievements();
         });
     });
-    // زر الإضافة السريع
-    document.getElementById('fab')?.addEventListener('click', () => {
-        document.getElementById('newTaskInput').focus();
-    });
 }
 
-// ---------- الرسوم البيانية ----------
-function initCharts() {
-    const ctx1 = document.getElementById('xpTrendChart')?.getContext('2d');
-    const ctx2 = document.getElementById('financeTrendChart')?.getContext('2d');
-    if (!ctx1 || !ctx2) return;
-    const last7 = getLast7Days();
-    xpChart = new Chart(ctx1, {
-        type: 'line',
-        data: { labels: last7, datasets: [{ label: 'XP', data: [], borderColor: '#38bdf8', tension: 0.3 }] },
-        options: { responsive: true }
-    });
-    financeChart = new Chart(ctx2, {
-        type: 'bar',
-        data: { labels: last7, datasets: [{ label: 'مدخرات (₿)', data: [], backgroundColor: '#4ade80' }] },
-        options: { responsive: true }
-    });
-    updateCharts();
-}
-
-// ---------- Three.js الخلفية ثلاثية الأبعاد ----------
+// ---------- الخلفية ثلاثية الأبعاد (Three.js) ----------
 function initThreeBackground() {
     const canvas = document.getElementById('bg-canvas');
-    if (!canvas) return;
+    if (!canvas || !window.THREE) return;
     const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.z = 30;
     const geometry = new THREE.BufferGeometry();
-    const particlesCount = 1500;
+    const particlesCount = 1200;
     const positions = new Float32Array(particlesCount * 3);
     for (let i = 0; i < particlesCount; i++) {
         positions[i*3] = (Math.random() - 0.5) * 100;
@@ -537,7 +518,7 @@ function initThreeBackground() {
         positions[i*3+2] = (Math.random() - 0.5) * 50 - 20;
     }
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const material = new THREE.PointsMaterial({ color: 0x38bdf8, size: 0.15, transparent: true, opacity: 0.6 });
+    const material = new THREE.PointsMaterial({ color: 0x38bdf8, size: 0.15, transparent: true, opacity: 0.5 });
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
     function animate() {
@@ -572,13 +553,14 @@ function setGreeting() {
     document.getElementById('greeting').innerText = `${greeting}، ابدأ يومك بقوة!`;
 }
 
-// ---------- الوظيفة الرئيسية ----------
+// ---------- دالة التحديث الكامل ----------
 function renderAll() {
     renderTasks();
     updateAllStats();
     setGreeting();
 }
 
+// ---------- التهيئة النهائية ----------
 function init() {
     loadData();
     checkMonthRollover();
@@ -590,7 +572,6 @@ function init() {
     setupVoiceInput();
     if (document.getElementById('xpTrendChart')) initCharts();
     if (document.getElementById('achievementsGrid')) renderAchievements();
-    // إضافة حدث إضافة مهمة
     document.getElementById('addTaskBtn')?.addEventListener('click', () => {
         addTask(document.getElementById('newTaskInput').value);
         document.getElementById('newTaskInput').value = '';
@@ -603,7 +584,9 @@ function init() {
         const val = parseFloat(document.getElementById('dailySavingInput').value);
         if (!isNaN(val) && val > 0) recordSaving(val);
     });
-    // تحديث دوري (كل دقيقة)
+    document.getElementById('fab')?.addEventListener('click', () => {
+        document.getElementById('newTaskInput').focus();
+    });
     setInterval(() => {
         checkMonthRollover();
         updateAllStats();
