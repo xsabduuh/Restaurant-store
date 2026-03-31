@@ -1,5 +1,5 @@
-// ==================== تحدي الإنجاز اليومي - النسخة المتطورة ====================
-// يدعم الشريط السفلي، خلفية Three.js، إنجازات، صوت، إدخال صوتي، رسوم بيانية، تصدير/استيراد
+// ==================== تحدي الإنجاز اليومي - النسخة الذكية المتطورة ====================
+// يدعم الإحصائيات المتقدمة، التوقعات، التقويم الحراري، 12 إنجازًا، إعدادات متطورة
 
 // ---------- المتغيرات العامة ----------
 const STORAGE = {
@@ -22,12 +22,16 @@ let unlockedAchievements = [];
 let settings = {
     darkMode: false,
     soundEnabled: true,
-    colorScheme: 'default'
+    colorScheme: 'default',
+    fontSize: 'medium',
+    animationSpeed: 'normal',
+    reminderTime: '09:00'
 };
 
 let currentPage = 'dashboard';
-let xpChart, financeChart;
+let xpChart, financeChart, completionChart;
 let audioComplete, audioAchievement;
+let calHeatmapInstance = null;
 
 // ---------- دوال مساعدة ----------
 function getTodayStr() {
@@ -108,6 +112,41 @@ function calculateStreak() {
         current.setDate(current.getDate() - 1);
     }
     return streak;
+}
+
+function getTotalCompletedTasks() {
+    let total = 0;
+    for (let date in completions) total += completions[date].length;
+    return total;
+}
+
+function getTotalSavings() {
+    let total = 0;
+    for (let date in financialRecords) total += financialRecords[date];
+    return total;
+}
+
+function getBestStreak() {
+    let maxStreak = 0;
+    let currentStreak = 0;
+    let dates = Object.keys(completions).sort();
+    let lastDate = null;
+    for (let date of dates) {
+        if (completions[date].length === 0) continue;
+        if (lastDate) {
+            const diff = (new Date(date) - new Date(lastDate)) / (1000*60*60*24);
+            if (diff === 1) currentStreak++;
+            else currentStreak = 1;
+        } else currentStreak = 1;
+        maxStreak = Math.max(maxStreak, currentStreak);
+        lastDate = date;
+    }
+    return maxStreak;
+}
+
+function getUsageDays() {
+    const allDates = [...new Set([...Object.keys(completions), ...Object.keys(financialRecords)])];
+    return allDates.length;
 }
 
 // ---------- إنهاء الشهر ----------
@@ -261,21 +300,47 @@ function updateAllStats() {
         if (neededXP > 0) insightText.innerHTML = `🧠 تحليل ذكي: تحتاج إلى ${neededXP} XP إضافي للوصول إلى 80% من هدف الشهر.`;
         else insightText.innerHTML = `🎉 مذهل! أنت على الطريق الصحيح للنجاح هذا الشهر.`;
     }
-    // تحديث الإحصائيات إذا كنا في صفحة الإحصائيات
-    if (currentPage === 'stats') updateCharts();
+
+    // تحديث الإحصائيات المتقدمة (صفحة الإحصائيات)
+    if (currentPage === 'stats') {
+        updateStatsPage();
+        updateCharts();
+        updateCalendarHeatmap();
+    }
+    if (currentPage === 'achievements') renderAchievements();
 }
 
-// ---------- الإنجازات ----------
+// ---------- الإنجازات المتقدمة ----------
 const achievementsList = [
-    { id: 'first_task', name: 'أول خطوة', desc: 'إنجاز أول مهمة', icon: 'fa-star', condition: () => Object.values(completions).some(arr => arr.length > 0) },
-    { id: 'streak_7', name: 'أسبوع متواصل', desc: 'تسلسل 7 أيام متتالية', icon: 'fa-calendar-check', condition: () => calculateStreak() >= 7 },
-    { id: 'xp_1000', name: 'صائد النقاط', desc: '1000 XP في شهر', icon: 'fa-trophy', condition: () => getCurrentMonthStats().earnedXP >= 1000 },
-    { id: 'financial_goal', name: 'المحقق المالي', desc: 'تحقيق الهدف المالي لشهر', icon: 'fa-chart-line', condition: () => getCurrentMonthStats().financialPercent >= 100 },
+    { id: 'first_task', name: 'أول خطوة', desc: 'إنجاز أول مهمة', icon: 'fa-star', condition: () => getTotalCompletedTasks() >= 1, progress: () => Math.min(1, getTotalCompletedTasks()), max: 1 },
+    { id: 'streak_7', name: 'أسبوع متواصل', desc: 'تسلسل 7 أيام متتالية', icon: 'fa-calendar-check', condition: () => calculateStreak() >= 7, progress: () => Math.min(7, calculateStreak()), max: 7 },
+    { id: 'xp_1000', name: 'صائد النقاط', desc: '1000 XP في شهر', icon: 'fa-trophy', condition: () => getCurrentMonthStats().earnedXP >= 1000, progress: () => Math.min(1000, getCurrentMonthStats().earnedXP), max: 1000 },
+    { id: 'financial_goal', name: 'المحقق المالي', desc: 'تحقيق الهدف المالي لشهر', icon: 'fa-chart-line', condition: () => getCurrentMonthStats().financialPercent >= 100, progress: () => getCurrentMonthStats().financialPercent, max: 100 },
     { id: 'month_pass', name: 'بطل الشهر', desc: 'إنهاء شهر بنجاح', icon: 'fa-crown', condition: () => {
         const history = JSON.parse(localStorage.getItem(STORAGE.HISTORY) || '[]');
         if (history.length === 0) return false;
         return history[history.length-1].passed;
-    } }
+    }, progress: () => 0, max: 1 },
+    { id: 'task_master', name: 'سيد المهام', desc: 'إنجاز 100 مهمة إجمالاً', icon: 'fa-tasks', condition: () => getTotalCompletedTasks() >= 100, progress: () => Math.min(100, getTotalCompletedTasks()), max: 100 },
+    { id: 'savings_king', name: 'ملك الادخار', desc: 'توفير 10,000 ₿ إجمالاً', icon: 'fa-piggy-bank', condition: () => getTotalSavings() >= 10000, progress: () => Math.min(10000, getTotalSavings()), max: 10000 },
+    { id: 'streak_30', name: 'أسطورة التسلسل', desc: 'تسلسل 30 يوماً', icon: 'fa-fire', condition: () => calculateStreak() >= 30, progress: () => Math.min(30, calculateStreak()), max: 30 },
+    { id: 'xp_5000', name: 'صائد النقاط الأسطوري', desc: '5000 XP في شهر', icon: 'fa-dragon', condition: () => getCurrentMonthStats().earnedXP >= 5000, progress: () => Math.min(5000, getCurrentMonthStats().earnedXP), max: 5000 },
+    { id: 'secret_perfect', name: 'الإنجاز السري: الكمال', desc: 'أكمل جميع المهام لمدة 7 أيام متتالية', icon: 'fa-gem', condition: () => {
+        let count = 0;
+        let current = new Date();
+        for (let i = 0; i < 7; i++) {
+            const dateStr = current.toISOString().slice(0,10);
+            if ((completions[dateStr] || []).length === tasks.length) count++;
+            current.setDate(current.getDate() - 1);
+        }
+        return count === 7;
+    }, progress: () => 0, max: 1, secret: true },
+    { id: 'secret_early', name: 'الإنجاز السري: الفجر', desc: 'أضف مهمة قبل الساعة 6 صباحاً', icon: 'fa-sun', condition: () => {
+        const lastAdd = localStorage.getItem('last_early_task');
+        if (!lastAdd) return false;
+        const hour = new Date(parseInt(lastAdd)).getHours();
+        return hour < 6;
+    }, progress: () => 0, max: 1, secret: true }
 ];
 
 function checkAchievements() {
@@ -299,21 +364,53 @@ function renderAchievements() {
     const container = document.getElementById('achievementsGrid');
     if (!container) return;
     container.innerHTML = '';
+    let unlockedCount = 0;
     achievementsList.forEach(ach => {
         const unlocked = unlockedAchievements.includes(ach.id);
+        if (unlocked) unlockedCount++;
+        const progressPercent = ach.max ? (ach.progress() / ach.max) * 100 : (unlocked ? 100 : 0);
         const card = document.createElement('div');
-        card.className = `achievement-card ${unlocked ? 'unlocked' : ''}`;
+        card.className = `achievement-card ${unlocked ? 'unlocked' : ''} ${ach.secret ? 'secret' : ''}`;
         card.innerHTML = `
             <div class="achievement-icon"><i class="fas ${ach.icon}"></i></div>
             <div class="achievement-title">${ach.name}</div>
             <div class="achievement-desc">${ach.desc}</div>
-            <div>${unlocked ? '<i class="fas fa-check-circle" style="color:#4ade80"></i> مفتوح' : '<i class="fas fa-lock"></i> مغلق'}</div>
+            ${ach.max > 1 ? `<div class="achievement-progress"><div class="progress-bar-container"><div class="progress-bar" style="width: ${progressPercent}%"></div></div><span>${Math.floor(ach.progress())} / ${ach.max}</span></div>` : ''}
+            <div class="${unlocked ? 'unlocked-badge' : 'locked-badge'}">${unlocked ? '<i class="fas fa-check-circle"></i> مفتوح' : '<i class="fas fa-lock"></i> مغلق'}</div>
         `;
         container.appendChild(card);
     });
+    document.getElementById('achievementCount').innerText = `${unlockedCount} / ${achievementsList.length} مفتوح`;
 }
 
-// ---------- الإحصائيات والرسوم البيانية ----------
+// ---------- الإحصائيات المتقدمة ----------
+function updateStatsPage() {
+    // Summary stats
+    document.getElementById('totalXP').innerText = getTotalCompletedTasks() * 10;
+    document.getElementById('bestStreak').innerText = getBestStreak();
+    document.getElementById('totalTasksCompleted').innerText = getTotalCompletedTasks();
+    document.getElementById('totalSavings').innerText = getTotalSavings();
+
+    // Prediction
+    const stats = getCurrentMonthStats();
+    const daysPassed = Math.ceil((new Date() - new Date(monthStartDate)) / (1000*60*60*24));
+    const totalDays = Math.ceil((new Date(addOneMonth(monthStartDate)) - new Date(monthStartDate)) / (1000*60*60*24));
+    const remainingDays = totalDays - daysPassed;
+    const currentXPRate = stats.earnedXP / Math.max(1, daysPassed);
+    const projectedXP = stats.earnedXP + (currentXPRate * remainingDays);
+    const projectedXPPercent = (projectedXP / stats.maxXP) * 100;
+    const financialRate = stats.financialTotal / Math.max(1, daysPassed);
+    const projectedFinancial = stats.financialTotal + (financialRate * remainingDays);
+    const projectedFinancialPercent = (projectedFinancial / financialGoal) * 100;
+    const predictedSuccess = (projectedXPPercent >= 80 && projectedFinancialPercent >= 100);
+    const predictionText = predictedSuccess ? 
+        `🎯 بناءً على أدائك الحالي، من المتوقع أن تنجح في الشهر بنسبة ${Math.min(100, Math.floor(projectedXPPercent))}% من XP و ${Math.min(100, Math.floor(projectedFinancialPercent))}% من الهدف المالي. استمر!` :
+        `⚠️ حسب الوتيرة الحالية، قد لا تصل إلى الهدف. تحتاج إلى زيادة إنجاز المهام أو المدخرات.`;
+    document.getElementById('predictionText').innerText = predictionText;
+    const predPercent = Math.min(100, Math.max(0, (projectedXPPercent + projectedFinancialPercent) / 2));
+    document.getElementById('predictionBar').style.width = `${predPercent}%`;
+}
+
 function getLast7Days() {
     const days = [];
     const today = new Date();
@@ -329,6 +426,7 @@ function updateCharts() {
     const last7 = getLast7Days();
     const xpData = last7.map(d => (completions[d] || []).length * 10);
     const financeData = last7.map(d => financialRecords[d] || 0);
+    const completionData = last7.map(d => (completions[d] || []).length);
     if (xpChart) {
         xpChart.data.datasets[0].data = xpData;
         xpChart.update();
@@ -337,6 +435,11 @@ function updateCharts() {
         financeChart.data.datasets[0].data = financeData;
         financeChart.update();
     }
+    if (completionChart) {
+        completionChart.data.datasets[0].data = completionData;
+        completionChart.update();
+    }
+    // Daily log
     const container = document.getElementById('dailyLogContainer');
     if (container) {
         const allDates = [...new Set([...Object.keys(completions), ...Object.keys(financialRecords)])].sort().reverse();
@@ -358,22 +461,62 @@ function updateCharts() {
 function initCharts() {
     const ctx1 = document.getElementById('xpTrendChart')?.getContext('2d');
     const ctx2 = document.getElementById('financeTrendChart')?.getContext('2d');
-    if (!ctx1 || !ctx2) return;
+    const ctx3 = document.getElementById('completionChart')?.getContext('2d');
+    if (!ctx1 || !ctx2 || !ctx3) return;
     const last7 = getLast7Days();
     xpChart = new Chart(ctx1, {
         type: 'line',
-        data: { labels: last7, datasets: [{ label: 'XP', data: [], borderColor: '#38bdf8', tension: 0.3 }] },
-        options: { responsive: true }
+        data: { labels: last7, datasets: [{ label: 'XP', data: [], borderColor: '#38bdf8', tension: 0.3, fill: true, backgroundColor: 'rgba(56,189,248,0.1)' }] },
+        options: { responsive: true, plugins: { legend: { labels: { color: '#e2e8f0' } } } }
     });
     financeChart = new Chart(ctx2, {
         type: 'bar',
-        data: { labels: last7, datasets: [{ label: 'مدخرات (₿)', data: [], backgroundColor: '#4ade80' }] },
-        options: { responsive: true }
+        data: { labels: last7, datasets: [{ label: 'مدخرات (₿)', data: [], backgroundColor: '#4ade80', borderRadius: 8 }] },
+        options: { responsive: true, plugins: { legend: { labels: { color: '#e2e8f0' } } } }
+    });
+    completionChart = new Chart(ctx3, {
+        type: 'line',
+        data: { labels: last7, datasets: [{ label: 'المهام المنجزة', data: [], borderColor: '#f97316', tension: 0.3 }] },
+        options: { responsive: true, plugins: { legend: { labels: { color: '#e2e8f0' } } } }
     });
     updateCharts();
 }
 
-// ---------- الإعدادات والمظهر ----------
+// ---------- التقويم الحراري ----------
+function initCalendarHeatmap() {
+    if (!document.getElementById('cal-heatmap')) return;
+    const data = {};
+    for (let date in completions) {
+        if (completions[date].length > 0) {
+            data[date] = completions[date].length;
+        }
+    }
+    if (calHeatmapInstance) calHeatmapInstance.destroy();
+    calHeatmapInstance = new CalHeatmap();
+    calHeatmapInstance.paint({
+        itemSelector: "#cal-heatmap",
+        domain: { type: "month", gutter: 4 },
+        subDomain: { type: "day", radius: 2 },
+        data: { source: data, x: "key", y: "value" },
+        range: 12,
+        date: { start: new Date(new Date().setMonth(new Date().getMonth() - 3)) },
+        scale: { color: { scheme: ["#0f172a", "#38bdf8"], type: "linear" } },
+        label: { text: (date, value) => value ? `${value} مهام` : "" }
+    });
+}
+
+function updateCalendarHeatmap() {
+    if (!calHeatmapInstance) return;
+    const data = {};
+    for (let date in completions) {
+        if (completions[date].length > 0) {
+            data[date] = completions[date].length;
+        }
+    }
+    calHeatmapInstance.update({ data: { source: data, x: "key", y: "value" } });
+}
+
+// ---------- الإعدادات المتطورة ----------
 function applySettings() {
     document.body.classList.toggle('light-mode', settings.darkMode);
     const scheme = settings.colorScheme;
@@ -384,19 +527,33 @@ function applySettings() {
     else primary = '#38bdf8';
     document.documentElement.style.setProperty('--primary', primary);
     document.documentElement.style.setProperty('--primary-glow', `${primary}80`);
+    document.body.className = document.body.className.replace(/font-(small|medium|large)/, '');
+    document.body.classList.add(`font-${settings.fontSize}`);
+    document.body.classList.remove('animation-slow', 'animation-normal', 'animation-fast');
+    document.body.classList.add(`animation-${settings.animationSpeed}`);
     saveSettings();
+    scheduleDailyReminder();
 }
 
 function setupSettingsUI() {
     const darkToggle = document.getElementById('darkModeToggle');
     const soundToggle = document.getElementById('soundToggle');
     const colorSelect = document.getElementById('colorSchemeSelect');
+    const fontSizeSelect = document.getElementById('fontSizeSelect');
+    const animationSpeedSelect = document.getElementById('animationSpeedSelect');
+    const reminderTimeInput = document.getElementById('reminderTime');
     if (darkToggle) darkToggle.checked = settings.darkMode;
     if (soundToggle) soundToggle.checked = settings.soundEnabled;
     if (colorSelect) colorSelect.value = settings.colorScheme;
+    if (fontSizeSelect) fontSizeSelect.value = settings.fontSize;
+    if (animationSpeedSelect) animationSpeedSelect.value = settings.animationSpeed;
+    if (reminderTimeInput) reminderTimeInput.value = settings.reminderTime;
     darkToggle?.addEventListener('change', e => { settings.darkMode = e.target.checked; applySettings(); });
     soundToggle?.addEventListener('change', e => { settings.soundEnabled = e.target.checked; applySettings(); });
     colorSelect?.addEventListener('change', e => { settings.colorScheme = e.target.value; applySettings(); });
+    fontSizeSelect?.addEventListener('change', e => { settings.fontSize = e.target.value; applySettings(); });
+    animationSpeedSelect?.addEventListener('change', e => { settings.animationSpeed = e.target.value; applySettings(); });
+    reminderTimeInput?.addEventListener('change', e => { settings.reminderTime = e.target.value; saveSettings(); scheduleDailyReminder(); });
     document.getElementById('exportDataBtn')?.addEventListener('click', exportData);
     document.getElementById('importFile')?.addEventListener('change', importData);
     document.getElementById('resetDataBtn')?.addEventListener('click', () => {
@@ -405,7 +562,10 @@ function setupSettingsUI() {
             location.reload();
         }
     });
-    document.getElementById('shareAchievementBtn')?.addEventListener('click', shareAsImage);
+    document.getElementById('shareAllAchievementsBtn')?.addEventListener('click', shareAllAchievements);
+    document.getElementById('quickTourBtn')?.addEventListener('click', quickTour);
+    document.getElementById('usageDays').innerText = getUsageDays();
+    document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks();
 }
 
 function exportData() {
@@ -444,16 +604,35 @@ function importData(e) {
     reader.readAsText(file);
 }
 
-async function shareAsImage() {
+async function shareAllAchievements() {
     const element = document.getElementById('achievementsGrid');
     if (!element) return;
     try {
         const canvas = await html2canvas(element);
         const link = document.createElement('a');
-        link.download = 'my_achievements.png';
+        link.download = 'all_achievements.png';
         link.href = canvas.toDataURL();
         link.click();
     } catch (err) { alert('فشل إنشاء الصورة'); }
+}
+
+function quickTour() {
+    alert('✨ مرحباً بك في الجولة التعريفية!\n\n1️⃣ أضف مهامك اليومية في الصفحة الرئيسية.\n2️⃣ سجل مدخراتك اليومية لتتبع هدفك المالي.\n3️⃣ احصل على نقاط XP عند إنجاز المهام.\n4️⃣ افتح إنجازات جديدة كلما حققت أهدافاً.\n5️⃣ تابع تقدمك في الإحصائيات والتقويم الحراري.\n\nاستمتع برحلتك نحو النجاح! 🚀');
+}
+
+function scheduleDailyReminder() {
+    if (!("Notification" in window)) return;
+    if (Notification.permission !== "granted") return;
+    const [hour, minute] = settings.reminderTime.split(':');
+    const now = new Date();
+    const reminderTime = new Date();
+    reminderTime.setHours(parseInt(hour), parseInt(minute), 0, 0);
+    if (reminderTime <= now) reminderTime.setDate(reminderTime.getDate() + 1);
+    const timeout = reminderTime - now;
+    setTimeout(() => {
+        new Notification('تذكير يومي', { body: 'لا تنسَ إنجاز مهامك اليوم وتسجيل مدخراتك!' });
+        scheduleDailyReminder();
+    }, timeout);
 }
 
 // ---------- الإدخال الصوتي ----------
@@ -484,7 +663,6 @@ function setupVoiceInput() {
 // ---------- التنقل بين الصفحات (شريط سفلي) ----------
 function setupNavigation() {
     const navBtns = document.querySelectorAll('.bottom-nav .nav-btn');
-    const pages = ['dashboard', 'stats', 'achievements', 'settings'];
     navBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const page = btn.dataset.page;
@@ -496,15 +674,22 @@ function setupNavigation() {
             btn.classList.add('active');
             if (page === 'stats') {
                 if (!xpChart) initCharts();
-                else updateCharts();
+                else {
+                    updateCharts();
+                    updateStatsPage();
+                    updateCalendarHeatmap();
+                }
             } else if (page === 'achievements') {
                 renderAchievements();
+            } else if (page === 'settings') {
+                document.getElementById('usageDays').innerText = getUsageDays();
+                document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks();
             }
         });
     });
 }
 
-// ---------- الخلفية ثلاثية الأبعاد (Three.js) ----------
+// ---------- الخلفية ثلاثية الأبعاد ----------
 function initThreeBackground() {
     const canvas = document.getElementById('bg-canvas');
     if (!canvas || !window.THREE) return;
@@ -562,6 +747,17 @@ function renderAll() {
     renderTasks();
     updateAllStats();
     setGreeting();
+    if (currentPage === 'stats') {
+        if (!xpChart) initCharts();
+        else updateCharts();
+        updateStatsPage();
+        updateCalendarHeatmap();
+    }
+    if (currentPage === 'achievements') renderAchievements();
+    if (currentPage === 'settings') {
+        document.getElementById('usageDays').innerText = getUsageDays();
+        document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks();
+    }
 }
 
 // ---------- التهيئة النهائية ----------
@@ -576,6 +772,7 @@ function init() {
     setupVoiceInput();
     if (document.getElementById('xpTrendChart')) initCharts();
     if (document.getElementById('achievementsGrid')) renderAchievements();
+    if (document.getElementById('cal-heatmap')) initCalendarHeatmap();
     document.getElementById('addTaskBtn')?.addEventListener('click', () => {
         addTask(document.getElementById('newTaskInput').value);
         document.getElementById('newTaskInput').value = '';
@@ -595,6 +792,10 @@ function init() {
         checkMonthRollover();
         updateAllStats();
     }, 60000);
+    // طلب إذن الإشعارات
+    if (Notification.permission !== 'granted' && Notification.permission !== 'denied') {
+        Notification.requestPermission();
+    }
 }
 
 init();
