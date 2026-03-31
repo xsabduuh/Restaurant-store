@@ -1,0 +1,289 @@
+/* ===============================
+   GLOBAL RESET & FONT
+================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", "Segoe UI", sans-serif;
+}
+
+/* ===============================
+   COLOR SYSTEM (RED DOMINANT)
+================================ */
+:root {
+    --bg-main: linear-gradient(135deg, #1f0a0a, #2b0f14, #3a0d0d);
+    --glass-bg: rgba(255, 255, 255, 0.08);
+    --glass-border: rgba(255, 255, 255, 0.25);
+
+    --primary-red: #ef4444;
+    --secondary-pink: #ec4899;
+    --accent-orange: #f97316;
+    --accent-violet: #8b5cf6;
+
+    --text-main: #fef2f2;
+    --text-muted: #fecaca;
+}
+
+/* ===============================
+   BODY
+================================ */
+body {
+    min-height: 100vh;
+    background: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.7;
+}
+
+/* ===============================
+   HEADER & NAVIGATION
+================================ */
+header {
+    padding: 30px 20px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+}
+
+header h1 {
+    font-size: 36px;
+    font-weight: 800;
+    background: linear-gradient(
+        90deg,
+        var(--primary-red),
+        var(--secondary-pink),
+        var(--accent-orange),
+        var(--accent-violet)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+nav {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 30px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    font-weight: 600;
+    transition: all 0.35s ease;
+}
+
+nav a:hover {
+    background: linear-gradient(
+        135deg,
+        var(--primary-red),
+        var(--secondary-pink)
+    );
+    color: #1f0a0a;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(239, 68, 68, 0.6);
+}
+
+/* ===============================
+   MAIN LAYOUT
+================================ */
+main {
+    max-width: 1150px;
+    margin: 45px auto;
+    padding: 20px;
+}
+
+/* ===============================
+   GLASS CARD SECTIONS
+================================ */
+section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px);
+    border: 1px solid var(--glass-border);
+    padding: 32px;
+    margin-bottom: 35px;
+    border-radius: 26px;
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.45);
+}
+
+/* ===============================
+   HEADINGS & TEXT
+================================ */
+h2 {
+    font-size: 26px;
+    margin-bottom: 14px;
+    color: var(--primary-red);
+}
+
+h3 {
+    margin-top: 22px;
+    margin-bottom: 10px;
+    color: var(--accent-orange);
+}
+
+p {
+    margin-bottom: 12px;
+    color: var(--text-muted);
+}
+
+strong {
+    color: var(--text-main);
+}
+
+/* ===============================
+   LISTS (GOALS / HABITS / AI)
+================================ */
+ul {
+    margin-top: 12px;
+    padding-left: 24px;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+ul li::marker {
+    color: var(--secondary-pink);
+}
+
+/* ===============================
+   TABLES (SCHEDULE PAGE)
+================================ */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 25px;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+table th {
+    background: linear-gradient(
+        90deg,
+        var(--primary-red),
+        var(--secondary-pink)
+    );
+    color: #1f0a0a;
+    padding: 16px;
+    font-weight: 700;
+    text-align: left;
+}
+
+table td {
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+}
+
+table tr:hover td {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* ===============================
+   FORMS & INPUTS
+================================ */
+label {
+    font-weight: 600;
+    color: var(--accent-orange);
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    margin-top: 8px;
+    margin-bottom: 18px;
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--text-main);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #ffe4e6;
+}
+
+/* ===============================
+   BUTTONS (NEON GLOW 🔥)
+================================ */
+button,
+input[type="submit"] {
+    background: linear-gradient(
+        135deg,
+        var(--primary-red),
+        var(--accent-orange)
+    );
+    color: #1f0a0a;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 40px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.8);
+    transition: all 0.35s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    transform: scale(1.12);
+    box-shadow: 0 0 50px rgba(236, 72, 153, 1);
+}
+
+/* ===============================
+   AI RESPONSE / OUTPUT
+================================ */
+#aiResponse,
+#aiOutput {
+    border-left: 6px solid var(--primary-red);
+    background: rgba(239, 68, 68, 0.18);
+}
+
+/* ===============================
+   LINKS
+================================ */
+a {
+    color: var(--accent-orange);
+}
+
+a:hover {
+    color: var(--secondary-pink);
+}
+
+/* ===============================
+   FOOTER
+================================ */
+footer {
+    text-align: center;
+    padding: 40px 15px;
+    margin-top: 70px;
+    color: var(--text-muted);
+}
+
+footer p:first-child {
+    color: var(--accent-violet);
+    font-weight: 700;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 28px;
+    }
+
+    nav a {
+        padding: 10px 16px;
+    }
+
+    section {
+        padding: 22px;
+    }
+}
