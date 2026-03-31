@@ -2,101 +2,204 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>تحدي الإنجاز اليومي | الرئيسية</title>
-    <!-- Font Awesome 6 (أيقونات رائعة) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>🏆 تحدي الإنجاز اليومي | النسخة المتطورة</title>
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
+        }
+    </script>
+    <!-- html-to-image for sharing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Fallback styles inline in case external fails, but we'll rely on style.css */
+    </style>
 </head>
 <body>
-    <nav class="glass-nav">
-        <div class="nav-container">
-            <a href="index.html" class="nav-link active"><i class="fas fa-home"></i> الرئيسية</a>
-            <a href="stats.html" class="nav-link"><i class="fas fa-chart-line"></i> الإحصائيات</a>
-            <a href="achievements.html" class="nav-link"><i class="fas fa-medal"></i> الإنجازات</a>
-            <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a>
-        </div>
-    </nav>
+    <!-- 3D Canvas Background -->
+    <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;"></canvas>
+    <div class="noise-overlay"></div>
 
-    <div class="container">
-        <header class="glass-header">
-            <h1><i class="fas fa-trophy"></i> تحدي الإنجاز اليومي</h1>
-            <p>نظام نقاط صارم | أهداف مالية | تقارير شهرية</p>
-        </header>
+    <div class="app">
+        <!-- Sidebar Navigation (مدمج في SPA) -->
+        <aside class="sidebar glass">
+            <div class="logo">
+                <i class="fas fa-dragon"></i>
+                <span>تحدي<span> الإنجاز</span></span>
+            </div>
+            <nav>
+                <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
+                <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
+                <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
+                <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
+            </nav>
+            <div class="user-tip" id="aiTip">
+                <i class="fas fa-robot"></i>
+                <span>نصيحة اليوم: سجل مهمة واحدة الآن!</span>
+            </div>
+        </aside>
 
-        <div class="dashboard">
-            <!-- بطاقة المهام -->
-            <div class="glass-card">
-                <div class="card-header">
-                    <i class="fas fa-check-circle"></i>
-                    <h2>مهام اليوم <span class="badge">تتكرر يومياً</span></h2>
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Dashboard Page -->
+            <div id="dashboard-page" class="page active">
+                <div class="welcome-section">
+                    <h1><i class="fas fa-crown"></i> مرحباً أيها البطل</h1>
+                    <p id="greeting"></p>
                 </div>
-                <div class="add-task">
-                    <input type="text" id="newTaskInput" placeholder="أضف مهمة جديدة...">
-                    <button id="addTaskBtn"><i class="fas fa-plus"></i> إضافة</button>
+                <div class="dashboard-grid">
+                    <!-- Task Card -->
+                    <div class="glass-card task-card">
+                        <div class="card-header">
+                            <i class="fas fa-tasks"></i>
+                            <h2>مهام اليوم</h2>
+                            <button id="voiceAddBtn" class="icon-btn" title="إضافة بالصوت"><i class="fas fa-microphone"></i></button>
+                        </div>
+                        <div class="add-task">
+                            <input type="text" id="newTaskInput" placeholder="أضف مهمة جديدة...">
+                            <button id="addTaskBtn"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <ul id="tasksList" class="tasks-list sortable"></ul>
+                        <div class="task-stats">
+                            <div><i class="fas fa-bolt"></i> XP اليوم: <strong id="todayXP">0</strong></div>
+                            <div><i class="fas fa-fire"></i> التسلسل: <strong id="streakCount">0</strong> يوم</div>
+                            <div><i class="fas fa-chart-simple"></i> XP الشهر: <strong id="monthXP">0</strong> / <span id="monthMaxXP">0</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Financial Card -->
+                    <div class="glass-card finance-card">
+                        <div class="card-header">
+                            <i class="fas fa-coins"></i>
+                            <h2>الهدف المالي</h2>
+                        </div>
+                        <div class="financial-goal-setup">
+                            <input type="number" id="financialGoalInput" placeholder="الهدف الشهري">
+                            <button id="setGoalBtn">تحديد</button>
+                        </div>
+                        <div class="progress-ring-container">
+                            <svg viewBox="0 0 100 100" class="progress-ring">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="url(#gradient)" stroke-width="8" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" id="financialRing"/>
+                                <defs><linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#a855f7"/></linearGradient></defs>
+                            </svg>
+                            <div class="ring-value" id="financialPercentRing">0%</div>
+                        </div>
+                        <div class="daily-saving">
+                            <input type="number" id="dailySavingInput" placeholder="مدخرات اليوم">
+                            <button id="recordSavingBtn"><i class="fas fa-plus-circle"></i></button>
+                        </div>
+                        <div class="saved-info">
+                            <span>المدخرات: <strong id="savedAmount">0</strong> ₿</span>
+                            <span>الهدف: <strong id="goalDisplay">0</strong> ₿</span>
+                        </div>
+                    </div>
+
+                    <!-- XP Progress Card -->
+                    <div class="glass-card xp-card">
+                        <div class="card-header">
+                            <i class="fas fa-chart-line"></i>
+                            <h2>تقدم XP الشهري</h2>
+                        </div>
+                        <div class="progress-ring-container">
+                            <svg viewBox="0 0 100 100" class="progress-ring">
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="8"/>
+                                <circle cx="50" cy="50" r="45" fill="none" stroke="url(#gradient2)" stroke-width="8" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" id="xpRing"/>
+                                <defs><linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#facc15"/></linearGradient></defs>
+                            </svg>
+                            <div class="ring-value" id="xpPercentRing">0%</div>
+                        </div>
+                        <div class="month-status" id="monthStatusCard">
+                            <i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري</strong>
+                        </div>
+                    </div>
                 </div>
-                <ul id="tasksList" class="tasks-list"></ul>
-                <div class="task-stats">
-                    <div><i class="fas fa-bolt"></i> XP اليوم: <strong id="todayXP">0</strong></div>
-                    <div><i class="fas fa-calendar-alt"></i> XP الشهر: <strong id="monthXP">0</strong> / <span id="monthMaxXP">0</span></div>
-                    <div><i class="fas fa-fire"></i> التسلسل: <strong id="streakCount">0</strong> يوم</div>
+                <div class="insight-card glass">
+                    <i class="fas fa-brain"></i>
+                    <div id="insightText">تحليل ذكي: أنت بحاجة إلى 200 XP إضافي للوصول إلى 80%</div>
                 </div>
             </div>
 
-            <!-- بطاقة الهدف المالي -->
-            <div class="glass-card">
-                <div class="card-header">
-                    <i class="fas fa-coins"></i>
-                    <h2>الهدف المالي الشهري</h2>
-                </div>
-                <div class="financial-goal-setup">
-                    <input type="number" id="financialGoalInput" placeholder="الهدف (₿)">
-                    <button id="setGoalBtn"><i class="fas fa-save"></i> تحديد</button>
-                </div>
-                <div class="progress-section">
-                    <div class="progress-label">
-                        <span><i class="fas fa-piggy-bank"></i> المدخرات: <strong id="savedAmount">0</strong> ₿</span>
-                        <span>الهدف: <strong id="goalDisplay">0</strong> ₿</span>
+            <!-- Stats Page -->
+            <div id="stats-page" class="page">
+                <h2><i class="fas fa-chart-pie"></i> الإحصائيات المتقدمة</h2>
+                <div class="stats-grid">
+                    <div class="glass-card full-width">
+                        <canvas id="xpTrendChart" width="400" height="200"></canvas>
                     </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="financialProgressBar"></div>
+                    <div class="glass-card full-width">
+                        <canvas id="financeTrendChart" width="400" height="200"></canvas>
+                    </div>
+                    <div class="glass-card full-width">
+                        <div id="dailyLogContainer" class="daily-log"></div>
                     </div>
                 </div>
-                <div class="daily-saving">
-                    <input type="number" id="dailySavingInput" placeholder="أضف مدخرات اليوم">
-                    <button id="recordSavingBtn"><i class="fas fa-plus-circle"></i> تسجيل</button>
-                </div>
-                <div id="todaySavingMsg" class="small-msg"></div>
             </div>
 
-            <!-- بطاقة ملخص سريع -->
-            <div class="glass-card">
-                <div class="card-header">
-                    <i class="fas fa-chart-simple"></i>
-                    <h2>ملخص سريع</h2>
-                </div>
-                <div class="stats-mini">
-                    <div class="stat-item">
-                        <span class="stat-label"><i class="fas fa-percent"></i> نسبة XP</span>
-                        <span class="stat-value" id="xpRateMini">0%</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label"><i class="fas fa-chart-line"></i> نسبة المالي</span>
-                        <span class="stat-value" id="financialRateMini">0%</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label"><i class="fas fa-hourglass-half"></i> حالة الشهر</span>
-                        <span class="stat-value" id="monthStatusMini">جاري</span>
-                    </div>
-                </div>
-                <button id="syncDataBtn" class="btn-secondary"><i class="fas fa-sync-alt"></i> مزامنة</button>
+            <!-- Achievements Page -->
+            <div id="achievements-page" class="page">
+                <h2><i class="fas fa-award"></i> إنجازاتي</h2>
+                <div id="achievementsGrid" class="achievements-grid"></div>
             </div>
-        </div>
+
+            <!-- Settings Page -->
+            <div id="settings-page" class="page">
+                <h2><i class="fas fa-sliders-h"></i> الإعدادات المتقدمة</h2>
+                <div class="settings-grid">
+                    <div class="glass-card">
+                        <h3>البيانات</h3>
+                        <button id="exportDataBtn"><i class="fas fa-download"></i> تصدير</button>
+                        <label for="importFile" class="file-label"><i class="fas fa-upload"></i> استيراد</label>
+                        <input type="file" id="importFile" accept=".json" style="display:none">
+                        <button id="resetDataBtn" class="danger"><i class="fas fa-trash"></i> إعادة ضبط</button>
+                    </div>
+                    <div class="glass-card">
+                        <h3>المظهر والصوت</h3>
+                        <div class="setting-item">
+                            <span>الوضع الليلي</span>
+                            <label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider round"></span></label>
+                        </div>
+                        <div class="setting-item">
+                            <span>المؤثرات الصوتية</span>
+                            <label class="switch"><input type="checkbox" id="soundToggle"><span class="slider round"></span></label>
+                        </div>
+                        <div class="setting-item">
+                            <span>نظام الألوان</span>
+                            <select id="colorSchemeSelect">
+                                <option value="default">أزرق (افتراضي)</option>
+                                <option value="purple">بنفسجي</option>
+                                <option value="green">أخضر</option>
+                                <option value="sunset">غروب الشمس</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h3>المشاركة</h3>
+                        <button id="shareAchievementBtn"><i class="fas fa-share-alt"></i> مشاركة الإنجازات كصورة</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Floating Action Button (Quick Add Task) -->
+        <button id="fab" class="fab glass"><i class="fas fa-plus"></i></button>
     </div>
 
-    <script src="data.js"></script>
-    <script src="script.js"></script>
+    <!-- Audio elements (optional) -->
+    <audio id="completeSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
+    <audio id="achievementSound" src="https://www.soundjay.com/misc/sounds/fanfare-01.mp3" preload="auto"></audio>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>
