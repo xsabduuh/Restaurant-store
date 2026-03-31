@@ -2,11 +2,22 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>تحدي المهام اليومية | نظام XP وأهداف مالية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي الإنجاز اليومي | الرئيسية</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Chart.js (للرسوم البيانية في صفحة الإحصائيات فقط) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link active">🏠 الرئيسية</a>
+            <a href="stats.html" class="nav-link">📊 الإحصائيات</a>
+            <a href="achievements.html" class="nav-link">🏅 الإنجازات</a>
+            <a href="settings.html" class="nav-link">⚙️ الإعدادات</a>
+        </div>
+    </nav>
+
     <div class="app-container">
         <header>
             <h1>🏆 تحدي الإنجاز اليومي</h1>
@@ -25,6 +36,7 @@
                 <div class="task-stats">
                     <span>🏅 XP اليوم: <strong id="todayXP">0</strong></span>
                     <span>🎯 إجمالي XP الشهر: <strong id="monthXP">0</strong> / <span id="monthMaxXP">0</span></span>
+                    <span>🔥 التسلسل: <strong id="streakCount">0</strong> يوم</span>
                 </div>
             </section>
 
@@ -53,47 +65,29 @@
                 </div>
             </section>
 
-            <!-- قسم الإحصائيات والتقرير الشهري -->
-            <section class="card stats-section">
-                <h2>📊 تقدم الشهر الحالي</h2>
-                <div class="month-info">
-                    <span>🗓️ الفترة: <strong id="monthRange"></strong></span>
-                    <span>📅 الأيام المتبقية: <strong id="daysLeft"></strong></span>
-                </div>
+            <!-- قسم التقدم السريع -->
+            <section class="card quick-stats">
+                <h2>⚡ ملخص سريع</h2>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-title">نسبة إنجاز المهام</div>
-                        <div class="stat-value" id="completionRate">0%</div>
-                        <div class="stat-detail">(مهام منفذة / إجمالي ممكن)</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-title">نسبة XP المحققة</div>
+                        <div class="stat-title">نسبة XP</div>
                         <div class="stat-value" id="xpRate">0%</div>
-                        <div class="stat-detail">مطلوب 80% للنجاح</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-title">الهدف المالي</div>
+                        <div class="stat-title">نسبة الهدف المالي</div>
                         <div class="stat-value" id="financialRate">0%</div>
-                        <div class="stat-detail">مطلوب 100% للنجاح</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-title">حالة الشهر</div>
+                        <div class="stat-value" id="monthStatusShort">جاري</div>
                     </div>
                 </div>
-                <div class="month-status">
-                    <span>⚡ حالة الشهر:</span>
-                    <strong id="monthStatus">جاري</strong>
-                </div>
-                <button id="manualCheckBtn" class="secondary-btn">تحديث الإحصائيات</button>
-            </section>
-
-            <!-- سجل الشهور السابقة -->
-            <section class="card history-section">
-                <h2>📜 سجل الشهور السابقة</h2>
-                <div id="historyList" class="history-list">
-                    <p class="empty-history">لا يوجد سجل بعد</p>
-                </div>
+                <button id="syncDataBtn" class="secondary-btn">🔄 مزامنة البيانات</button>
             </section>
         </div>
     </div>
 
+    <script src="data.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
