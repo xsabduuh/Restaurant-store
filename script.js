@@ -812,6 +812,9 @@ function updateTodaySavingDisplay() {
     if (el) el.innerText = financialRecords[today] || 0;
 }
 
-init(document.getElementById('resetTodaySavingBtn')?.addEventListener('click', () => {
-    if (confirm('تأكيد: مسح مدخرات اليوم؟')) resetTodaySaving();
-}););
+    document.getElementById('resetTodaySavingBtn')?.addEventListener('click', () => {
+        if (confirm('تأكيد: مسح مدخرات اليوم؟')) resetTodaySaving();
+    });
+}
+
+init();
