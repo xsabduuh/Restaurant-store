@@ -4,42 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تحدي الإنجاز اليومي | الإحصائيات</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <nav class="main-nav">
+    <nav class="glass-nav">
         <div class="nav-container">
-            <a href="index.html" class="nav-link">🏠 الرئيسية</a>
-            <a href="stats.html" class="nav-link active">📊 الإحصائيات</a>
-            <a href="achievements.html" class="nav-link">🏅 الإنجازات</a>
-            <a href="settings.html" class="nav-link">⚙️ الإعدادات</a>
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> الرئيسية</a>
+            <a href="stats.html" class="nav-link active"><i class="fas fa-chart-line"></i> الإحصائيات</a>
+            <a href="achievements.html" class="nav-link"><i class="fas fa-medal"></i> الإنجازات</a>
+            <a href="settings.html" class="nav-link"><i class="fas fa-cog"></i> الإعدادات</a>
         </div>
     </nav>
 
-    <div class="app-container">
-        <header>
-            <h1>📊 لوحة الإحصائيات المتقدمة</h1>
-            <p class="subtitle">تحليل يومي وشهري لتقدمك</p>
+    <div class="container">
+        <header class="glass-header">
+            <h1><i class="fas fa-chart-pie"></i> لوحة الإحصائيات المتقدمة</h1>
+            <p>تحليل يومي وشهري مع رسوم بيانية تفاعلية</p>
         </header>
 
         <div class="dashboard">
-            <!-- الرسوم البيانية -->
-            <section class="card chart-section">
-                <h2>📈 تقدم XP خلال آخر 7 أيام</h2>
+            <div class="glass-card full-width">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>تقدم XP خلال آخر 7 أيام</h2>
+                </div>
                 <canvas id="xpChart" width="400" height="200" style="max-height: 300px;"></canvas>
-            </section>
+            </div>
 
-            <section class="card chart-section">
-                <h2>💰 تقدم الهدف المالي خلال آخر 7 أيام</h2>
+            <div class="glass-card full-width">
+                <div class="card-header">
+                    <i class="fas fa-chart-line"></i>
+                    <h2>تقدم الهدف المالي خلال آخر 7 أيام</h2>
+                </div>
                 <canvas id="financeChart" width="400" height="200" style="max-height: 300px;"></canvas>
-            </section>
+            </div>
 
-            <!-- السجل اليومي المفصل -->
-            <section class="card daily-log-section">
-                <h2>📅 السجل اليومي</h2>
+            <div class="glass-card full-width">
+                <div class="card-header">
+                    <i class="fas fa-calendar-day"></i>
+                    <h2>السجل اليومي التفصيلي</h2>
+                </div>
                 <div id="dailyLogContainer" class="daily-log"></div>
-            </section>
+            </div>
         </div>
     </div>
 
