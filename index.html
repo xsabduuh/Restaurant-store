@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>🏆 تحدي الإنجاز اليومي</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -21,25 +21,8 @@
     <div class="noise-overlay"></div>
 
     <div class="app">
-        <aside class="sidebar glass">
-            <div class="logo">
-                <i class="fas fa-dragon"></i>
-                <span>تحدي<span> الإنجاز</span></span>
-            </div>
-            <nav>
-                <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
-                <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
-                <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
-                <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
-            </nav>
-            <div class="user-tip" id="aiTip">
-                <i class="fas fa-robot"></i>
-                <span id="tipText">نصيحة: سجل مهمة واحدة الآن!</span>
-            </div>
-        </aside>
-
         <main class="content">
-            <!-- Dashboard -->
+            <!-- Dashboard Page -->
             <div id="dashboard-page" class="page active">
                 <div class="welcome-section">
                     <h1><i class="fas fa-crown"></i> مرحباً أيها البطل</h1>
@@ -175,6 +158,26 @@
                 </div>
             </div>
         </main>
+
+        <!-- Bottom Navigation Bar -->
+        <nav class="bottom-nav glass">
+            <button class="nav-btn active" data-page="dashboard">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </button>
+            <button class="nav-btn" data-page="stats">
+                <i class="fas fa-chart-line"></i>
+                <span>الإحصائيات</span>
+            </button>
+            <button class="nav-btn" data-page="achievements">
+                <i class="fas fa-medal"></i>
+                <span>الإنجازات</span>
+            </button>
+            <button class="nav-btn" data-page="settings">
+                <i class="fas fa-cog"></i>
+                <span>الإعدادات</span>
+            </button>
+        </nav>
 
         <button id="fab" class="fab glass"><i class="fas fa-plus"></i></button>
     </div>
