@@ -13,533 +13,350 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cal-heatmap@4.0.0/dist/cal-heatmap.css">
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cal-heatmap@4.0.0/dist/cal-heatmap.min.js"></script>
-    <link rel="stylesheet" href="style.css">
     <style>
-        /* ===== Dashboard Styles ===== */
-        .greeting-card {
-            text-align: center;
-            padding: 1.2rem;
-            margin-bottom: 1.2rem;
+        :root {
+            --bg: #0a0f1c;
+            --glass: rgba(15,25,45,0.75);
+            --border: rgba(56,189,248,0.25);
+            --primary: #38bdf8;
+            --primary-dim: rgba(56,189,248,0.15);
+            --text: #f0f4ff;
+            --muted: #7a8fa6;
+            --danger: #ef4444;
+            --success: #4ade80;
+            --radius: 20px;
         }
-        .greeting-text {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--primary);
+        * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-
-```
-    /* Quick Stats Row */
-    .stats-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-bottom: 1.2rem;
-    }
-    .stat-card {
-        text-align: center;
-        padding: 1rem;
-        margin-bottom: 0;
-    }
-    .stat-card i {
-        font-size: 1.6rem;
-        color: var(--primary);
-        margin-bottom: 0.4rem;
-        display: block;
-    }
-    .stat-value {
-        font-size: 2rem;
-        font-weight: bold;
-        color: var(--text);
-    }
-    .stat-label {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        margin-top: 0.2rem;
-    }
-
-    /* Progress Rings Row */
-    .rings-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin-bottom: 1.2rem;
-    }
-    .ring-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 1rem;
-        margin-bottom: 0;
-        position: relative;
-    }
-    .ring-svg-wrap {
-        position: relative;
-        width: 110px;
-        height: 110px;
-    }
-    .ring-svg {
-        width: 110px;
-        height: 110px;
-        transform: rotate(-90deg);
-    }
-    .ring-center-text {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        pointer-events: none;
-    }
-    .ring-percent {
-        font-size: 1.3rem;
-        font-weight: bold;
-        color: var(--primary);
-        display: block;
-    }
-    .ring-label {
-        text-align: center;
-        margin-top: 0.6rem;
-    }
-    .ring-label small {
-        display: block;
-        font-size: 0.7rem;
-        color: var(--text-muted);
-        line-height: 1.4;
-    }
-    .ring-label .ring-title {
-        font-size: 0.85rem;
-        font-weight: 600;
-        color: var(--text);
-        display: block;
-    }
-
-    /* Month Status */
-    #monthStatusCard {
-        padding: 1rem 1.5rem;
-        margin-bottom: 1rem;
-        font-size: 0.95rem;
-    }
-
-    /* Insight */
-    .insight-box {
-        padding: 1rem 1.5rem;
-        margin-bottom: 1.2rem;
-        font-size: 0.9rem;
-        color: var(--text-muted);
-    }
-
-    /* Tasks Card */
-    .tasks-card {
-        margin-bottom: 1.2rem;
-    }
-    .add-task-row {
-        display: flex;
-        gap: 0.5rem;
-        margin-top: 1rem;
-    }
-    .task-input {
-        flex: 1;
-        background: rgba(0,0,0,0.4);
-        border: 1px solid var(--glass-border);
-        padding: 0.65rem 1rem;
-        border-radius: 2rem;
-        color: var(--text);
-        outline: none;
-        font-size: 0.9rem;
-        font-family: inherit;
-    }
-    .task-input::placeholder { color: var(--text-muted); }
-    .btn-primary {
-        background: var(--primary);
-        border: none;
-        padding: 0.65rem 1rem;
-        border-radius: 2rem;
-        color: #0f172a;
-        cursor: pointer;
-        font-size: 1rem;
-        transition: var(--transition);
-    }
-    .btn-primary:hover { opacity: 0.9; transform: scale(1.04); }
-    .btn-icon {
-        background: rgba(56,189,248,0.15);
-        border: 1px solid var(--glass-border);
-        padding: 0.65rem 0.9rem;
-        border-radius: 2rem;
-        color: var(--primary);
-        cursor: pointer;
-        font-size: 1rem;
-        transition: var(--transition);
-    }
-    .btn-icon:hover { background: rgba(56,189,248,0.25); }
-
-    /* Finance Card */
-    .finance-card { margin-bottom: 1.2rem; }
-    .finance-row {
-        display: flex;
-        gap: 0.5rem;
-        margin-bottom: 0.75rem;
-    }
-    .finance-input {
-        flex: 1;
-        background: rgba(0,0,0,0.4);
-        border: 1px solid var(--glass-border);
-        padding: 0.65rem 1rem;
-        border-radius: 2rem;
-        color: var(--text);
-        outline: none;
-        font-size: 0.9rem;
-        font-family: inherit;
-    }
-    .finance-input::placeholder { color: var(--text-muted); }
-
-    /* Settings buttons */
-    #settings-page .glass-card button {
-        background: var(--primary);
-        border: none;
-        padding: 0.6rem 1rem;
-        border-radius: 2rem;
-        color: #0f172a;
-        cursor: pointer;
-        margin: 0.4rem 0;
-        width: 100%;
-        font-size: 0.9rem;
-        font-family: inherit;
-        transition: var(--transition);
-    }
-    #settings-page .glass-card button.danger {
-        background: var(--danger);
-        color: white;
-    }
-    #settings-page .glass-card select,
-    #settings-page .glass-card input[type="time"] {
-        background: rgba(0,0,0,0.4);
-        border: 1px solid var(--glass-border);
-        padding: 0.4rem 0.8rem;
-        border-radius: 1rem;
-        color: var(--text);
-        font-family: inherit;
-        font-size: 0.85rem;
-    }
-
-    /* btn-secondary */
-    .btn-secondary {
-        background: rgba(56,189,248,0.15);
-        border: 1px solid var(--glass-border);
-        padding: 0.5rem 1rem;
-        border-radius: 2rem;
-        color: var(--primary);
-        cursor: pointer;
-        font-size: 0.85rem;
-        font-family: inherit;
-        transition: var(--transition);
-    }
-    .btn-secondary:hover { background: rgba(56,189,248,0.25); }
-
-    /* Stats page h2 / achievements page h2 */
-    .page > h2 {
-        margin-bottom: 1.2rem;
-        font-size: 1.3rem;
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
-        color: var(--primary);
-    }
-    .page > h2 i { font-size: 1.4rem; }
-
-    /* Stats grid */
-    .stats-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 1.2rem;
-    }
-
-    /* Cal-heatmap container */
-    #cal-heatmap {
-        overflow-x: auto;
-        padding: 0.5rem 0;
-    }
-</style>
-```
-
+        #bg-canvas { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; pointer-events:none; }
+        .noise-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,0.04) 0px,rgba(0,0,0,0.04) 2px,transparent 2px,transparent 4px); pointer-events:none; z-index:-1; }
+        .app { display:flex; flex-direction:column; min-height:100vh; }
+        .content { flex:1; padding:1rem; padding-bottom:5.5rem; overflow-y:auto; }
+        .glass-card { background:var(--glass); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; margin-bottom:1rem; }
+        .card-header { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.8rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
+        .card-header i { font-size:1.2rem; color:var(--primary); }
+        .card-header h3 { font-size:1rem; margin:0; }
+        .page { display:none; }
+        .page.active { display:block; animation:fadeUp 0.25s ease; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+        .page-title { display:flex; align-items:center; gap:0.5rem; font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:1rem; }
+        .bottom-nav { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:space-around; align-items:center; padding:0.5rem 0; background:rgba(8,12,22,0.97); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-top:1px solid var(--border); z-index:1000; }
+        .nav-btn { background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:0.15rem; padding:0.4rem 0.8rem; color:var(--muted); font-size:0.68rem; cursor:pointer; border-radius:1rem; transition:color 0.2s; min-width:55px; -webkit-tap-highlight-color:transparent; }
+        .nav-btn i { font-size:1.25rem; }
+        .nav-btn.active { color:var(--primary); }
+        .fab { position:fixed; bottom:4.5rem; left:1rem; width:48px; height:48px; border-radius:50%; background:var(--primary); border:none; font-size:1.3rem; color:#0f172a; cursor:pointer; z-index:999; box-shadow:0 4px 15px rgba(56,189,248,0.4); }
+        .greeting-card { text-align:center; }
+        .greeting-text { font-size:1.1rem; font-weight:600; color:var(--primary); }
+        .two-col { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem; }
+        .stat-card { text-align:center; padding:1rem 0.5rem; margin-bottom:0; }
+        .stat-card i { font-size:1.4rem; color:var(--primary); display:block; margin-bottom:0.3rem; }
+        .stat-value { font-size:1.8rem; font-weight:800; }
+        .stat-label { font-size:0.7rem; color:var(--muted); margin-top:0.2rem; }
+        .ring-card { display:flex; flex-direction:column; align-items:center; padding:0.8rem 0.5rem; margin-bottom:0; }
+        .ring-wrap { position:relative; width:100px; height:100px; }
+        .ring-svg { width:100px; height:100px; transform:rotate(-90deg); }
+        .ring-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; pointer-events:none; }
+        .ring-pct { font-size:1.2rem; font-weight:700; display:block; }
+        .ring-info { text-align:center; margin-top:0.5rem; }
+        .ring-title { font-size:0.78rem; font-weight:600; display:block; }
+        .ring-sub { font-size:0.65rem; color:var(--muted); display:block; margin-top:0.2rem; }
+        .status-card { font-size:0.88rem; }
+        .insight-card { font-size:0.82rem; color:var(--muted); }
+        .tasks-list { list-style:none; max-height:240px; overflow-y:auto; margin-bottom:0.75rem; }
+        .tasks-list li { display:flex; align-items:center; gap:0.6rem; background:rgba(0,0,0,0.25); margin-bottom:0.45rem; padding:0.55rem 0.75rem; border-radius:12px; }
+        .task-check { width:1.1rem; height:1.1rem; cursor:pointer; accent-color:var(--primary); flex-shrink:0; }
+        .task-text { flex:1; font-size:0.88rem; }
+        .delete-task { background:none; border:none; color:var(--danger); cursor:pointer; font-size:0.95rem; flex-shrink:0; }
+        .input-row { display:flex; gap:0.4rem; }
+        .txt-input { flex:1; background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--text); font-size:0.85rem; font-family:inherit; outline:none; }
+        .num-input { flex:1; background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--text); font-size:0.85rem; font-family:inherit; outline:none; }
+        .txt-input::placeholder,.num-input::placeholder { color:var(--muted); }
+        .btn-primary { background:var(--primary); border:none; padding:0.55rem 0.9rem; border-radius:50px; color:#0f172a; font-size:0.88rem; cursor:pointer; font-family:inherit; font-weight:600; flex-shrink:0; }
+        .btn-icon { background:var(--primary-dim); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.88rem; flex-shrink:0; }
+        .btn-danger-icon { background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.35); padding:0.45rem 0.7rem; border-radius:50px; color:var(--danger); cursor:pointer; font-size:0.82rem; flex-shrink:0; }
+        .btn-secondary { background:var(--primary-dim); border:1px solid var(--border); padding:0.45rem 0.8rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.78rem; font-family:inherit; }
+        .saving-row { display:flex; align-items:center; justify-content:space-between; margin-top:0.6rem; padding:0.5rem 0.75rem; background:rgba(0,0,0,0.2); border-radius:12px; }
+        .saving-label { font-size:0.8rem; color:var(--muted); }
+        .saving-amount { font-weight:700; color:var(--primary); font-size:0.9rem; }
+        .stats-summary { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+        .summary-item { background:rgba(0,0,0,0.25); border-radius:12px; padding:0.6rem; font-size:0.78rem; text-align:center; color:var(--muted); }
+        .summary-item strong { display:block; font-size:1.05rem; color:var(--primary); margin-top:0.2rem; }
+        .prediction-box { background:rgba(0,0,0,0.2); border-radius:12px; padding:0.7rem; font-size:0.82rem; margin-bottom:0.6rem; line-height:1.5; color:var(--muted); }
+        .progress-bar-wrap { background:rgba(0,0,0,0.3); border-radius:50px; height:7px; overflow:hidden; }
+        .progress-bar { background:var(--primary); height:100%; border-radius:50px; transition:width 0.4s; }
+        .chart-card canvas { max-width:100% !important; }
+        .heatmap-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; padding:0.3rem 0; }
+        .log-entry { background:rgba(0,0,0,0.2); border-radius:10px; padding:0.45rem 0.7rem; margin-bottom:0.35rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.25rem; font-size:0.78rem; color:var(--muted); }
+        .log-entry span:first-child { color:var(--text); font-weight:600; }
+        .ach-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem; }
+        .ach-count { font-size:0.78rem; color:var(--muted); }
+        .ach-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; }
+        .ach-card { background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:14px; padding:0.75rem; text-align:center; position:relative; }
+        .ach-card.unlocked { border-color:var(--primary); background:linear-gradient(145deg,rgba(56,189,248,0.1),rgba(0,0,0,0.2)); }
+        .ach-card.secret { border-color:rgba(249,115,22,0.4); }
+        .ach-icon { font-size:1.8rem; margin-bottom:0.3rem; }
+        .ach-name { font-size:0.72rem; font-weight:700; margin-bottom:0.2rem; }
+        .ach-desc { font-size:0.62rem; color:var(--muted); line-height:1.3; }
+        .ach-badge { position:absolute; top:5px; right:5px; font-size:0.58rem; padding:0.12rem 0.35rem; border-radius:50px; background:rgba(0,0,0,0.5); }
+        .ach-badge.open { color:var(--success); }
+        .ach-badge.locked { color:var(--muted); }
+        .ach-prog { margin-top:0.35rem; }
+        .ach-prog-bar { background:rgba(0,0,0,0.3); border-radius:50px; height:3px; overflow:hidden; margin-bottom:0.15rem; }
+        .ach-prog-fill { background:var(--primary); height:100%; border-radius:50px; }
+        .ach-prog-text { font-size:0.58rem; color:var(--muted); }
+        .setting-row { display:flex; justify-content:space-between; align-items:center; padding:0.55rem 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.83rem; }
+        .setting-row:last-child { border-bottom:none; }
+        .setting-row span { display:flex; align-items:center; gap:0.4rem; color:var(--muted); }
+        .setting-row span i { color:var(--primary); width:14px; }
+        .switch { position:relative; display:inline-block; width:44px; height:22px; }
+        .switch input { opacity:0; width:0; height:0; }
+        .slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#334155; border-radius:34px; transition:0.3s; }
+        .slider:before { position:absolute; content:''; height:16px; width:16px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; }
+        input:checked + .slider { background:var(--primary); }
+        input:checked + .slider:before { transform:translateX(22px); }
+        .setting-select { background:rgba(0,0,0,0.4); border:1px solid var(--border); padding:0.28rem 0.5rem; border-radius:8px; color:var(--text); font-family:inherit; font-size:0.78rem; }
+        .time-input { background:rgba(0,0,0,0.4); border:1px solid var(--border); padding:0.28rem 0.5rem; border-radius:8px; color:var(--text); font-family:inherit; font-size:0.78rem; }
+        .settings-btn { display:block; width:100%; background:var(--primary-dim); border:1px solid var(--border); padding:0.6rem; border-radius:12px; color:var(--primary); cursor:pointer; font-size:0.83rem; font-family:inherit; text-align:center; margin-bottom:0.45rem; }
+        .settings-btn.danger-btn { background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:var(--danger); }
+        .file-label-btn { display:block; width:100%; background:var(--primary-dim); border:1px solid var(--border); padding:0.6rem; border-radius:12px; color:var(--primary); cursor:pointer; font-size:0.83rem; text-align:center; margin-bottom:0.45rem; }
+        .data-info { font-size:0.78rem; color:var(--muted); margin-top:0.5rem; line-height:2; }
+        .version-text { font-size:0.68rem; color:var(--muted); text-align:center; margin-top:0.5rem; }
+        body.light-mode { --bg:#f1f5f9; --glass:rgba(255,255,255,0.8); --border:rgba(56,189,248,0.4); --text:#0f172a; --muted:#64748b; }
+        body.font-small { font-size:12px; }
+        body.font-medium { font-size:14px; }
+        body.font-large { font-size:16px; }
+        body.animation-slow * { transition-duration:0.5s !important; }
+        body.animation-fast * { transition-duration:0.1s !important; }
+    </style>
 </head>
 <body>
-    <canvas id="bg-canvas"></canvas>
-    <div class="noise-overlay"></div>
-
-```
+<canvas id="bg-canvas"></canvas>
+<div class="noise-overlay"></div>
 <div class="app">
     <main class="content">
 
-        <!-- ===== Dashboard Page ===== -->
-        <div id="dashboard-page" class="page active">
-
-            <!-- الترحيب -->
-            <div class="glass-card greeting-card">
-                <p id="greeting" class="greeting-text">مرحباً 👋</p>
+```
+    <!-- DASHBOARD -->
+    <div id="dashboard-page" class="page active">
+        <div class="glass-card greeting-card">
+            <p id="greeting" class="greeting-text">مرحباً 👋</p>
+        </div>
+        <div class="two-col">
+            <div class="glass-card stat-card">
+                <i class="fas fa-bolt"></i>
+                <div class="stat-value" id="todayXP">0</div>
+                <div class="stat-label">XP اليوم</div>
             </div>
-
-            <!-- إحصائيات سريعة -->
-            <div class="stats-row">
-                <div class="glass-card stat-card">
-                    <i class="fas fa-bolt"></i>
-                    <div class="stat-value" id="todayXP">0</div>
-                    <div class="stat-label">XP اليوم</div>
-                </div>
-                <div class="glass-card stat-card">
-                    <i class="fas fa-fire"></i>
-                    <div class="stat-value" id="streakCount">0</div>
-                    <div class="stat-label">التسلسل (يوم)</div>
-                </div>
+            <div class="glass-card stat-card">
+                <i class="fas fa-fire"></i>
+                <div class="stat-value" id="streakCount">0</div>
+                <div class="stat-label">التسلسل (يوم)</div>
             </div>
-
-            <!-- حلقات التقدم -->
-            <div class="rings-row">
-                <!-- حلقة XP -->
-                <div class="glass-card ring-card">
-                    <div class="ring-svg-wrap">
-                        <svg class="ring-svg" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45" fill="none" stroke="#1e293b" stroke-width="8"/>
-                            <circle id="xpRing"
-                                cx="50" cy="50" r="45"
-                                fill="none"
-                                stroke="var(--primary)"
-                                stroke-width="8"
-                                stroke-dasharray="283"
-                                stroke-dashoffset="283"
-                                stroke-linecap="round"/>
-                        </svg>
-                        <div class="ring-center-text">
-                            <span class="ring-percent" id="xpPercentRing">0%</span>
-                        </div>
-                    </div>
-                    <div class="ring-label">
-                        <span class="ring-title">XP الشهر</span>
-                        <small><span id="monthXP">0</span> / <span id="monthMaxXP">0</span></small>
+        </div>
+        <div class="two-col">
+            <div class="glass-card ring-card">
+                <div class="ring-wrap">
+                    <svg class="ring-svg" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8"/>
+                        <circle id="xpRing" cx="50" cy="50" r="44" fill="none" stroke="var(--primary)" stroke-width="8" stroke-dasharray="276" stroke-dashoffset="276" stroke-linecap="round"/>
+                    </svg>
+                    <div class="ring-center">
+                        <span class="ring-pct" id="xpPercentRing" style="color:var(--primary);">0%</span>
                     </div>
                 </div>
-
-                <!-- حلقة المالية -->
-                <div class="glass-card ring-card">
-                    <div class="ring-svg-wrap">
-                        <svg class="ring-svg" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45" fill="none" stroke="#1e293b" stroke-width="8"/>
-                            <circle id="financialRing"
-                                cx="50" cy="50" r="45"
-                                fill="none"
-                                stroke="#4ade80"
-                                stroke-width="8"
-                                stroke-dasharray="283"
-                                stroke-dashoffset="283"
-                                stroke-linecap="round"/>
-                        </svg>
-                        <div class="ring-center-text">
-                            <span class="ring-percent" style="color:#4ade80" id="financialPercentRing">0%</span>
-                        </div>
-                    </div>
-                    <div class="ring-label">
-                        <span class="ring-title">الهدف المالي</span>
-                        <small><span id="savedAmount">0</span> / <span id="goalDisplay">0</span> ₿</small>
+                <div class="ring-info">
+                    <span class="ring-title">XP الشهر</span>
+                    <span class="ring-sub"><span id="monthXP">0</span> / <span id="monthMaxXP">0</span></span>
+                </div>
+            </div>
+            <div class="glass-card ring-card">
+                <div class="ring-wrap">
+                    <svg class="ring-svg" viewBox="0 0 100 100">
+                        <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8"/>
+                        <circle id="financialRing" cx="50" cy="50" r="44" fill="none" stroke="#4ade80" stroke-width="8" stroke-dasharray="276" stroke-dashoffset="276" stroke-linecap="round"/>
+                    </svg>
+                    <div class="ring-center">
+                        <span class="ring-pct" id="financialPercentRing" style="color:#4ade80;">0%</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- حالة الشهر -->
-            <div class="glass-card" id="monthStatusCard">
-                <i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري</strong>
-            </div>
-
-            <!-- تحليل ذكي -->
-            <div class="glass-card insight-box">
-                <p id="insightText">🧠 جاري التحليل...</p>
-            </div>
-
-            <!-- المهام -->
-            <div class="glass-card tasks-card">
-                <div class="card-header">
-                    <i class="fas fa-tasks"></i>
-                    <h3>مهام اليوم</h3>
-                </div>
-                <ul id="tasksList" class="tasks-list"></ul>
-                <div class="add-task-row">
-                    <input type="text" id="newTaskInput" placeholder="أضف مهمة جديدة..." class="task-input"/>
-                    <button id="voiceAddBtn" class="btn-icon"><i class="fas fa-microphone"></i></button>
-                    <button id="addTaskBtn" class="btn-primary"><i class="fas fa-plus"></i></button>
+                <div class="ring-info">
+                    <span class="ring-title">الهدف المالي</span>
+                    <span class="ring-sub"><span id="savedAmount">0</span> / <span id="goalDisplay">0</span></span>
                 </div>
             </div>
-
-            <!-- المالية -->
-            <div class="glass-card finance-card">
-                <div class="card-header">
-                    <i class="fas fa-coins"></i>
-                    <h3>الهدف المالي</h3>
-                </div>
-                <div class="finance-row">
-                    <input type="number" id="financialGoalInput" placeholder="الهدف الشهري (₿)" class="finance-input"/>
-                    <button id="setGoalBtn" class="btn-primary">تحديد</button>
-                </div>
-                <div class="finance-row">
-                    <input type="number" id="dailySavingInput" placeholder="مدخرات اليوم (₿)" class="finance-input"/>
-                    <button id="recordSavingBtn" class="btn-primary">تسجيل</button>
-                </div>
-                <div class="finance-row" style="align-items:center; margin-top:0.25rem;">
-                    <span style="color:var(--text-muted); font-size:0.85rem;">
-                        مدخرات اليوم: <strong id="todaySavingDisplay" style="color:var(--primary);">0</strong> &#x20BF;
-                    </span>
-                    <button id="resetTodaySavingBtn" class="btn-icon" style="color:var(--danger); border-color:var(--danger);">
+        </div>
+        <div class="glass-card status-card" id="monthStatusCard">
+            <i class="fas fa-hourglass-half"></i> حالة الشهر: <strong>جاري</strong>
+        </div>
+        <div class="glass-card insight-card">
+            <p id="insightText">🧠 جاري التحليل...</p>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-tasks"></i><h3>مهام اليوم</h3></div>
+            <ul id="tasksList" class="tasks-list"></ul>
+            <div class="input-row">
+                <input type="text" id="newTaskInput" placeholder="أضف مهمة..." class="txt-input"/>
+                <button id="voiceAddBtn" class="btn-icon"><i class="fas fa-microphone"></i></button>
+                <button id="addTaskBtn" class="btn-primary"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-coins"></i><h3>الهدف المالي</h3></div>
+            <div class="input-row" style="margin-bottom:0.6rem;">
+                <input type="number" id="financialGoalInput" placeholder="الهدف الشهري" class="num-input"/>
+                <button id="setGoalBtn" class="btn-primary">تحديد</button>
+            </div>
+            <div class="input-row">
+                <input type="number" id="dailySavingInput" placeholder="مدخرات اليوم" class="num-input"/>
+                <button id="recordSavingBtn" class="btn-primary">تسجيل</button>
+            </div>
+            <div class="saving-row">
+                <span class="saving-label">مدخرات اليوم:</span>
+                <div style="display:flex;align-items:center;gap:0.5rem;">
+                    <span class="saving-amount" id="todaySavingDisplay">0</span>
+                    <button id="resetTodaySavingBtn" class="btn-danger-icon" title="تصفير مدخرات اليوم">
                         <i class="fas fa-undo"></i>
                     </button>
                 </div>
             </div>
-
         </div>
-        <!-- ===== نهاية Dashboard ===== -->
+    </div>
 
-        <!-- Stats Page -->
-        <div id="stats-page" class="page">
-            <h2><i class="fas fa-chart-pie"></i> الإحصائيات المتقدمة</h2>
-            <div class="stats-grid">
-                <div class="glass-card summary-card">
-                    <div class="card-header">
-                        <i class="fas fa-chart-line"></i>
-                        <h3>ملخص الإنجاز</h3>
-                    </div>
-                    <div class="summary-stats">
-                        <div><i class="fas fa-trophy"></i> إجمالي XP: <strong id="totalXP">0</strong></div>
-                        <div><i class="fas fa-fire"></i> أطول تسلسل: <strong id="bestStreak">0</strong> يوم</div>
-                        <div><i class="fas fa-check-circle"></i> إجمالي المهام: <strong id="totalTasksCompleted">0</strong></div>
-                        <div><i class="fas fa-coins"></i> إجمالي المدخرات: <strong id="totalSavings">0</strong> ₿</div>
-                    </div>
-                </div>
-                <div class="glass-card prediction-card">
-                    <div class="card-header">
-                        <i class="fas fa-brain"></i>
-                        <h3>توقعات الشهر</h3>
-                    </div>
-                    <div id="predictionText" class="prediction-text">جاري التحليل...</div>
-                    <div class="prediction-progress">
-                        <div class="progress-label">نسبة النجاح المتوقعة</div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" id="predictionBar" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-card full-width">
-                    <canvas id="xpTrendChart" width="400" height="200"></canvas>
-                </div>
-                <div class="glass-card full-width">
-                    <canvas id="financeTrendChart" width="400" height="200"></canvas>
-                </div>
-                <div class="glass-card full-width">
-                    <canvas id="completionChart" width="400" height="200"></canvas>
-                </div>
-                <div class="glass-card full-width">
-                    <div class="card-header">
-                        <i class="fas fa-calendar-alt"></i>
-                        <h3>التقويم الحراري للإنجازات</h3>
-                    </div>
-                    <div id="cal-heatmap"></div>
-                </div>
-                <div class="glass-card full-width">
-                    <div class="card-header">
-                        <i class="fas fa-list-ul"></i>
-                        <h3>السجل اليومي التفصيلي</h3>
-                    </div>
-                    <div id="dailyLogContainer" class="daily-log"></div>
-                </div>
+    <!-- STATS -->
+    <div id="stats-page" class="page">
+        <div class="page-title"><i class="fas fa-chart-pie"></i> الإحصائيات</div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-chart-line"></i><h3>ملخص الإنجاز</h3></div>
+            <div class="stats-summary">
+                <div class="summary-item">XP الإجمالي<strong id="totalXP">0</strong></div>
+                <div class="summary-item">أطول تسلسل<strong id="bestStreak">0</strong></div>
+                <div class="summary-item">إجمالي المهام<strong id="totalTasksCompleted">0</strong></div>
+                <div class="summary-item">إجمالي المدخرات<strong id="totalSavings">0</strong></div>
             </div>
         </div>
-
-        <!-- Achievements Page -->
-        <div id="achievements-page" class="page">
-            <h2><i class="fas fa-award"></i> إنجازاتي</h2>
-            <div class="achievements-header">
-                <button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة جميع الإنجازات</button>
-                <span id="achievementCount">0 / 12 مفتوح</span>
-            </div>
-            <div id="achievementsGrid" class="achievements-grid"></div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-brain"></i><h3>توقعات الشهر</h3></div>
+            <div class="prediction-box" id="predictionText">جاري التحليل...</div>
+            <div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem;">نسبة النجاح المتوقعة</div>
+            <div class="progress-bar-wrap"><div class="progress-bar" id="predictionBar" style="width:0%"></div></div>
         </div>
+        <div class="glass-card chart-card">
+            <div class="card-header"><i class="fas fa-bolt"></i><h3>XP آخر 7 أيام</h3></div>
+            <canvas id="xpTrendChart"></canvas>
+        </div>
+        <div class="glass-card chart-card">
+            <div class="card-header"><i class="fas fa-coins"></i><h3>المدخرات آخر 7 أيام</h3></div>
+            <canvas id="financeTrendChart"></canvas>
+        </div>
+        <div class="glass-card chart-card">
+            <div class="card-header"><i class="fas fa-tasks"></i><h3>المهام المنجزة</h3></div>
+            <canvas id="completionChart"></canvas>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-calendar-alt"></i><h3>التقويم الحراري</h3></div>
+            <div class="heatmap-wrap"><div id="cal-heatmap"></div></div>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-list-ul"></i><h3>السجل اليومي</h3></div>
+            <div id="dailyLogContainer" style="max-height:280px;overflow-y:auto;"></div>
+        </div>
+    </div>
 
-        <!-- Settings Page -->
-        <div id="settings-page" class="page">
-            <h2><i class="fas fa-sliders-h"></i> الإعدادات المتقدمة</h2>
-            <div class="settings-grid">
-                <div class="glass-card">
-                    <h3><i class="fas fa-database"></i> إدارة البيانات</h3>
-                    <button id="exportDataBtn"><i class="fas fa-download"></i> تصدير</button>
-                    <label for="importFile" class="file-label"><i class="fas fa-upload"></i> استيراد</label>
-                    <input type="file" id="importFile" accept=".json" style="display:none">
-                    <button id="resetDataBtn" class="danger"><i class="fas fa-trash"></i> إعادة ضبط</button>
-                    <div class="data-stats">
-                        <p><i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong></p>
-                        <p><i class="fas fa-check-double"></i> إجمالي المهام المنفذة: <strong id="totalCompletedStats">0</strong></p>
-                    </div>
-                </div>
-                <div class="glass-card">
-                    <h3><i class="fas fa-palette"></i> التخصيص</h3>
-                    <div class="setting-item">
-                        <span><i class="fas fa-moon"></i> الوضع الليلي</span>
-                        <label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider round"></span></label>
-                    </div>
-                    <div class="setting-item">
-                        <span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span>
-                        <label class="switch"><input type="checkbox" id="soundToggle"><span class="slider round"></span></label>
-                    </div>
-                    <div class="setting-item">
-                        <span><i class="fas fa-palette"></i> نظام الألوان</span>
-                        <select id="colorSchemeSelect">
-                            <option value="default">أزرق</option>
-                            <option value="purple">بنفسجي</option>
-                            <option value="green">أخضر</option>
-                            <option value="sunset">غروب الشمس</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <span><i class="fas fa-font"></i> حجم الخط</span>
-                        <select id="fontSizeSelect">
-                            <option value="small">صغير</option>
-                            <option value="medium" selected>متوسط</option>
-                            <option value="large">كبير</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <span><i class="fas fa-hourglass-half"></i> سرعة الحركات</span>
-                        <select id="animationSpeedSelect">
-                            <option value="slow">بطيء</option>
-                            <option value="normal" selected>عادي</option>
-                            <option value="fast">سريع</option>
-                        </select>
-                    </div>
-                    <div class="setting-item">
-                        <span><i class="fas fa-bell"></i> وقت التذكير اليومي</span>
-                        <input type="time" id="reminderTime" step="60">
-                    </div>
-                </div>
-                <div class="glass-card">
-                    <h3><i class="fas fa-info-circle"></i> معلومات</h3>
-                    <button id="quickTourBtn"><i class="fas fa-compass"></i> جولة تعريفية</button>
-                    <p class="version">الإصدار 2.0 | متطور بالذكاء الاصطناعي</p>
-                </div>
+    <!-- ACHIEVEMENTS -->
+    <div id="achievements-page" class="page">
+        <div class="page-title"><i class="fas fa-award"></i> إنجازاتي</div>
+        <div class="ach-header">
+            <button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة</button>
+            <span id="achievementCount" class="ach-count">0 / 11 مفتوح</span>
+        </div>
+        <div id="achievementsGrid" class="ach-grid"></div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settings-page" class="page">
+        <div class="page-title"><i class="fas fa-sliders-h"></i> الإعدادات</div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-palette"></i><h3>التخصيص</h3></div>
+            <div class="setting-row">
+                <span><i class="fas fa-moon"></i> الوضع الليلي</span>
+                <label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span>
+                <label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label>
+            </div>
+            <div class="setting-row">
+                <span><i class="fas fa-palette"></i> نظام الألوان</span>
+                <select id="colorSchemeSelect" class="setting-select">
+                    <option value="default">أزرق</option>
+                    <option value="purple">بنفسجي</option>
+                    <option value="green">أخضر</option>
+                    <option value="sunset">غروب</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <span><i class="fas fa-font"></i> حجم الخط</span>
+                <select id="fontSizeSelect" class="setting-select">
+                    <option value="small">صغير</option>
+                    <option value="medium" selected>متوسط</option>
+                    <option value="large">كبير</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <span><i class="fas fa-hourglass-half"></i> سرعة الحركات</span>
+                <select id="animationSpeedSelect" class="setting-select">
+                    <option value="slow">بطيء</option>
+                    <option value="normal" selected>عادي</option>
+                    <option value="fast">سريع</option>
+                </select>
+            </div>
+            <div class="setting-row">
+                <span><i class="fas fa-bell"></i> وقت التذكير</span>
+                <input type="time" id="reminderTime" class="time-input" value="09:00">
             </div>
         </div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-database"></i><h3>إدارة البيانات</h3></div>
+            <button id="exportDataBtn" class="settings-btn"><i class="fas fa-download"></i> تصدير البيانات</button>
+            <label for="importFile" class="file-label-btn"><i class="fas fa-upload"></i> استيراد البيانات</label>
+            <input type="file" id="importFile" accept=".json" style="display:none">
+            <button id="resetDataBtn" class="settings-btn danger-btn"><i class="fas fa-trash"></i> إعادة الضبط</button>
+            <div class="data-info">
+                <i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong><br>
+                <i class="fas fa-check-double"></i> إجمالي المهام: <strong id="totalCompletedStats">0</strong>
+            </div>
+        </div>
+        <div class="glass-card">
+            <div class="card-header"><i class="fas fa-info-circle"></i><h3>معلومات</h3></div>
+            <button id="quickTourBtn" class="settings-btn"><i class="fas fa-compass"></i> جولة تعريفية</button>
+            <p class="version-text">الإصدار 2.0 | تحدي الإنجاز اليومي</p>
+        </div>
+    </div>
 
-    </main>
+</main>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav glass">
-        <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
-        <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
-        <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
-        <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
-    </nav>
+<nav class="bottom-nav">
+    <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
+    <button class="nav-btn" data-page="stats"><i class="fas fa-chart-line"></i><span>الإحصائيات</span></button>
+    <button class="nav-btn" data-page="achievements"><i class="fas fa-medal"></i><span>الإنجازات</span></button>
+    <button class="nav-btn" data-page="settings"><i class="fas fa-cog"></i><span>الإعدادات</span></button>
+</nav>
 
-    <button id="fab" class="fab glass"><i class="fas fa-plus"></i></button>
+<button id="fab" class="fab"><i class="fas fa-plus"></i></button>
+```
+
 </div>
 
 <audio id="completeSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
 <audio id="achievementSound" src="https://www.soundjay.com/misc/sounds/fanfare-01.mp3" preload="auto"></audio>
 
 <script src="script.js"></script>
-```
 
 </body>
 </html>
