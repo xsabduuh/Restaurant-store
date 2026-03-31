@@ -1,4 +1,5 @@
-// ==================== تحدي الإنجاز اليومي - النسخة المتطورة (تعمل في GitHub Pages) ====================
+// ==================== تحدي الإنجاز اليومي - النسخة المتطورة ====================
+// يدعم الشريط السفلي، خلفية Three.js، إنجازات، صوت، إدخال صوتي، رسوم بيانية، تصدير/استيراد
 
 // ---------- المتغيرات العامة ----------
 const STORAGE = {
@@ -260,6 +261,7 @@ function updateAllStats() {
         if (neededXP > 0) insightText.innerHTML = `🧠 تحليل ذكي: تحتاج إلى ${neededXP} XP إضافي للوصول إلى 80% من هدف الشهر.`;
         else insightText.innerHTML = `🎉 مذهل! أنت على الطريق الصحيح للنجاح هذا الشهر.`;
     }
+    // تحديث الإحصائيات إذا كنا في صفحة الإحصائيات
     if (currentPage === 'stats') updateCharts();
 }
 
@@ -375,7 +377,7 @@ function initCharts() {
 function applySettings() {
     document.body.classList.toggle('light-mode', settings.darkMode);
     const scheme = settings.colorScheme;
-    let primary, secondary;
+    let primary;
     if (scheme === 'purple') primary = '#a855f7';
     else if (scheme === 'green') primary = '#22c55e';
     else if (scheme === 'sunset') primary = '#f97316';
@@ -479,9 +481,9 @@ function setupVoiceInput() {
     recognition.onerror = () => { voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>'; };
 }
 
-// ---------- التنقل بين الصفحات ----------
+// ---------- التنقل بين الصفحات (شريط سفلي) ----------
 function setupNavigation() {
-    const navBtns = document.querySelectorAll('.nav-btn');
+    const navBtns = document.querySelectorAll('.bottom-nav .nav-btn');
     const pages = ['dashboard', 'stats', 'achievements', 'settings'];
     navBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -495,7 +497,9 @@ function setupNavigation() {
             if (page === 'stats') {
                 if (!xpChart) initCharts();
                 else updateCharts();
-            } else if (page === 'achievements') renderAchievements();
+            } else if (page === 'achievements') {
+                renderAchievements();
+            }
         });
     });
 }
