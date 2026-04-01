@@ -37,24 +37,29 @@
         .noise-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:repeating-radial-gradient(circle at 20% 30%,rgba(0,0,0,0.04) 0px,rgba(0,0,0,0.04) 2px,transparent 2px,transparent 4px); pointer-events:none; z-index:-1; }
         .app { display:flex; flex-direction:column; min-height:100vh; }
         .content { flex:1; padding:1rem; padding-bottom:5.5rem; overflow-y:auto; }
-        .glass-card { background:var(--glass); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; margin-bottom:1rem; }
+        .glass-card { background:var(--glass); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid var(--border); border-radius:var(--radius); padding:1rem; margin-bottom:1rem; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .glass-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
         .card-header { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.8rem; padding-bottom:0.5rem; border-bottom:1px solid var(--border); }
-        .card-header i { font-size:1.2rem; color:var(--primary); }
+        .card-header i { font-size:1.2rem; color:var(--primary); transition: transform 0.2s ease; }
+        .card-header i:hover { transform: scale(1.1) rotate(5deg); }
         .card-header h3 { font-size:1rem; margin:0; }
         .page { display:none; }
         .page.active { display:block; animation:fadeUp 0.25s ease; }
         @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
         .page-title { display:flex; align-items:center; gap:0.5rem; font-size:1.2rem; font-weight:700; color:var(--primary); margin-bottom:1rem; }
         .bottom-nav { position:fixed; bottom:0; left:0; right:0; display:flex; justify-content:space-around; align-items:center; padding:0.5rem 0; background:rgba(8,12,22,0.97); backdrop-filter:blur(12px); border-top:1px solid var(--border); z-index:1000; }
-        .nav-btn { background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:0.15rem; padding:0.4rem 0.8rem; color:var(--muted); font-size:0.68rem; cursor:pointer; border-radius:1rem; transition:color 0.2s; min-width:55px; }
-        .nav-btn i { font-size:1.25rem; }
+        .nav-btn { background:transparent; border:none; display:flex; flex-direction:column; align-items:center; gap:0.15rem; padding:0.4rem 0.8rem; color:var(--muted); font-size:0.68rem; cursor:pointer; border-radius:1rem; transition:color 0.2s, transform 0.2s; min-width:55px; }
+        .nav-btn i { font-size:1.25rem; transition: transform 0.2s; }
+        .nav-btn:hover i { transform: scale(1.1); }
         .nav-btn.active { color:var(--primary); }
-        .fab { position:fixed; bottom:4.5rem; left:1rem; width:48px; height:48px; border-radius:50%; background:var(--primary); border:none; font-size:1.3rem; color:#0f172a; cursor:pointer; z-index:999; box-shadow:0 4px 15px rgba(56,189,248,0.4); }
+        .fab { position:fixed; bottom:4.5rem; left:1rem; width:48px; height:48px; border-radius:50%; background:var(--primary); border:none; font-size:1.3rem; color:#0f172a; cursor:pointer; z-index:999; box-shadow:0 4px 15px rgba(56,189,248,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+        .fab:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(56,189,248,0.6); }
         .greeting-card { text-align:center; }
         .greeting-text { font-size:1.1rem; font-weight:600; color:var(--primary); }
         .two-col { display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:1rem; }
         .stat-card { text-align:center; padding:1rem 0.5rem; margin-bottom:0; }
-        .stat-card i { font-size:1.4rem; color:var(--primary); display:block; margin-bottom:0.3rem; }
+        .stat-card i { font-size:1.4rem; color:var(--primary); display:block; margin-bottom:0.3rem; transition: transform 0.2s; }
+        .stat-card:hover i { transform: scale(1.1); }
         .stat-value { font-size:1.8rem; font-weight:800; }
         .stat-label { font-size:0.7rem; color:var(--muted); margin-top:0.2rem; }
         .ring-card { display:flex; flex-direction:column; align-items:center; padding:0.8rem 0.5rem; margin-bottom:0; }
@@ -68,20 +73,28 @@
         .status-card { font-size:0.88rem; }
         .insight-card { font-size:0.82rem; color:var(--muted); }
         .tasks-list { list-style:none; max-height:240px; overflow-y:auto; margin-bottom:0.75rem; }
-        .tasks-list li { display:flex; align-items:center; gap:0.6rem; background:rgba(0,0,0,0.25); margin-bottom:0.45rem; padding:0.55rem 0.75rem; border-radius:12px; }
-        .task-check { width:1.1rem; height:1.1rem; cursor:pointer; accent-color:var(--primary); flex-shrink:0; }
+        .tasks-list li { display:flex; align-items:center; gap:0.6rem; background:rgba(0,0,0,0.25); margin-bottom:0.45rem; padding:0.55rem 0.75rem; border-radius:12px; transition: background 0.2s; }
+        .tasks-list li:hover { background:rgba(56,189,248,0.1); }
+        .task-check { width:1.1rem; height:1.1rem; cursor:pointer; accent-color:var(--primary); flex-shrink:0; transition: transform 0.1s; }
+        .task-check:active { transform: scale(0.95); }
         .task-text { flex:1; font-size:0.88rem; }
-        .delete-task { background:none; border:none; color:var(--danger); cursor:pointer; font-size:0.95rem; flex-shrink:0; }
+        .delete-task { background:none; border:none; color:var(--danger); cursor:pointer; font-size:0.95rem; flex-shrink:0; transition: transform 0.2s; }
+        .delete-task:hover { transform: scale(1.1); }
         .input-row { display:flex; gap:0.4rem; }
-        .txt-input { flex:1; background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--text); font-size:0.85rem; font-family:inherit; outline:none; }
-        .num-input { flex:1; background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--text); font-size:0.85rem; font-family:inherit; outline:none; }
-        .btn-primary { background:var(--primary); border:none; padding:0.55rem 0.9rem; border-radius:50px; color:#0f172a; font-size:0.88rem; cursor:pointer; font-family:inherit; font-weight:600; flex-shrink:0; }
-        .btn-icon { background:var(--primary-dim); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.88rem; flex-shrink:0; }
-        .btn-danger-icon { background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.35); padding:0.45rem 0.7rem; border-radius:50px; color:var(--danger); cursor:pointer; font-size:0.82rem; flex-shrink:0; }
-        .btn-secondary { background:var(--primary-dim); border:1px solid var(--border); padding:0.45rem 0.8rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.78rem; font-family:inherit; }
+        .txt-input, .num-input { flex:1; background:rgba(0,0,0,0.35); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--text); font-size:0.85rem; font-family:inherit; outline:none; transition: border-color 0.2s; }
+        .txt-input:focus, .num-input:focus { border-color:var(--primary); }
+        .btn-primary { background:var(--primary); border:none; padding:0.55rem 0.9rem; border-radius:50px; color:#0f172a; font-size:0.88rem; cursor:pointer; font-family:inherit; font-weight:600; flex-shrink:0; transition: transform 0.2s, background 0.2s; }
+        .btn-primary:hover { transform: scale(0.98); background:#2ea5e6; }
+        .btn-icon { background:var(--primary-dim); border:1px solid var(--border); padding:0.55rem 0.75rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.88rem; flex-shrink:0; transition: transform 0.2s; }
+        .btn-icon:hover { transform: scale(0.98); }
+        .btn-danger-icon { background:rgba(239,68,68,0.12); border:1px solid rgba(239,68,68,0.35); padding:0.45rem 0.7rem; border-radius:50px; color:var(--danger); cursor:pointer; font-size:0.82rem; flex-shrink:0; transition: transform 0.2s; }
+        .btn-danger-icon:hover { transform: scale(0.98); background:rgba(239,68,68,0.2); }
+        .btn-secondary { background:var(--primary-dim); border:1px solid var(--border); padding:0.45rem 0.8rem; border-radius:50px; color:var(--primary); cursor:pointer; font-size:0.78rem; font-family:inherit; transition: transform 0.2s; }
+        .btn-secondary:hover { transform: scale(0.98); }
         .saving-row { display:flex; align-items:center; justify-content:space-between; margin-top:0.6rem; padding:0.5rem 0.75rem; background:rgba(0,0,0,0.2); border-radius:12px; }
         .stats-summary { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
-        .summary-item { background:rgba(0,0,0,0.25); border-radius:12px; padding:0.6rem; font-size:0.78rem; text-align:center; color:var(--muted); }
+        .summary-item { background:rgba(0,0,0,0.25); border-radius:12px; padding:0.6rem; font-size:0.78rem; text-align:center; color:var(--muted); transition: transform 0.2s; }
+        .summary-item:hover { transform: translateY(-2px); background:rgba(0,0,0,0.35); }
         .summary-item strong { display:block; font-size:1.05rem; color:var(--primary); margin-top:0.2rem; }
         .prediction-box { background:rgba(0,0,0,0.2); border-radius:12px; padding:0.7rem; font-size:0.82rem; margin-bottom:0.6rem; line-height:1.5; color:var(--muted); }
         .progress-bar-wrap { background:rgba(0,0,0,0.3); border-radius:50px; height:7px; overflow:hidden; }
@@ -92,9 +105,11 @@
         .ach-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; flex-wrap:wrap; gap:0.5rem; }
         .ach-count { font-size:0.78rem; color:var(--muted); }
         .ach-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; }
-        .ach-card { background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:14px; padding:0.75rem; text-align:center; position:relative; }
+        .ach-card { background:rgba(0,0,0,0.3); border:1px solid var(--border); border-radius:14px; padding:0.75rem; text-align:center; position:relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .ach-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
         .ach-card.unlocked { border-color:var(--primary); background:linear-gradient(145deg,rgba(56,189,248,0.1),rgba(0,0,0,0.2)); }
-        .ach-icon { font-size:1.8rem; margin-bottom:0.3rem; }
+        .ach-icon { font-size:1.8rem; margin-bottom:0.3rem; transition: transform 0.2s; }
+        .ach-card:hover .ach-icon { transform: scale(1.05); }
         .ach-name { font-size:0.72rem; font-weight:700; margin-bottom:0.2rem; }
         .ach-desc { font-size:0.62rem; color:var(--muted); line-height:1.3; }
         .ach-badge { position:absolute; top:5px; right:5px; font-size:0.58rem; padding:0.12rem 0.35rem; border-radius:50px; background:rgba(0,0,0,0.5); }
@@ -106,7 +121,8 @@
         .ach-prog-text { font-size:0.58rem; color:var(--muted); }
         .setting-row { display:flex; justify-content:space-between; align-items:center; padding:0.55rem 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.83rem; }
         .setting-row span { display:flex; align-items:center; gap:0.4rem; color:var(--muted); }
-        .setting-row span i { color:var(--primary); width:14px; }
+        .setting-row span i { color:var(--primary); width:14px; transition: transform 0.2s; }
+        .setting-row span i:hover { transform: scale(1.1); }
         .switch { position:relative; display:inline-block; width:44px; height:22px; }
         .switch input { opacity:0; width:0; height:0; }
         .slider { position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:#334155; border-radius:34px; transition:0.3s; }
@@ -114,24 +130,51 @@
         input:checked + .slider { background:var(--primary); }
         input:checked + .slider:before { transform:translateX(22px); }
         .setting-select { background:rgba(0,0,0,0.4); border:1px solid var(--border); padding:0.28rem 0.5rem; border-radius:8px; color:var(--text); font-family:inherit; font-size:0.78rem; }
-        .time-input { background:rgba(0,0,0,0.4); border:1px solid var(--border); padding:0.28rem 0.5rem; border-radius:8px; color:var(--text); font-family:inherit; font-size:0.78rem; }
-        .settings-btn { display:block; width:100%; background:var(--primary-dim); border:1px solid var(--border); padding:0.6rem; border-radius:12px; color:var(--primary); cursor:pointer; font-size:0.83rem; font-family:inherit; text-align:center; margin-bottom:0.45rem; }
+        .settings-btn { display:block; width:100%; background:var(--primary-dim); border:1px solid var(--border); padding:0.6rem; border-radius:12px; color:var(--primary); cursor:pointer; font-size:0.83rem; font-family:inherit; text-align:center; margin-bottom:0.45rem; transition: transform 0.2s; }
+        .settings-btn:hover { transform: scale(0.98); }
         .settings-btn.danger-btn { background:rgba(239,68,68,0.1); border-color:rgba(239,68,68,0.3); color:var(--danger); }
-        .file-label-btn { display:block; width:100%; background:var(--primary-dim); border:1px solid var(--border); padding:0.6rem; border-radius:12px; color:var(--primary); cursor:pointer; font-size:0.83rem; text-align:center; margin-bottom:0.45rem; }
+        .file-label-btn { display:block; width:100%; background:var(--primary-dim); border:1px solid var(--border); padding:0.6rem; border-radius:12px; color:var(--primary); cursor:pointer; font-size:0.83rem; text-align:center; margin-bottom:0.45rem; transition: transform 0.2s; }
+        .file-label-btn:hover { transform: scale(0.98); }
         .data-info { font-size:0.78rem; color:var(--muted); margin-top:0.5rem; line-height:2; }
         .version-text { font-size:0.68rem; color:var(--muted); text-align:center; margin-top:0.5rem; }
         body.light-mode { --bg:#f1f5f9; --glass:rgba(255,255,255,0.8); --border:rgba(56,189,248,0.4); --text:#0f172a; --muted:#64748b; }
-        body.font-small { font-size:12px; }
-        body.font-medium { font-size:14px; }
-        body.font-large { font-size:16px; }
-        body.animation-slow * { transition-duration:0.5s !important; }
-        body.animation-fast * { transition-duration:0.1s !important; }
+
+        /* Password page styles */
+        .password-page { position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg); z-index:2000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px); }
+        .password-container { width:300px; background:var(--glass); border-radius:var(--radius); padding:1.5rem; text-align:center; border:1px solid var(--border); }
+        .password-container h2 { margin-bottom:1rem; color:var(--primary); }
+        .password-display { background:rgba(0,0,0,0.5); border-radius:12px; padding:0.5rem; margin-bottom:1rem; font-size:1.5rem; letter-spacing:0.2rem; direction:ltr; font-family:monospace; }
+        .password-keypad { display:grid; grid-template-columns:repeat(3,1fr); gap:0.5rem; margin-bottom:1rem; }
+        .password-key { background:var(--primary-dim); border:1px solid var(--border); padding:0.8rem; font-size:1.2rem; border-radius:12px; cursor:pointer; transition: transform 0.1s; }
+        .password-key:active { transform:scale(0.95); background:var(--primary); color:#0f172a; }
+        .password-buttons { display:flex; gap:0.5rem; justify-content:center; margin-bottom:0.5rem; }
+        .password-btn { background:var(--primary); border:none; padding:0.5rem 1rem; border-radius:50px; color:#0f172a; font-weight:bold; cursor:pointer; flex:1; }
+        .password-btn.reset { background:var(--danger); color:white; }
+        .password-message { margin-top:0.5rem; font-size:0.8rem; color:var(--danger); }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 <canvas id="bg-canvas"></canvas>
 <div class="noise-overlay"></div>
-<div class="app">
+
+<!-- Password page -->
+<div id="password-page" class="password-page">
+    <div class="password-container">
+        <h2><i class="fas fa-lock"></i> قفل التطبيق</h2>
+        <div class="password-display" id="passwordDisplay">****</div>
+        <div class="password-keypad" id="passwordKeypad">
+            <!-- numbers will be generated here -->
+        </div>
+        <div class="password-buttons">
+            <button class="password-btn" id="passwordConfirmBtn">تأكيد</button>
+            <button class="password-btn reset" id="passwordClearBtn">مسح</button>
+        </div>
+        <div class="password-message" id="passwordMessage"></div>
+    </div>
+</div>
+
+<div class="app hidden" id="mainApp">
     <main class="content">
         <!-- Dashboard -->
         <div id="dashboard-page" class="page active">
@@ -154,7 +197,7 @@
         <!-- Achievements -->
         <div id="achievements-page" class="page"><div class="page-title"><i class="fas fa-award"></i> إنجازاتي</div><div class="ach-header"><button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة</button><span id="achievementCount" class="ach-count">0 / 0 مفتوح</span></div><div id="achievementsGrid" class="ach-grid"></div></div>
         <!-- Settings -->
-        <div id="settings-page" class="page"><div class="page-title"><i class="fas fa-sliders-h"></i> الإعدادات</div><div class="glass-card"><div class="card-header"><i class="fas fa-palette"></i><h3>التخصيص</h3></div><div class="setting-row"><span><i class="fas fa-moon"></i> الوضع الليلي</span><label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span><label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-palette"></i> نظام الألوان</span><select id="colorSchemeSelect" class="setting-select"><option value="default">أزرق</option><option value="purple">بنفسجي</option><option value="green">أخضر</option><option value="sunset">غروب</option></select></div><div class="setting-row"><span><i class="fas fa-font"></i> حجم الخط</span><select id="fontSizeSelect" class="setting-select"><option value="small">صغير</option><option value="medium" selected>متوسط</option><option value="large">كبير</option></select></div><div class="setting-row"><span><i class="fas fa-hourglass-half"></i> سرعة الحركات</span><select id="animationSpeedSelect" class="setting-select"><option value="slow">بطيء</option><option value="normal" selected>عادي</option><option value="fast">سريع</option></select></div><div class="setting-row"><span><i class="fas fa-bell"></i> وقت التذكير</span><input type="time" id="reminderTime" class="time-input" value="09:00"></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-database"></i><h3>إدارة البيانات</h3></div><button id="exportDataBtn" class="settings-btn"><i class="fas fa-download"></i> تصدير البيانات</button><label for="importFile" class="file-label-btn"><i class="fas fa-upload"></i> استيراد البيانات</label><input type="file" id="importFile" accept=".json" style="display:none"><button id="resetDataBtn" class="settings-btn danger-btn"><i class="fas fa-trash"></i> إعادة الضبط</button><div class="data-info"><i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong><br><i class="fas fa-check-double"></i> إجمالي المهام: <strong id="totalCompletedStats">0</strong></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-info-circle"></i><h3>معلومات</h3></div><button id="quickTourBtn" class="settings-btn"><i class="fas fa-compass"></i> جولة تعريفية</button><p class="version-text">الإصدار 2.0 | تحدي الإنجاز اليومي</p></div></div>
+        <div id="settings-page" class="page"><div class="page-title"><i class="fas fa-sliders-h"></i> الإعدادات</div><div class="glass-card"><div class="card-header"><i class="fas fa-palette"></i><h3>التخصيص</h3></div><div class="setting-row"><span><i class="fas fa-moon"></i> الوضع الليلي</span><label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span><label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-palette"></i> نظام الألوان</span><select id="colorSchemeSelect" class="setting-select"><option value="default">أزرق</option><option value="purple">بنفسجي</option><option value="green">أخضر</option><option value="sunset">غروب</option></select></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-key"></i><h3>الأمان</h3></div><button id="changePasswordBtn" class="settings-btn"><i class="fas fa-key"></i> تغيير الرقم السري</button></div><div class="glass-card"><div class="card-header"><i class="fas fa-database"></i><h3>إدارة البيانات</h3></div><button id="exportDataBtn" class="settings-btn"><i class="fas fa-download"></i> تصدير البيانات</button><label for="importFile" class="file-label-btn"><i class="fas fa-upload"></i> استيراد البيانات</label><input type="file" id="importFile" accept=".json" style="display:none"><button id="resetDataBtn" class="settings-btn danger-btn"><i class="fas fa-trash"></i> إعادة الضبط</button><div class="data-info"><i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong><br><i class="fas fa-check-double"></i> إجمالي المهام: <strong id="totalCompletedStats">0</strong></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-info-circle"></i><h3>معلومات</h3></div><button id="quickTourBtn" class="settings-btn"><i class="fas fa-compass"></i> جولة تعريفية</button><p class="version-text">الإصدار 3.0 | تحدي الإنجاز اليومي</p></div></div>
     </main>
     <nav class="bottom-nav">
         <button class="nav-btn active" data-page="dashboard"><i class="fas fa-home"></i><span>الرئيسية</span></button>
@@ -164,34 +207,179 @@
     </nav>
     <button id="fab" class="fab"><i class="fas fa-plus"></i></button>
 </div>
-<audio id="completeSound" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
-<audio id="achievementSound" src="https://www.soundjay.com/misc/sounds/fanfare-01.mp3" preload="auto"></audio>
 
 <script>
-// ------------------------------------------------------------
-//  التطبيق الكامل – جميع الوظائف مع إصلاح مشكلة التنقل
-// ------------------------------------------------------------
 (function(){
-    // ----- البيانات الأساسية -----
+    // ---------- PASSWORD SYSTEM ----------
+    let storedPassword = localStorage.getItem('app_password');
+    let tempPassword = '';
+    let maxPasswordLength = 4;
+
+    const passwordPage = document.getElementById('password-page');
+    const mainApp = document.getElementById('mainApp');
+    const passwordDisplay = document.getElementById('passwordDisplay');
+    const passwordKeypad = document.getElementById('passwordKeypad');
+    const passwordConfirmBtn = document.getElementById('passwordConfirmBtn');
+    const passwordClearBtn = document.getElementById('passwordClearBtn');
+    const passwordMessage = document.getElementById('passwordMessage');
+
+    function generateKeypad() {
+        passwordKeypad.innerHTML = '';
+        for (let i = 1; i <= 9; i++) {
+            const btn = document.createElement('div');
+            btn.className = 'password-key';
+            btn.innerText = i;
+            btn.addEventListener('click', () => addDigit(i));
+            passwordKeypad.appendChild(btn);
+        }
+        const zeroBtn = document.createElement('div');
+        zeroBtn.className = 'password-key';
+        zeroBtn.innerText = '0';
+        zeroBtn.addEventListener('click', () => addDigit(0));
+        passwordKeypad.appendChild(zeroBtn);
+        const delBtn = document.createElement('div');
+        delBtn.className = 'password-key';
+        delBtn.innerHTML = '<i class="fas fa-backspace"></i>';
+        delBtn.addEventListener('click', () => removeLastDigit());
+        passwordKeypad.appendChild(delBtn);
+    }
+
+    function addDigit(d) {
+        if (tempPassword.length < maxPasswordLength) {
+            tempPassword += d.toString();
+            updateDisplay();
+            passwordMessage.innerText = '';
+        }
+    }
+
+    function removeLastDigit() {
+        tempPassword = tempPassword.slice(0, -1);
+        updateDisplay();
+        passwordMessage.innerText = '';
+    }
+
+    function updateDisplay() {
+        passwordDisplay.innerText = '*'.repeat(tempPassword.length);
+    }
+
+    function clearPassword() {
+        tempPassword = '';
+        updateDisplay();
+        passwordMessage.innerText = '';
+    }
+
+    function setNewPassword(newPass) {
+        if (newPass.length === maxPasswordLength) {
+            storedPassword = newPass;
+            localStorage.setItem('app_password', storedPassword);
+            passwordMessage.innerText = 'تم تعيين الرقم السري بنجاح';
+            passwordMessage.style.color = 'var(--success)';
+            setTimeout(() => {
+                unlockApp();
+            }, 1000);
+        } else {
+            passwordMessage.innerText = `الرقم السري يجب أن يتكون من ${maxPasswordLength} أرقام`;
+            passwordMessage.style.color = 'var(--danger)';
+        }
+    }
+
+    function verifyPassword() {
+        if (!storedPassword) {
+            // First time: set password
+            if (tempPassword.length === maxPasswordLength) {
+                setNewPassword(tempPassword);
+            } else {
+                passwordMessage.innerText = `أدخل ${maxPasswordLength} أرقام لتعيين الرقم السري`;
+                passwordMessage.style.color = 'var(--danger)';
+            }
+        } else {
+            if (tempPassword === storedPassword) {
+                unlockApp();
+            } else {
+                passwordMessage.innerText = 'الرقم السري غير صحيح';
+                passwordMessage.style.color = 'var(--danger)';
+                clearPassword();
+            }
+        }
+    }
+
+    function unlockApp() {
+        passwordPage.style.display = 'none';
+        mainApp.classList.remove('hidden');
+        initApp(); // initialize the app after unlocking
+    }
+
+    function resetPassword() {
+        storedPassword = null;
+        localStorage.removeItem('app_password');
+        tempPassword = '';
+        updateDisplay();
+        passwordMessage.innerText = 'الرجاء تعيين رقم سري جديد (4 أرقام)';
+        passwordMessage.style.color = 'var(--primary)';
+    }
+
+    passwordConfirmBtn.addEventListener('click', verifyPassword);
+    passwordClearBtn.addEventListener('click', clearPassword);
+
+    generateKeypad();
+
+    // ---------- AUDIO FIX ----------
+    let audioComplete = null;
+    let audioAchievement = null;
+    let soundEnabled = true;
+
+    function initSounds() {
+        // Use base64 encoded short beep (silent fallback)
+        try {
+            audioComplete = new Audio();
+            audioComplete.src = "data:audio/wav;base64,U3RlYWx0aCB3YXZlIGZvciBzb3VuZCBlZmZlY3Rz";
+            audioAchievement = new Audio();
+            audioAchievement.src = "data:audio/wav;base64,U3RlYWx0aCB3YXZlIGZvciBzb3VuZCBlZmZlY3Rz";
+            // Actually create a proper beep using Web Audio API for better reliability
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (AudioContext) {
+                const ctx = new AudioContext();
+                const playBeep = (type) => {
+                    if (!soundEnabled) return;
+                    const oscillator = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    oscillator.connect(gain);
+                    gain.connect(ctx.destination);
+                    oscillator.type = 'sine';
+                    oscillator.frequency.value = type === 'complete' ? 880 : 440;
+                    gain.gain.value = 0.2;
+                    oscillator.start();
+                    gain.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 0.5);
+                    oscillator.stop(ctx.currentTime + 0.5);
+                };
+                audioComplete = { play: () => playBeep('complete') };
+                audioAchievement = { play: () => playBeep('achievement') };
+            } else {
+                // fallback: create dummy objects
+                audioComplete = { play: () => {} };
+                audioAchievement = { play: () => {} };
+            }
+        } catch(e) {
+            audioComplete = { play: () => {} };
+            audioAchievement = { play: () => {} };
+        }
+    }
+
+    // ---------- MAIN APP LOGIC ----------
     let tasks = [];
-    let completions = {};      // { "YYYY-MM-DD": [taskId, ...] }
-    let financialRecords = {}; // { "YYYY-MM-DD": amount }
+    let completions = {};
+    let financialRecords = {};
     let monthStartDate = null;
     let financialGoal = 5000;
     let unlockedAchievements = [];
     let settings = {
         darkMode: false,
         soundEnabled: true,
-        colorScheme: 'default',
-        fontSize: 'medium',
-        animationSpeed: 'normal',
-        reminderTime: '09:00'
+        colorScheme: 'default'
     };
     let currentPage = 'dashboard';
     let xpChart, financeChart, completionChart, calHeatmapInstance;
-    let audioComplete, audioAchievement;
 
-    // ----- دوال مساعدة -----
     function getTodayStr() {
         return new Date().toISOString().slice(0,10);
     }
@@ -207,7 +395,6 @@
         return d.toISOString().slice(0,10);
     }
 
-    // ----- تحميل وحفظ -----
     function loadData() {
         tasks = JSON.parse(localStorage.getItem('daily_tasks') || '[]');
         if (!tasks.length) tasks = [{ id: '1', name: 'البرمجة لمدة ساعة' }, { id: '2', name: 'قراءة 20 صفحة' }, { id: '3', name: 'تمارين رياضية' }];
@@ -218,6 +405,7 @@
         unlockedAchievements = JSON.parse(localStorage.getItem('achievements_unlocked') || '[]');
         const storedSettings = localStorage.getItem('app_settings');
         if (storedSettings) settings = Object.assign({}, settings, JSON.parse(storedSettings));
+        soundEnabled = settings.soundEnabled;
         applySettings();
     }
     function saveTasks() { localStorage.setItem('daily_tasks', JSON.stringify(tasks)); }
@@ -228,7 +416,6 @@
     function saveAchievements() { localStorage.setItem('achievements_unlocked', JSON.stringify(unlockedAchievements)); }
     function saveSettings() { localStorage.setItem('app_settings', JSON.stringify(settings)); }
 
-    // ----- إحصائيات -----
     function getCurrentMonthStats() {
         const today = getTodayStr();
         const endDate = addOneMonth(monthStartDate);
@@ -288,7 +475,6 @@
         return allDates.size;
     }
 
-    // ----- إنهاء الشهر -----
     function finalizeMonth() {
         const endDate = addOneMonth(monthStartDate);
         let current = new Date(monthStartDate);
@@ -308,9 +494,9 @@
         localStorage.setItem('monthly_history', JSON.stringify(history));
         monthStartDate = addOneDay(endDate);
         saveMonthStart();
-        if (passed && settings.soundEnabled) {
+        if (passed && soundEnabled && audioAchievement) {
             canvasConfetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-            if (audioAchievement) audioAchievement.play();
+            audioAchievement.play();
         }
         renderAll();
     }
@@ -318,7 +504,6 @@
         if (getTodayStr() > addOneMonth(monthStartDate)) finalizeMonth();
     }
 
-    // ----- المهام -----
     function addTask(name) {
         if (!name.trim()) return;
         tasks.push({ id: Date.now().toString(), name: name.trim() });
@@ -339,7 +524,7 @@
         if (!completions[today]) completions[today] = [];
         if (checked) {
             if (!completions[today].includes(taskId)) completions[today].push(taskId);
-            if (settings.soundEnabled && audioComplete) audioComplete.play();
+            if (soundEnabled && audioComplete) audioComplete.play();
         } else {
             completions[today] = completions[today].filter(id => id !== taskId);
         }
@@ -375,13 +560,11 @@
         });
     }
 
-    // ----- مالية -----
     function setFinancialGoal(goal) { if (goal > 0) financialGoal = goal; saveFinancialGoal(); updateAllStats(); }
     function recordSaving(amount) { if (amount <= 0) return; const today = getTodayStr(); financialRecords[today] = (financialRecords[today] || 0) + amount; saveFinancialRecords(); updateAllStats(); updateTodaySavingDisplay(); }
     function resetTodaySaving() { const today = getTodayStr(); financialRecords[today] = 0; saveFinancialRecords(); updateAllStats(); updateTodaySavingDisplay(); }
     function updateTodaySavingDisplay() { const el = document.getElementById('todaySavingDisplay'); if (el) el.innerText = financialRecords[getTodayStr()] || 0; }
 
-    // ----- تحديث الواجهة الرئيسية -----
     function updateAllStats() {
         const stats = getCurrentMonthStats();
         const streak = calculateStreak();
@@ -415,7 +598,6 @@
         if (currentPage === 'achievements') renderAchievements();
     }
 
-    // ----- الإنجازات -----
     const achievementsList = [
         { id: 'first_task', name: 'أول خطوة', desc: 'إنجاز أول مهمة', icon: 'fa-star', condition: () => getTotalCompletedTasks() >= 1, progress: () => Math.min(1, getTotalCompletedTasks()), max: 1 },
         { id: 'streak_7', name: 'أسبوع متواصل', desc: 'تسلسل 7 أيام متتالية', icon: 'fa-calendar-check', condition: () => calculateStreak() >= 7, progress: () => Math.min(7, calculateStreak()), max: 7 },
@@ -433,7 +615,7 @@
             if (!unlockedAchievements.includes(ach.id) && ach.condition()) {
                 unlockedAchievements.push(ach.id);
                 changed = true;
-                if (settings.soundEnabled && audioAchievement) audioAchievement.play();
+                if (soundEnabled && audioAchievement) audioAchievement.play();
                 canvasConfetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
                 setTimeout(() => alert('🏅 إنجاز جديد: ' + ach.name + '\n' + ach.desc), 100);
             }
@@ -459,7 +641,6 @@
         document.getElementById('achievementCount').innerText = unlockedCount + ' / ' + achievementsList.length + ' مفتوح';
     }
 
-    // ----- الإحصائيات والصفحات -----
     function updateStatsPage() {
         document.getElementById('totalXP').innerText = getTotalCompletedTasks() * 10;
         document.getElementById('bestStreak').innerText = getBestStreak();
@@ -549,7 +730,6 @@
         calHeatmapInstance.update({ data: { source: data, x: 'key', y: 'value' } });
     }
 
-    // ----- الإعدادات -----
     function applySettings() {
         document.body.classList.toggle('light-mode', settings.darkMode);
         let primary = '#38bdf8';
@@ -557,26 +737,16 @@
         else if (settings.colorScheme === 'green') primary = '#22c55e';
         else if (settings.colorScheme === 'sunset') primary = '#f97316';
         document.documentElement.style.setProperty('--primary', primary);
-        document.body.className = document.body.className.replace(/font-(small|medium|large)/, '');
-        document.body.classList.add('font-' + settings.fontSize);
-        document.body.classList.remove('animation-slow', 'animation-normal', 'animation-fast');
-        document.body.classList.add('animation-' + settings.animationSpeed);
+        soundEnabled = settings.soundEnabled;
         saveSettings();
-        scheduleDailyReminder();
     }
     function setupSettingsUI() {
         document.getElementById('darkModeToggle').checked = settings.darkMode;
         document.getElementById('soundToggle').checked = settings.soundEnabled;
         document.getElementById('colorSchemeSelect').value = settings.colorScheme;
-        document.getElementById('fontSizeSelect').value = settings.fontSize;
-        document.getElementById('animationSpeedSelect').value = settings.animationSpeed;
-        document.getElementById('reminderTime').value = settings.reminderTime;
         document.getElementById('darkModeToggle').addEventListener('change', e => { settings.darkMode = e.target.checked; applySettings(); });
         document.getElementById('soundToggle').addEventListener('change', e => { settings.soundEnabled = e.target.checked; applySettings(); });
         document.getElementById('colorSchemeSelect').addEventListener('change', e => { settings.colorScheme = e.target.value; applySettings(); });
-        document.getElementById('fontSizeSelect').addEventListener('change', e => { settings.fontSize = e.target.value; applySettings(); });
-        document.getElementById('animationSpeedSelect').addEventListener('change', e => { settings.animationSpeed = e.target.value; applySettings(); });
-        document.getElementById('reminderTime').addEventListener('change', e => { settings.reminderTime = e.target.value; saveSettings(); scheduleDailyReminder(); });
         document.getElementById('exportDataBtn').addEventListener('click', () => {
             const data = { tasks, completions, financialRecords, monthStartDate, financialGoal, unlockedAchievements, history: localStorage.getItem('monthly_history') };
             const blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
@@ -598,20 +768,18 @@
         document.getElementById('quickTourBtn').addEventListener('click', () => alert('✨ جولة تعريفية:\n1️⃣ أضف مهامك اليومية\n2️⃣ سجل مدخراتك\n3️⃣ احصل على XP\n4️⃣ افتح الإنجازات\n5️⃣ تابع التقدم في الإحصائيات'));
         document.getElementById('usageDays').innerText = getUsageDays();
         document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks();
-    }
-    function scheduleDailyReminder() {
-        if (!('Notification' in window) || Notification.permission !== 'granted') return;
-        const [hour, minute] = settings.reminderTime.split(':');
-        const now = new Date();
-        const remind = new Date(); remind.setHours(hour, minute, 0, 0);
-        if (remind <= now) remind.setDate(remind.getDate() + 1);
-        setTimeout(() => { new Notification('تذكير يومي', { body: 'لا تنسَ إنجاز مهامك وتسجيل مدخراتك!' }); scheduleDailyReminder(); }, remind - now);
+        // Change password button
+        document.getElementById('changePasswordBtn').addEventListener('click', () => {
+            if (confirm('هل تريد تغيير الرقم السري؟ سيتم إعادة تعيينه وسيطلب منك تعيين رقم جديد.')) {
+                resetPassword();
+                // Hide main app and show password page
+                mainApp.classList.add('hidden');
+                passwordPage.style.display = 'flex';
+                clearPassword();
+            }
+        });
     }
 
-    // ----- الصوت -----
-    function initAudio() { audioComplete = document.getElementById('completeSound'); audioAchievement = document.getElementById('achievementSound'); if (audioComplete) audioComplete.volume = 0.3; if (audioAchievement) audioAchievement.volume = 0.4; }
-
-    // ----- خلفية ثلاثية الأبعاد -----
     function initThreeBackground() {
         const canvas = document.getElementById('bg-canvas');
         if (!canvas || !window.THREE) return;
@@ -633,7 +801,6 @@
         window.addEventListener('resize', () => { renderer.setSize(window.innerWidth, window.innerHeight); camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); });
     }
 
-    // ----- التنقل (المشكلة الأساسية) -----
     function setupNavigation() {
         const navBtns = document.querySelectorAll('.bottom-nav .nav-btn');
         navBtns.forEach(btn => {
@@ -645,7 +812,6 @@
                 document.getElementById(page + '-page').classList.add('active');
                 navBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
-                // تحديث المحتوى حسب الصفحة
                 if (page === 'stats') { if (!xpChart) initCharts(); else { updateCharts(); updateStatsPage(); updateCalendarHeatmap(); } if (!calHeatmapInstance) initCalendarHeatmap(); }
                 else if (page === 'achievements') renderAchievements();
                 else if (page === 'settings') { document.getElementById('usageDays').innerText = getUsageDays(); document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks(); }
@@ -653,7 +819,6 @@
         });
     }
 
-    // ----- الإدخال الصوتي -----
     function setupVoiceInput() {
         const voiceBtn = document.getElementById('voiceAddBtn');
         if (!voiceBtn) return;
@@ -666,7 +831,6 @@
         recognition.onerror = () => { voiceBtn.innerHTML = '<i class="fas fa-microphone"></i>'; };
     }
 
-    // ----- تهيئة عامة -----
     function renderAll() {
         renderTasks();
         updateAllStats();
@@ -677,12 +841,13 @@
         if (currentPage === 'achievements') renderAchievements();
         if (currentPage === 'settings') { document.getElementById('usageDays').innerText = getUsageDays(); document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks(); }
     }
-    function init() {
+
+    function initApp() {
         loadData();
         checkMonthRollover();
         initThreeBackground();
-        initAudio();
-        setupNavigation();        // إصلاح التنقل
+        initSounds();
+        setupNavigation();
         renderAll();
         setupSettingsUI();
         setupVoiceInput();
@@ -696,7 +861,17 @@
         setInterval(() => { checkMonthRollover(); updateAllStats(); }, 60000);
         if (Notification.permission !== 'granted' && Notification.permission !== 'denied') Notification.requestPermission();
     }
-    init();
+
+    // Start: show password page first, but init sounds and background early
+    initThreeBackground();
+    initSounds(); // preload sounds
+
+    // If password already exists, just show keypad; else allow set
+    if (storedPassword) {
+        passwordMessage.innerText = 'أدخل الرقم السري';
+    } else {
+        passwordMessage.innerText = 'قم بتعيين رقم سري (4 أرقام)';
+    }
 })();
 </script>
 </body>
