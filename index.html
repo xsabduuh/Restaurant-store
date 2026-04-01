@@ -247,7 +247,7 @@
         .version-text { font-size:0.68rem; color:var(--muted); text-align:center; margin-top:0.5rem; }
         body.light-mode { --bg:#f1f5f9; --glass:rgba(255,255,255,0.8); --border:rgba(56,189,248,0.4); --text:#0f172a; --muted:#64748b; }
 
-        /* Password page styles */
+        /* Password page */
         .password-page { position:fixed; top:0; left:0; right:0; bottom:0; background:var(--bg); z-index:2000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(8px); }
         .password-container { width:300px; background:var(--glass); border-radius:var(--radius); padding:1.5rem; text-align:center; border:1px solid var(--border); }
         .password-container h2 { margin-bottom:1rem; color:var(--primary); }
@@ -280,7 +280,7 @@
         .password-message { margin-top:0.5rem; font-size:0.8rem; color:var(--danger); }
         .hidden { display: none; }
 
-        /* Store page styles */
+        /* Store page */
         .store-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -310,28 +310,8 @@
         }
         .badge-name { font-weight: bold; margin-bottom: 0.3rem; }
         .badge-desc { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.5rem; }
-        .badge-price {
-            font-size: 0.8rem;
-            color: var(--primary);
-            font-weight: bold;
-        }
-        .owned-badge {
-            background: rgba(74,222,128,0.15);
-            border-color: var(--success);
-        }
-        .owned-badge .badge-img {
-            background: linear-gradient(135deg, #4ade80, #22c55e);
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-        .store-xp {
-            background: var(--primary-dim);
-            border-radius: 20px;
-            padding: 0.3rem 0.8rem;
-            display: inline-block;
-            margin-bottom: 0.5rem;
-            font-size: 0.8rem;
-        }
+        .badge-price { font-size: 0.8rem; color: var(--primary); font-weight: bold; }
+        .owned-badge { background: rgba(74,222,128,0.15); border-color: var(--success); }
     </style>
 </head>
 <body>
@@ -375,7 +355,7 @@
         <div id="stats-page" class="page"><div class="page-title"><i class="fas fa-chart-pie"></i> الإحصائيات</div><div class="glass-card"><div class="card-header"><i class="fas fa-chart-line"></i><h3>ملخص الإنجاز</h3></div><div class="stats-summary"><div class="summary-item">XP الإجمالي<strong id="totalXP">0</strong></div><div class="summary-item">أطول تسلسل<strong id="bestStreak">0</strong></div><div class="summary-item">إجمالي المهام<strong id="totalTasksCompleted">0</strong></div><div class="summary-item">إجمالي المدخرات<strong id="totalSavings">0</strong></div></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-brain"></i><h3>توقعات الشهر</h3></div><div class="prediction-box" id="predictionText">جاري التحليل...</div><div style="font-size:0.72rem;color:var(--muted);margin-bottom:0.3rem;">نسبة النجاح المتوقعة</div><div class="progress-bar-wrap"><div class="progress-bar" id="predictionBar" style="width:0%"></div></div></div><div class="glass-card chart-card"><div class="card-header"><i class="fas fa-bolt"></i><h3>XP آخر 7 أيام</h3></div><canvas id="xpTrendChart"></canvas></div><div class="glass-card chart-card"><div class="card-header"><i class="fas fa-coins"></i><h3>المدخرات آخر 7 أيام</h3></div><canvas id="financeTrendChart"></canvas></div><div class="glass-card chart-card"><div class="card-header"><i class="fas fa-tasks"></i><h3>المهام المنجزة</h3></div><canvas id="completionChart"></canvas></div><div class="glass-card"><div class="card-header"><i class="fas fa-calendar-alt"></i><h3>التقويم الحراري</h3></div><div class="heatmap-wrap"><div id="cal-heatmap"></div></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-list-ul"></i><h3>السجل اليومي</h3></div><div id="dailyLogContainer" style="max-height:280px;overflow-y:auto;"></div></div></div>
         <!-- Achievements -->
         <div id="achievements-page" class="page"><div class="page-title"><i class="fas fa-award"></i> إنجازاتي</div><div class="ach-header"><button id="shareAllAchievementsBtn" class="btn-secondary"><i class="fas fa-share-alt"></i> مشاركة</button><span id="achievementCount" class="ach-count">0 / 0 مفتوح</span></div><div id="achievementsGrid" class="ach-grid"></div></div>
-        <!-- Store page -->
+        <!-- Store -->
         <div id="store-page" class="page"><div class="page-title"><i class="fas fa-store"></i> متجر الأوسمة</div><div class="glass-card"><div class="card-header"><i class="fas fa-coins"></i><h3>رصيد XP المتاح: <span id="userXPBalance">0</span></h3></div><div id="storeGrid" class="store-grid"></div><div id="ownedBadgesSection" style="margin-top: 1rem;"><div class="card-header"><i class="fas fa-medal"></i><h3>أوسمةي المملوكة</h3></div><div id="ownedBadgesGrid" class="store-grid"></div></div></div></div>
         <!-- Settings -->
         <div id="settings-page" class="page"><div class="page-title"><i class="fas fa-sliders-h"></i> الإعدادات</div><div class="glass-card"><div class="card-header"><i class="fas fa-palette"></i><h3>التخصيص</h3></div><div class="setting-row"><span><i class="fas fa-moon"></i> الوضع الليلي</span><label class="switch"><input type="checkbox" id="darkModeToggle"><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-volume-up"></i> المؤثرات الصوتية</span><label class="switch"><input type="checkbox" id="soundToggle" checked><span class="slider"></span></label></div><div class="setting-row"><span><i class="fas fa-palette"></i> نظام الألوان</span><select id="colorSchemeSelect" class="setting-select"><option value="default">أزرق</option><option value="purple">بنفسجي</option><option value="green">أخضر</option><option value="sunset">غروب</option></select></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-fingerprint"></i><h3>الأمان</h3></div><div class="setting-row"><span><i class="fas fa-face-smile"></i> فتح بالوجه / البصمة</span><label class="switch"><input type="checkbox" id="biometricToggle"><span class="slider"></span></label></div><button id="changePasswordBtn" class="settings-btn"><i class="fas fa-key"></i> تغيير الرقم السري</button></div><div class="glass-card"><div class="card-header"><i class="fas fa-database"></i><h3>إدارة البيانات</h3></div><button id="exportDataBtn" class="settings-btn"><i class="fas fa-download"></i> تصدير البيانات</button><label for="importFile" class="file-label-btn"><i class="fas fa-upload"></i> استيراد البيانات</label><input type="file" id="importFile" accept=".json" style="display:none"><button id="resetDataBtn" class="settings-btn danger-btn"><i class="fas fa-trash"></i> إعادة الضبط</button><div class="data-info"><i class="fas fa-calendar-day"></i> أيام الاستخدام: <strong id="usageDays">0</strong><br><i class="fas fa-check-double"></i> إجمالي المهام: <strong id="totalCompletedStats">0</strong></div></div><div class="glass-card"><div class="card-header"><i class="fas fa-info-circle"></i><h3>معلومات</h3></div><button id="quickTourBtn" class="settings-btn"><i class="fas fa-compass"></i> جولة تعريفية</button><p class="version-text">الإصدار 4.0 | تحدي الإنجاز اليومي</p></div></div>
@@ -392,26 +372,39 @@
 
 <script>
 (function(){
-    // ---------- BIOMETRIC (WebAuthn) ----------
+    // ---------- BIOMETRIC (WebAuthn) - IMPROVED ----------
     let biometricEnabled = localStorage.getItem('biometricEnabled') === 'true';
     let credentialId = localStorage.getItem('credentialId');
+    let userId = localStorage.getItem('webauthn_user_id');
+    if (!userId) {
+        const randomBytes = new Uint8Array(16);
+        crypto.getRandomValues(randomBytes);
+        userId = btoa(String.fromCharCode(...randomBytes));
+        localStorage.setItem('webauthn_user_id', userId);
+    }
+
     let isBiometricSupported = window.PublicKeyCredential && PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable;
     let biometricAvailable = false;
     if (isBiometricSupported) {
-        isBiometricSupported().then(available => { biometricAvailable = available; updateBiometricUI(); });
+        isBiometricSupported().then(available => { 
+            biometricAvailable = available; 
+            updateBiometricUI();
+            const bioToggle = document.getElementById('biometricToggle');
+            if (bioToggle) bioToggle.disabled = !biometricAvailable;
+        });
     }
 
-    function updateBiometricUI() {
-        const container = document.getElementById('biometricButtonContainer');
-        if (!container) return;
-        if (biometricEnabled && biometricAvailable) {
-            container.innerHTML = '<button id="biometricLoginBtn" class="password-btn" style="background:#4ade80; margin-top:0.5rem;"><i class="fas fa-fingerprint"></i> مسح الوجه / البصمة</button>';
-            document.getElementById('biometricLoginBtn')?.addEventListener('click', () => {
-                authenticateWithBiometrics();
-            });
-        } else {
-            container.innerHTML = '';
-        }
+    function base64ToArrayBuffer(base64) {
+        const binaryString = atob(base64);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) bytes[i] = binaryString.charCodeAt(i);
+        return bytes.buffer;
+    }
+    function arrayBufferToBase64(buffer) {
+        const bytes = new Uint8Array(buffer);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) binary += String.fromCharCode(bytes[i]);
+        return btoa(binary);
     }
 
     async function registerBiometric() {
@@ -419,58 +412,85 @@
             alert('جهازك لا يدعم المصادقة البيومترية');
             return false;
         }
+        if (credentialId) {
+            return true;
+        }
         try {
+            const challenge = new Uint8Array(32);
+            crypto.getRandomValues(challenge);
             const publicKeyCredentialCreationOptions = {
-                challenge: new Uint8Array(32),
+                challenge: challenge,
                 rp: { name: "تحدي الإنجاز", id: window.location.hostname },
                 user: {
-                    id: new Uint8Array(16),
+                    id: base64ToArrayBuffer(userId),
                     name: "user",
-                    displayName: "مستخدم"
+                    displayName: "مستخدم التطبيق"
                 },
-                pubKeyCredParams: [{ alg: -7, type: "public-key" }],
-                authenticatorSelection: { userVerification: "required", authenticatorAttachment: "platform" },
+                pubKeyCredParams: [
+                    { alg: -7, type: "public-key" },
+                    { alg: -257, type: "public-key" }
+                ],
+                authenticatorSelection: {
+                    userVerification: "required",
+                    authenticatorAttachment: "platform"
+                },
                 timeout: 60000,
                 attestation: "none"
             };
-            // generate random challenge
-            window.crypto.getRandomValues(publicKeyCredentialCreationOptions.challenge);
             const credential = await navigator.credentials.create({ publicKey: publicKeyCredentialCreationOptions });
-            if (credential) {
-                credentialId = btoa(String.fromCharCode(...new Uint8Array(credential.rawId)));
+            if (credential && credential.rawId) {
+                credentialId = arrayBufferToBase64(credential.rawId);
                 localStorage.setItem('credentialId', credentialId);
                 return true;
             }
+            return false;
         } catch(e) {
-            console.error(e);
-            alert('فشل التسجيل البيومتري');
+            console.error('Biometric registration error:', e);
+            alert('فشل التسجيل البيومتري: ' + (e.message || 'خطأ غير معروف'));
             return false;
         }
-        return false;
     }
 
     async function authenticateWithBiometrics() {
-        if (!biometricAvailable || !credentialId) return;
+        if (!biometricAvailable || !credentialId) {
+            alert('المصادقة البيومترية غير متاحة أو لم يتم تسجيلها');
+            return false;
+        }
         try {
-            const allowCredentials = [{
-                id: Uint8Array.from(atob(credentialId), c => c.charCodeAt(0)),
+            const challenge = new Uint8Array(32);
+            crypto.getRandomValues(challenge);
+            const allowCredential = {
+                id: base64ToArrayBuffer(credentialId),
                 type: "public-key"
-            }];
+            };
             const publicKeyCredentialRequestOptions = {
-                challenge: new Uint8Array(32),
-                allowCredentials: allowCredentials,
+                challenge: challenge,
+                allowCredentials: [allowCredential],
                 timeout: 60000,
                 userVerification: "required"
             };
-            window.crypto.getRandomValues(publicKeyCredentialRequestOptions.challenge);
             const assertion = await navigator.credentials.get({ publicKey: publicKeyCredentialRequestOptions });
             if (assertion) {
-                // success
                 unlockApp();
+                return true;
             }
+            return false;
         } catch(e) {
-            console.error(e);
-            alert('فشل المصادقة البيومترية');
+            console.error('Biometric authentication error:', e);
+            alert('فشل المصادقة البيومترية: ' + (e.message || 'خطأ غير معروف'));
+            return false;
+        }
+    }
+
+    function updateBiometricUI() {
+        const container = document.getElementById('biometricButtonContainer');
+        if (!container) return;
+        if (biometricEnabled && biometricAvailable && credentialId) {
+            container.innerHTML = '<button id="biometricLoginBtn" class="password-btn" style="background:#4ade80; margin-top:0.5rem;"><i class="fas fa-fingerprint"></i> مسح الوجه / البصمة</button>';
+            const bioBtn = document.getElementById('biometricLoginBtn');
+            if (bioBtn) bioBtn.onclick = () => authenticateWithBiometrics();
+        } else {
+            container.innerHTML = '';
         }
     }
 
@@ -641,7 +661,7 @@
     let monthStartDate = null;
     let financialGoal = 5000;
     let unlockedAchievements = [];
-    let purchasedBadges = []; // store purchased badge IDs
+    let purchasedBadges = [];
     let settings = {
         darkMode: false,
         soundEnabled: true,
@@ -649,7 +669,7 @@
     };
     let currentPage = 'dashboard';
     let xpChart, financeChart, completionChart, calHeatmapInstance;
-    const MAX_DAILY_XP = 50; // Cap XP per day
+    const MAX_DAILY_XP = 50;
 
     function getTodayStr() { return new Date().toISOString().slice(0,10); }
     function addOneMonth(dateStr) {
@@ -664,22 +684,19 @@
         return d.toISOString().slice(0,10);
     }
 
-    // XP calculation with cap
     function getDailyCappedXP(dateStr) {
         const completedCount = (completions[dateStr] || []).length;
         return Math.min(completedCount * 10, MAX_DAILY_XP);
     }
-
     function getTotalXP() {
         let total = 0;
-        for (let date in completions) {
-            total += getDailyCappedXP(date);
-        }
+        for (let date in completions) total += getDailyCappedXP(date);
         return total;
     }
-
-    function getTodayCappedXP() {
-        return getDailyCappedXP(getTodayStr());
+    function getTodayCappedXP() { return getDailyCappedXP(getTodayStr()); }
+    function getAvailableXP() {
+        let spentXP = parseInt(localStorage.getItem('spentXP') || '0');
+        return getTotalXP() - spentXP;
     }
 
     function getCurrentMonthStats() {
@@ -692,7 +709,7 @@
         while (current <= end) {
             const dateStr = current.toISOString().slice(0,10);
             earnedXP += getDailyCappedXP(dateStr);
-            maxXP += MAX_DAILY_XP; // maximum possible per day is MAX_DAILY_XP
+            maxXP += MAX_DAILY_XP;
             financialTotal += financialRecords[dateStr] || 0;
             current.setDate(current.getDate() + 1);
         }
@@ -867,7 +884,6 @@
         if (currentPage === 'store') updateStoreBalance();
     }
 
-    // Achievements (unchanged but adjust XP-related conditions)
     const achievementsList = [
         { id: 'first_task', name: 'أول خطوة', desc: 'إنجاز أول مهمة', icon: 'fa-star', condition: () => getTotalCompletedTasks() >= 1, progress: () => Math.min(1, getTotalCompletedTasks()), max: 1 },
         { id: 'streak_7', name: 'أسبوع متواصل', desc: 'تسلسل 7 أيام متتالية', icon: 'fa-calendar-check', condition: () => calculateStreak() >= 7, progress: () => Math.min(7, calculateStreak()), max: 7 },
@@ -911,7 +927,7 @@
         document.getElementById('achievementCount').innerText = unlockedCount + ' / ' + achievementsList.length + ' مفتوح';
     }
 
-    // Store badges data
+    // Store
     const badges = [
         { id: 'badge1', name: 'المثابر', desc: 'أكمل 50 مهمة', price: 200, icon: 'fa-seedling', color: '#4ade80' },
         { id: 'badge2', name: 'المنجز', desc: 'أكمل 200 مهمة', price: 500, icon: 'fa-star', color: '#f97316' },
@@ -927,8 +943,8 @@
     function savePurchasedBadges() { localStorage.setItem('purchasedBadges', JSON.stringify(purchasedBadges)); }
 
     function updateStoreBalance() {
-        const totalXP = getTotalXP();
-        document.getElementById('userXPBalance').innerText = totalXP;
+        const availableXP = getAvailableXP();
+        document.getElementById('userXPBalance').innerText = availableXP;
         renderStore();
     }
 
@@ -936,11 +952,11 @@
         const container = document.getElementById('storeGrid');
         const ownedContainer = document.getElementById('ownedBadgesGrid');
         if (!container) return;
-        const totalXP = getTotalXP();
+        const availableXP = getAvailableXP();
         container.innerHTML = '';
         badges.forEach(badge => {
             const owned = purchasedBadges.includes(badge.id);
-            const canBuy = !owned && totalXP >= badge.price;
+            const canBuy = !owned && availableXP >= badge.price;
             const card = document.createElement('div');
             card.className = `badge-card ${owned ? 'owned' : ''}`;
             card.innerHTML = `
@@ -954,9 +970,8 @@
                 card.onclick = () => {
                     if (canBuy) {
                         if (confirm(`شراء وسام "${badge.name}" مقابل ${badge.price} XP؟`)) {
-                            // deduct XP from total (but we need to store spent XP? Actually totalXP is computed from completions, so we cannot deduct directly. We need to keep a separate XP wallet that can be spent. But the user wants to spend XP, so we must track spent XP separately. We'll store spentXP total and compute availableXP = totalXP - spentXP. Let's implement spentXP.
                             let spentXP = parseInt(localStorage.getItem('spentXP') || '0');
-                            if (totalXP - spentXP >= badge.price) {
+                            if (availableXP >= badge.price) {
                                 spentXP += badge.price;
                                 localStorage.setItem('spentXP', spentXP);
                                 purchasedBadges.push(badge.id);
@@ -978,7 +993,6 @@
             }
             container.appendChild(card);
         });
-        // owned badges
         ownedContainer.innerHTML = '';
         const ownedBadges = badges.filter(b => purchasedBadges.includes(b.id));
         if (ownedBadges.length === 0) {
@@ -997,7 +1011,6 @@
         }
     }
 
-    // Stats page functions (adjust for capped XP)
     function updateStatsPage() {
         document.getElementById('totalXP').innerText = getTotalXP();
         document.getElementById('bestStreak').innerText = getBestStreak();
@@ -1125,44 +1138,43 @@
         document.getElementById('quickTourBtn').addEventListener('click', () => alert('✨ جولة تعريفية:\n1️⃣ أضف مهامك اليومية\n2️⃣ سجل مدخراتك\n3️⃣ احصل على XP (حد أقصى 50 XP يومياً)\n4️⃣ افتح الإنجازات\n5️⃣ اشترِ أوسمة من المتجر'));
         document.getElementById('usageDays').innerText = getUsageDays();
         document.getElementById('totalCompletedStats').innerText = getTotalCompletedTasks();
-        // Biometric toggle
+
         const bioToggle = document.getElementById('biometricToggle');
-        bioToggle.checked = biometricEnabled;
-        bioToggle.addEventListener('change', async (e) => {
-            if (e.target.checked) {
-                if (!biometricAvailable) {
-                    alert('جهازك لا يدعم المصادقة البيومترية');
-                    bioToggle.checked = false;
-                    return;
-                }
-                const success = await registerBiometric();
-                if (success) {
-                    biometricEnabled = true;
-                    localStorage.setItem('biometricEnabled', 'true');
-                    updateBiometricUI();
+        if (bioToggle) {
+            bioToggle.checked = biometricEnabled;
+            if (!biometricAvailable) bioToggle.disabled = true;
+            bioToggle.addEventListener('change', async (e) => {
+                if (e.target.checked) {
+                    if (!biometricAvailable) {
+                        alert('جهازك لا يدعم المصادقة البيومترية');
+                        bioToggle.checked = false;
+                        return;
+                    }
+                    const success = await registerBiometric();
+                    if (success) {
+                        biometricEnabled = true;
+                        localStorage.setItem('biometricEnabled', 'true');
+                        updateBiometricUI();
+                        alert('تم تفعيل المصادقة البيومترية بنجاح');
+                    } else {
+                        bioToggle.checked = false;
+                    }
                 } else {
-                    bioToggle.checked = false;
+                    biometricEnabled = false;
+                    localStorage.setItem('biometricEnabled', 'false');
+                    updateBiometricUI();
                 }
-            } else {
-                biometricEnabled = false;
-                localStorage.setItem('biometricEnabled', 'false');
-                credentialId = null;
-                localStorage.removeItem('credentialId');
-                updateBiometricUI();
-            }
-        });
+            });
+        }
         document.getElementById('changePasswordBtn').addEventListener('click', () => {
             if (confirm('هل تريد تغيير الرقم السري؟ سيتم إعادة تعيينه وسيطلب منك تعيين رقم جديد.')) {
                 resetPassword();
                 mainApp.classList.add('hidden');
                 passwordPage.style.display = 'flex';
                 clearPassword();
-                // Disable biometric temporarily
                 biometricEnabled = false;
                 localStorage.setItem('biometricEnabled', 'false');
-                credentialId = null;
-                localStorage.removeItem('credentialId');
-                bioToggle.checked = false;
+                if (bioToggle) bioToggle.checked = false;
                 updateBiometricUI();
             }
         });
